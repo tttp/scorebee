@@ -1,0 +1,586 @@
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Scorecard demo</title>
+<link rel="stylesheet" type="text/css" href="dc.css"/>
+</head>
+<body>
+
+<script type="text/javascript" src="js/d3.v3.js"></script>
+<script type="text/javascript" src="js/crossfilter.js"></script>
+<script type="text/javascript" src="js/dc.js"></script>
+<!--script type="text/javascript" src="../../src/data-grid.js"></script-->
+<script type="text/javascript" src="js/underscore-min.js"></script>
+<!--script type="text/javascript" src="queue.v1.min.js"></script-->
+
+<script src="jquery.min.js"></script>
+<script src="jquery.lazyload.js"></script>
+
+<script>
+
+var eu_groups = {
+"GUE/NGL":"#df73be",
+"S&D":"#ec2335",
+"Verts/ALE":"#67bd1b",
+"ALDE":"#f1cb01",
+"EFD":"#60c0e2",
+"PPE":"blue",
+"EPP":"blue",
+"ECR":"darkblue",
+"NA/NI":"grey",
+"Array":"pink"
+};
+
+var topic_climate = {
+  "title": "Does your MEP care about the climate?",
+  "description": "We collected the main topics...",
+  "link": "",
+  "logo": "",
+  "limits": [
+  {"upper": 20,  "text": " is a climate killer.", "color": "red"},
+  {"upper": 40,  "text": " has voted against climate policies.", "color" : "orange" }, 
+  {"upper": 60,  "text": " is not really decided on the climate.", "color": "yellow"},
+  {"upper": 90,  "text": " is rather climate-friendly.",        "color": "palegreen"},
+  {"upper": 100, "text": " is a climate champion.",               "color": "lightgreen"} 
+  ],
+    "order": 1,
+    "name":"climate",
+    "weight": 1,
+};
+
+climate_votes = [
+{
+  "id": "B7-0482/2013|§ 8 - AM 6D",
+    "dbid": 4995,
+    "weight": 1,
+    "date":"2013-04-05",
+    "title": "An EU greenhouse gas reduction target of 50% by 2030",
+    "description": "To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.",
+    "recommendation": -1,
+},
+{
+  "id": "B7-0482/2013 - Am 12/1",
+  "dbid": 5004,
+  "weight": 0.5,
+    "date":"2013-04-06",
+  "title": "Phasing out fossil fuel subsidies",
+  "description": "Subsidies still support fossil fuels. Money used to support these polluting fuels could be used to support climate  action.",
+  "recommendation": 1,
+},
+{
+  "id": "A7-0046/2013 - Matthias Groote - Amended proposal",
+  "dbid": 5276,
+  "weight": 0.8,
+  "date":"2013-04-06",
+  "title": "Back-loading' the Emissions Trading System",
+  "description": "The EU carbon market has been sorely in need of reform for many years now - an agreement to temporarily withhold allowances was a small step in the right direction.",
+  "recommendation": 1,
+},
+{
+  "id": "A7-0135/2013 - Herbert Reul - Am 1/1",
+  "dbid": 4096,
+  "weight": 0.5,
+  "date":"2013-04-09",
+   "title": "Increasing European renewable energy supply",
+  "description": "Increasing the share of renewables is crucial in the transition to a low-carbon future. Ambitious targets are needed to secure this as a policy.",
+  "recommendation": 1,
+},
+{
+  "id": "A7-0035/2013 - Niki Tzavela - Am 1",
+  "dbid": 3939,
+  "weight": 0.8,
+  "date":"2013-04-10",
+  "title": "3 Binding Targets on the EU 2050 Roadmap",
+  "description": "NGO's have called for <a href='http://www.foeeurope.org/2030-climate-plan'>3 binding targets</a> on renewable energy, emissions reductions and energy saving measures. It is essential that the agreements are legally binding so that member states cannot escape from their responsibilities.",
+  "recommendation": 1,
+},
+{
+  "id": "A7-0191/2012 - Bas Eickhout - Legislative resolution",
+  "dbid": 3708,
+  "weight": 1,
+  "date":"2012-09-01",
+  "title": "Reporting greenhouse gas emissions across Europe",
+  "description": "In order to reduce greenhoues gas emissions across Europe, there must be firm standards for carbon accounting.",
+  "recommendation": 1,
+},
+{
+  "id": "A7-0265/2012 - Claude Turmes - Single vote",
+  "dbid": 3082,
+  "weight": 0.4,
+  "date":"2012-09-02",
+  "title": "Measures to reduce energy consumption",
+  "description": "Reducing energy consumption is a very effective and cheap way to reduce greenhouse gas emissions along with other benefits.",
+  "recommendation": 1,
+},
+{
+  "id": "A7-0033/2012 - Chris Davies - Am 1/2",
+  "dbid": 2636,
+  "weight": 0.8,
+  "date":"2012-09-03",
+  "title": "Increasing 2020 emissions reductions targets to 30%",
+  "description": "The EU's 2020 climate targets <a href='http://www.sandbag.org.uk/blog/2013/dec/9/eus-2020-targets-allow-massive-growth-emissions-em'>allows emissions to grow!</a> The targets need to be accordingly more ambitious to take into account current progress.",
+  "recommendation": 1,
+},
+{
+  "id": "B7-0571/2011 - § 38",
+  "dbid": 2340,
+  "weight": 0.4,
+  "date":"2011-05-02",
+  "title": "Climate finance for the world's poorest",
+  "description": "Developed countries have promised to provide $100bn /yr by 2020 to support developing countries fighting climate change impacts. ",
+  "recommendation": 1,
+},
+{
+  "id": "B7-0522/2011 - Resolution",
+  "dbid": 2189,
+  "weight": 0.6,
+  "date":"2011-05-03",
+  "title": "Developing a common EU position ahead of the United Nations Conference on Sustainable Development (Rio+20)",
+  "description": "Climate change will disproportionately impact the world's poorest, so it is essential that climate change considerations are integrated in development policy.",
+  "recommendation": 1,
+},
+{
+  "id": "B7-0141/2009/rev1 - Copenhagen Summit - resolution",
+  "dbid": 220,
+  "weight": 0.9,
+  "date":"2009-05-02",
+  "title": "The EU strategy for the Copenhagen Conference on Climate Change (COP 15)",
+  "description": "A global agreement at Copenhagen in 2009 would have been a big step in the right direction. These hopes ultimately floundered with a weak agreement. The EU position ahead of the conference was important groundwork.",
+  "recommendation": 1,
+}
+];
+
+var votes = function (all) {
+  this.all = all;
+  this.index = {};
+  this.mepindex = {};
+  _.each (all, function(v,i) {
+    v.pro = v.against = v.abstention = v.absent = 0;
+    v.date = new Date (v.date);
+    if (typeof v.dbid !== "undefined") {
+      this.index[v.dbid] = i;
+    }
+  },this);
+};
+
+votes.prototype.get = function (id) {
+  if (this.index[id])
+    return this.all[this.index[id]];
+  return null;// asking for a vote that doesn't exist
+}
+
+votes.prototype.setRollCall = function (rolls) {
+  var type = {1:"pro","-1":"against",0:"abstention","":"absent"};
+  this.rollcalls = rolls;
+  _.each (rolls, function(v,i) {
+    var mep =v;
+    this.mepindex[v.mep] = i;
+    _.each(this.all, function (vote,id) {
+      ++vote[type[mep[vote.dbid]]];
+    }, this);
+  }, this);
+  // coef calculation
+    var max = 0, min = Infinity;
+    _.each(this.all, function (vote) {
+      vote.cast = vote.pro+vote.against+vote.abstention;
+      vote.weight = Math.abs (vote.cast / (vote.against - vote.pro));
+      if (min > vote.weight) min = vote.weight;
+      if (max < vote.weight) max = vote.weight;
+    }, this);
+    _.each(this.all, function (vote) {
+      vote.weight = 1+(vote.weight-min)/(max-min);
+    }, this);
+  
+}
+
+votes.prototype.getScore = function (mepid) {
+  var score = nbvote = 0;
+  if (! this.mepindex[mepid]) {
+    console || console.log ("mep missing "+ mepid);
+    return 0;//we don't have that mep?
+  }
+  var mep = this.rollcalls[this.mepindex[mepid]];
+  _.each(this.all, function (vote) {
+    if (mep[vote.dbid]) {
+      nbvote = nbvote + vote.weight; //no weight used
+      score = score + vote.recommendation * mep[vote.dbid]*vote.weight;
+    }
+  },this);
+  if (nbvote == 0) 
+    return 0; // the dude wasn't around for the votes
+  return Math.floor (100*(score / nbvote));
+}
+
+var vote = new votes (climate_votes);
+
+var topics = ["climate","gmo","topic 3","topic 4"];
+
+var tpl = _.template("<div style='background-color:<%= color %>;'><div class='score'><%= score %></div><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><img class='lazy-load' dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='party'><%= party %></div></div>");
+
+function grid (selector) {
+  var ndx = crossfilter(meps),
+      all = ndx.groupAll();
+
+  function getScore (mep) {
+    return vote.getScore (mep.epid);
+    var min =-100, max = 100;
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  // color based on the score.
+  var color = d3.scale.linear()
+    .clamp(true)
+    .domain([-100, -1, 0, 1, 100])
+    .range(["#b00000","#f4d8d8","#ccc","#d0e5cc","#3a6033"])
+    .interpolate(d3.interpolateHcl);
+
+
+  function adjust (data) {
+    //calculate age
+    var dateFormat = d3.time.format("%Y-%m-%d");
+    var now = Date.now();
+    data.forEach(function (e) {
+        e.scores = [getScore(e),getScore(e),getScore(e),getScore(e)];
+        e.birthdate = dateFormat.parse(e.birthdate);
+        e.age= ~~((now - e.birthdate) / (31557600000));// 24 * 3600 * 365.25 * 1000
+        });
+  }
+
+  adjust (meps);
+
+  var pie_group = dc.pieChart(selector +  " .group").innerRadius(20).radius(70);
+  var group = ndx.dimension(function(d) {
+      if (typeof d.eugroup == "undefined") return "";
+      return d.eugroup;
+      });
+  var groupGroup   = group.group().reduceSum(function(d) {   return 1; });
+
+  //var chart_age = dc.barChart(selector + " .age");
+  var chart_age = dc.lineChart(selector + " .age");
+
+ var age = ndx.dimension(function(d) {
+      if (typeof d.age == "undefined") return "";
+      return d.age;
+      });
+
+
+var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
+
+  chart_age
+    .width(444)
+    .height(200)
+    .margins({top: 0, right: 0, bottom: 95, left: 30})
+    .x(d3.scale.linear().domain([20,100]))
+    .brushOn(true)
+    .renderArea(true)
+    .elasticY(true)
+    .yAxisLabel("#MEPs")
+    .dimension(age)
+    .group(ageGroup);
+
+
+  var pie_gender = dc.pieChart(selector +  " .gender").radius(70);
+  var gender = ndx.dimension(function(d) {
+      if (typeof d.gender == "undefined") return "";
+      return d.gender;
+      });
+
+  var groupGender   = gender.group().reduceSum(function(d) {   return 1; });
+
+
+  var NameGender= {"M":"Male","F":"Female","":"missing data"};
+  var SymbolGender= {"M":"\u2642","F":"\u2640","":""};
+
+
+  pie_gender
+    .width(200)
+    .height(200)
+    .dimension(gender)
+    .label(function (d){
+        return SymbolGender[d.key];
+        })
+  .title(function (d){
+      return NameGender[d.key] +": "+d.value;
+      })
+  .group(groupGender);
+
+  pie_group
+    .width(200)
+    .height(200)
+    .dimension(group)
+    .colorCalculator(function(d, i) {
+      if (eu_groups[d.key])
+        return eu_groups[d.key];
+      return "pink";
+    })
+    .group(groupGroup)
+    .renderlet(function (chart) {
+        });
+
+  var score = ndx.dimension (function(d) {
+      return d.scores[0];
+      });
+  var scoreGroup = score.group().reduceSum (function(d) { return 1;});
+  var bar_score = dc.barChart (".bar_score")
+    .width(250)
+    .height(200)
+    .outerPadding(0)
+    .gap(1)
+    .margins({top: 10, right: 10, bottom: 20, left: 30})
+    .x(d3.scale.linear().domain([-100, 100]))
+    .elasticY(true)
+    .round(dc.round.floor)
+    .colorCalculator(function(d, i) {
+        return color(d.key);
+        })
+    .dimension(score)
+    .group(scoreGroup)
+    .renderlet(function (chart) {
+      if (!console || !console.log) return;
+      var d = chart.dimension().top(Number.POSITIVE_INFINITY);
+      var total = nb = 0;
+      d.forEach (function (a) {
+        ++nb;
+        total += a.scores[0];
+      }); 
+      var avg= total/nb;
+      console.log ("average:" + avg);
+    });
+
+
+  var party = ndx.dimension (function(d) {
+      if (typeof d.party == "undefined") return "";
+      return d.party;
+      });
+
+  var partyGroup = party.group().reduceSum (function(d) { 
+      return 1;
+      return d.scores[0];});
+
+  pie_party =dc.pieChart(selector +  " .party").innerRadius(20).radius(70)
+    .width(200)
+    .height(200)
+    .dimension(party)
+    .colors(d3.scale.category10())
+    .group(partyGroup)
+    .renderlet(function (chart) {
+        });
+
+  /*  var bar_topic = dc.barChart (selector + ".topic");
+      var topic = ndx.dimension (function(d) {
+//        return do something;
+      });
+      var topicGroup = topic.group().reduceSum (function(d) { return 0.6;});
+      bar_topic
+      .width(200)
+      .height(100)
+      .outerPadding(0)
+      .gap(1)
+      .margins({top: 0, right: 0, bottom: 10, left: 30})
+      .x(d3.scale.ordinal())
+      .xUnits(dc.units.ordinal)
+      .brushOn(false)
+      .elasticY(true)
+      .yAxisLabel("#topics")
+      .dimension(topic)
+      .group(topicGroup);
+   */
+
+  var bar_country = dc.barChart(selector + " .country");
+  var country = ndx.dimension(function(d) {
+      if (typeof d.country == "undefined") return "";
+      return d.country;
+      });
+  var countryGroup   = country.group().reduce(
+      function(a,d) {a.count +=1; a.score +=d.scores[0]; return a; },
+      function(a,d) {a.count -=1; a.score -=d.scores[0]; return a; },
+      function() {return {count:0,score:0}; }
+      );
+  //  var countryScore   = country.group().reduceSum(function(d) { return d.scores[0]; });
+  bar_country
+    .colorCalculator(function(d, i) {
+        return color(d.value.score/d.value.count);
+        })
+  .valueAccessor (
+      function(d) {
+      return d.value.count;
+      })
+  .width(444)
+    .height(200)
+    .outerPadding(0)
+    .gap(1)
+    .margins({top: 10, right: 0, bottom: 95, left: 30})
+    .x(d3.scale.ordinal())
+    .xUnits(dc.units.ordinal)
+    .brushOn(false)
+    .elasticY(true)
+    .yAxisLabel("#MEPs")
+    .dimension(country)
+    .group(countryGroup);
+
+  bar_country.on("postRender", function(c) {rotateBarChartLabels();} );
+
+
+  function rotateBarChartLabels() {
+    d3.selectAll(selector+ ' .country .axis.x text')
+      .style("text-anchor", "end" )
+      .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
+  }
+
+  dc.dataCount(".dc-data-count")
+    .dimension(ndx)
+    .group(all);
+
+  dc.dataGrid(".dc-data-grid")
+    .dimension(country)
+    .group(function (d) {
+        return d.country;
+        })
+  .size(1000)
+    .html (function(d) { 
+        d.score = d.scores [0];
+        d.color = color(d.score);
+
+        return tpl(d);
+        })
+  .sortBy(function (d) {
+      return d.last_name;
+      })
+  .order(d3.ascending)
+    .renderlet(function (grid) {
+        $("img.lazy-load").lazyload ({
+effect : "fadeIn"
+})
+        .removeClass("lazy-load");
+        });
+
+
+
+dc.renderAll();
+}
+
+</script>
+
+<h1 class="page-header">Members of the European parliament</h1>
+<p><b>Click on the graphs to filter the Members of the European parliament by country or party</b></p>
+
+
+<div id="ep2014list">
+<div class="group"></div>
+<div class="country"></div>
+<div class="gender"></div>
+<div class="age"></div>
+<div class="bar_score"></div>
+<div class="list"></div>
+<div style="clear:both;">
+<div class="dc-data-count">
+<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
+href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+</div>
+</div>
+<div class="nokparty">
+</div>
+<div class="dc-data-grid">
+</div>
+
+</div>
+
+<script>
+var meps = [];
+var mepvotes = [];
+
+$(function() {
+  var _grid = _.after(2, function () {
+    grid ("#ep2014list");
+  });
+
+    d3.csv("mep.csv", function(d) {return d;}
+      ,function(error, rows) {
+        meps = rows;
+        _grid ();
+      });      
+
+    d3.csv("votes_climate.csv", function(d) {return d;}
+      ,function(error, rows) {
+        vote.setRollCall (rows);
+        _grid ();
+      });      
+
+});      
+</script>
+
+<style>
+
+#ep2014list table, .dc-data-grid {clear:both;}
+.dc-table-label {background: #F5F5F5; font-weight:bold; }
+.x line {stroke:none;}
+
+body {font-family: arial, helvetica, sans-serif;}
+
+.dc-data-grid, .dc-grid-group {clear:both}
+.dc-data-count {clear:both;}
+.dc-grid-group {
+  background-color: #F5F5F5;
+border: 1px solid #E3E3E3;
+        border-radius: 4px;
+
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+        margin-bottom: 20px;
+        min-height: 20px;
+padding: 10px;
+}
+
+.score {
+position:absolute;
+right:1px;
+color:#111;
+background: rgba(255, 255, 255, 0.31);
+            text-shadow: lightgrey 1.5px 1.5px;
+width: 100%;
+       font-size: 40px;
+padding: 1px 1px;
+bottom: 15px;
+        font-weight: bold;
+}
+
+.dc-grid-item>div {
+padding:5px;
+        border-color: #E7E7E7;
+        border-radius: 4px;
+        text-align:center;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+height:354px;
+       margin-bottom:5px;
+}
+
+.party {font-size:0.9em;font-style:italic; padding-top:5px;}
+
+.dc-grid-item {
+position:relative;
+float:left;
+      min-height:354px;
+margin:0 10px 0px 0;
+width:200px;
+      background-color: #F8F8F8;
+      border-color: #E7E7E7;
+      border-radius: 4px;
+      text-align:center;
+      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+}
+.dc-grid-item img {width:170px;height:215px}
+.dc-grid-top h1 {font-size:22px;}
+.dc-grid-top h2 {font-size:14px;}
+
+aa.age {display:none}
+
+</style>
+</div>
+
+
+</div>
+</div>
+
+</body>
+</html>
