@@ -2,11 +2,22 @@
 border-top: 4px solid #3eb249;
 }
 
+.jqm-demos .jqm-content > h1.starthead {
+font-size: 3.5em;
+width: 50%;
+min-width: 300px;
+max-width: 600px;
+margin: 0.3em auto 1em auto;
+text-align: center;
+font-family: 'Open Sans', sans-serif;
+font-weight: 300;
+}
+
 #ep2014list table, .dc-data-grid {clear:both;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
 .x line {stroke:none;}
 
-body {font-family: arial, helvetica, sans-serif;}
+body {font-family: sans-serif, arial, helvetica;}
 
 .dc-data-grid, .dc-grid-group {clear:both}
 .dc-data-count {clear:both;}
