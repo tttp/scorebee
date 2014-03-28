@@ -20,6 +20,7 @@ votes.prototype.get = function (id) {
 }
 
 votes.prototype.setRollCall = function (rolls) {
+  //var type = {1:"pro","-1":"against",0:"abstention","":"absent"};
   var type = {1:"pro","-1":"against",0:"abstention","":"absent"};
   this.rollcalls = rolls;
   _.each (rolls, function(v,i) {
@@ -29,6 +30,7 @@ votes.prototype.setRollCall = function (rolls) {
       ++vote[type[mep[vote.dbid]]];
     }, this);
   }, this);
+  vote.effort = (vote.pro+vote.against) / ( vote.pro+vote.against+vote.abstention+vote.absent);
   // coef calculation
     var max = 0, min = Infinity;
     _.each(this.all, function (vote) {
@@ -58,7 +60,8 @@ votes.prototype.getScore = function (mepid) {
   },this);
   if (nbvote == 0) 
     return 0; // the dude wasn't around for the votes
-  return Math.floor (100*(score / nbvote));
+//  return Math.floor (100*(score / nbvote)); // from -100 to 100
+    return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
 }
 
 var vote = new votes (climate_votes);
@@ -80,7 +83,7 @@ function grid (selector) {
   // color based on the score.
   var color = d3.scale.linear()
     .clamp(true)
-    .domain([-100, -1, 0, 1, 100])
+    .domain([0, 49, 50, 51, 100])
     .range(["#b00000","#f4d8d8","#ccc","#d0e5cc","#3a6033"])
     .interpolate(d3.interpolateHcl);
 
@@ -177,7 +180,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .outerPadding(0)
     .gap(1)
     .margins({top: 10, right: 10, bottom: 20, left: 30})
-    .x(d3.scale.linear().domain([-100, 100]))
+    .x(d3.scale.linear().domain([0, 100]))
     .elasticY(true)
     .round(dc.round.floor)
     .colorCalculator(function(d, i) {
