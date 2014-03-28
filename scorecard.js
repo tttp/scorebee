@@ -1,9 +1,9 @@
 var scoreCard = function () {
 
 var votes = function (all) {
-  this.all = all;
-  this.index = {};
-  this.mepindex = {};
+  this.all = all;// votes to be taken into account. [dbid] is the voteid key
+  this.index = {}; // column number in the cvs of a voteid
+  this.mepindex = {}; //row number in the csv of a mepid
   _.each (all, function(v,i) {
     v.pro = v.against = v.abstention = v.absent = 0;
     v.date = new Date (v.date);
@@ -13,7 +13,7 @@ var votes = function (all) {
   },this);
 };
 
-votes.prototype.get = function (id) {
+votes.prototype.get = function (id) { //return the detail of a vote based on its id
   if (this.index[id])
     return this.all[this.index[id]];
   return null;// asking for a vote that doesn't exist
@@ -27,10 +27,9 @@ votes.prototype.setRollCall = function (rolls) {
     var mep =v;
     this.mepindex[v.mep] = i;
     _.each(this.all, function (vote,id) {
-      ++vote[type[mep[vote.dbid]]];
+      ++vote[type[mep[vote.dbid]]]; //type is one of pro against abstention absent
     }, this);
   }, this);
-  vote.effort = (vote.pro+vote.against) / ( vote.pro+vote.against+vote.abstention+vote.absent);
   // coef calculation
     var max = 0, min = Infinity;
     _.each(this.all, function (vote) {
@@ -45,11 +44,28 @@ votes.prototype.setRollCall = function (rolls) {
   
 }
 
+votes.prototype.getEffort = function (mepid) {
+  var effort = 0;
+  if (! this.mepindex[mepid]) {
+    console || console.log ("mep missing "+ mepid);
+    return 0;//we don't have that mep?
+  }
+  var mep = this.rollcalls[this.mepindex[mepid]];
+  _.each(this.all, function (vote) {
+    if (mep[vote.dbid]) { 
+      ++nbvote;
+      if (Math.abs(mep[vote.dbid]) == 1) // yes or no
+        ++effort;
+    }
+  },this);
+  return effort/nbvote * 100; 
+}
+
 votes.prototype.getScore = function (mepid) {
   var score = nbvote = 0;
   if (! this.mepindex[mepid]) {
     console || console.log ("mep missing "+ mepid);
-    return 0;//we don't have that mep?
+    return 50;//we don't have that mep?
   }
   var mep = this.rollcalls[this.mepindex[mepid]];
   _.each(this.all, function (vote) {
@@ -59,7 +75,7 @@ votes.prototype.getScore = function (mepid) {
     }
   },this);
   if (nbvote == 0) 
-    return 0; // the dude wasn't around for the votes
+    return 50; // the dude wasn't around for the votes
 //  return Math.floor (100*(score / nbvote)); // from -100 to 100
     return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
 }
@@ -76,8 +92,6 @@ function grid (selector) {
 
   function getScore (mep) {
     return vote.getScore (mep.epid);
-    var min =-100, max = 100;
-    return Math.floor(Math.random() * (max - min) + min);
   }
 
   // color based on the score.
@@ -87,12 +101,12 @@ function grid (selector) {
     .range(["#b00000","#f4d8d8","#ccc","#d0e5cc","#3a6033"])
     .interpolate(d3.interpolateHcl);
 
-
   function adjust (data) {
     //calculate age
     var dateFormat = d3.time.format("%Y-%m-%d");
     var now = Date.now();
     data.forEach(function (e) {
+        e.effort = vote.getEffort (e.epid);
         e.scores = [getScore(e),getScore(e),getScore(e),getScore(e)];
         e.birthdate = dateFormat.parse(e.birthdate);
         e.age= ~~((now - e.birthdate) / (31557600000));// 24 * 3600 * 365.25 * 1000
@@ -280,6 +294,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
   }
 
+  chartParty (selector, ndx, color);
+
   dc.dataCount(".dc-data-count")
     .dimension(ndx)
     .group(all);
@@ -310,6 +326,63 @@ effect : "fadeIn"
 
 
 dc.renderAll();
+}
+
+function chartParty (selector, ndx, color) {
+  var bubble_party = dc.bubbleChart(selector + " .party");
+  var party = ndx.dimension(function(d) {
+      if (typeof d.party == "undefined") return "";
+      return d.party;
+      });
+  var partyGroup   = party.group().reduce(
+      function(a,d) {a.count +=1; a.score +=d.scores[0]; a.effort += d.effort; return a; },
+      function(a,d) {a.count -=1; a.score -=d.scores[0]; a.effort -= d.effort; return a; },
+      function() {return {count:0,score:0,effort:0}; }
+      );
+  //  var countryScore   = country.group().reduceSum(function(d) { return d.scores[0]; });
+  bubble_party
+    .colorCalculator(function(d, i) {
+        return color(d.value.score/d.value.count);
+        })
+  .valueAccessor (
+      function(d) {
+      return d.value.count;
+      })
+  .width(444)
+    .height(200)
+    .margins({top: 10, right: 0, bottom: 95, left: 30})
+    .yAxisLabel("effort")
+    .dimension(party)
+    .group(partyGroup)
+    .keyAccessor(function (p) {
+        return p.value.score/p.value.count;
+    })
+    .valueAccessor(function (p) {
+        return p.value.effort/p.value.count;
+    })
+    .radiusValueAccessor(function (p) {
+        return p.value.count;
+    })
+    .x(d3.scale.linear().domain([0, 100]))
+    .r(d3.scale.linear().domain([0, 50]))
+    .minRadiusWithLabel(15)
+    .elasticY(false)
+    .yAxisPadding(10)
+    .elasticX(true)
+    .xAxisPadding(0)
+    .maxBubbleRelativeSize(0.15)
+    .renderHorizontalGridLines(true)
+    .renderVerticalGridLines(true)
+    .renderLabel(false)
+    .renderTitle(true)
+    .title(function (p) {
+        return p.key + "\n" + 
+                "count:" +p.value.count + "\n" +
+                "effort:" +p.value.effort + "\n" +
+                "score"+p.value.score + "\n";
+    });
+
+
 }
 
 this.vote = vote;
