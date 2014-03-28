@@ -339,7 +339,8 @@ function chartParty (selector, ndx, color) {
       function(a,d) {a.count +=1; a.score +=d.scores[0]; a.effort += d.effort; return a; },
       function(a,d) {a.count -=1; a.score -=d.scores[0]; a.effort -= d.effort; return a; },
       function() {return {count:0,score:0,effort:0}; }
-      );
+      )
+      .order(function (p) {return p.count});
   //  var countryScore   = country.group().reduceSum(function(d) { return d.scores[0]; });
   bubble_party
     .colorCalculator(function(d, i) {
