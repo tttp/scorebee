@@ -45,7 +45,7 @@ votes.prototype.setRollCall = function (rolls) {
 }
 
 votes.prototype.getEffort = function (mepid) {
-  var effort = 0;
+  var effort = 0; nbvote = 0;
   if (! this.mepindex[mepid]) {
     console || console.log ("mep missing "+ mepid);
     return 0;//we don't have that mep?
@@ -56,6 +56,7 @@ votes.prototype.getEffort = function (mepid) {
       ++nbvote;
       if (Math.abs(mep[vote.dbid]) == 1) // yes or no
         ++effort;
+//      if (mep[vote.dbid] == 0) ++effort; //count abstention as effort
     }
   },this);
   return effort/nbvote * 100; 
@@ -350,8 +351,8 @@ function chartParty (selector, ndx, color) {
       })
   .width(444)
     .height(200)
-    .margins({top: 10, right: 0, bottom: 95, left: 30})
-    .yAxisLabel("effort")
+    .margins({top: 20, right: 20, bottom: 95, left: 30})
+    .yAxisLabel("Effort")
     .dimension(party)
     .group(partyGroup)
     .keyAccessor(function (p) {
@@ -366,7 +367,7 @@ function chartParty (selector, ndx, color) {
     .x(d3.scale.linear().domain([0, 100]))
     .r(d3.scale.linear().domain([0, 50]))
     .minRadiusWithLabel(15)
-    .elasticY(false)
+    .elasticY(true)
     .yAxisPadding(10)
     .elasticX(true)
     .xAxisPadding(0)
@@ -377,9 +378,9 @@ function chartParty (selector, ndx, color) {
     .renderTitle(true)
     .title(function (p) {
         return p.key + "\n" + 
-                "count:" +p.value.count + "\n" +
-                "effort:" +p.value.effort + "\n" +
-                "score"+p.value.score + "\n";
+                "count: " +p.value.count + "\n" +
+                "effort: " +p.value.effort/p.value.count + "\n" +
+                "score: "+p.value.score/p.value.count + "\n";
     });
 
 
