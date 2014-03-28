@@ -5,6 +5,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Scorecard demo</title>
 <link rel="stylesheet" type="text/css" href="dc.css"/>
+
+<!-- Jquery mobile css and js -->
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+
+<!-- Our styles -->
+<link rel="stylesheet" type="text/css" href="style.css"/>
+
 </head>
 <body>
 
@@ -157,29 +166,40 @@ var card=scoreCard ();
 
 </script>
 
-<h1 class="page-header">Members of the European parliament</h1>
-<p><b>Click on the graphs to filter the Members of the European parliament by country or party</b></p>
+<div data-role="page" class="jqm-demos" data-quicklinks="false" id="meps">
 
+	<div data-role="header" class="jqm-header"  onclick="document.location.href='index.html'" style="cursor:pointer">
+	<h2>
+		<img alt="" id="logo" />
+		<p>Scoring the European Parliament – <strong>score-ep.org</strong></p>
+	</h2>
+	</div>
 
-<div id="ep2014list">
-<div class="group"></div>
-<div class="country"></div>
-<div class="gender"></div>
-<div class="age"></div>
-<div class="bar_score"></div>
-<div class="party"></div>
-<div class="list"></div>
-<div style="clear:both;">
-<div class="dc-data-count">
-<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
-href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
-</div>
-</div>
-<div class="nokparty">
-</div>
-<div class="dc-data-grid">
-</div>
+	<div role="main" class="ui-content jqm-content">
+		<h1 class="page-header">Members of the European parliament</h1>
+		<p><b>Click on the graphs to filter the Members of the European parliament by country or party</b></p>
 
+			<div id="ep2014list">
+			<div class="group"></div>
+			<div class="country"></div>
+			<div class="gender"></div>
+			<div class="age"></div>
+			<div class="bar_score"></div>
+			<div class="party"></div>
+			<div class="list"></div>
+			<div style="clear:both;">
+			<div class="dc-data-count">
+			<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
+			href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+			</div>
+			</div>
+			<div class="nokparty">
+			</div>
+			<div class="dc-data-grid">
+			</div>
+
+			</div>
+	</div>
 </div>
 
 <script>
@@ -271,11 +291,8 @@ width:200px;
 aa.age {display:none}
 
 </style>
-</div>
 
 
-</div>
-</div>
 
 </body>
 </html>
