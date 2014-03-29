@@ -13,6 +13,10 @@ font-family: 'Open Sans', sans-serif;
 font-weight: 300;
 }
 
+.ui-page-theme-a {
+	text-shadow:none;
+}
+
 #ep2014list table, .dc-data-grid {clear:both;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
 .x line {stroke:none;}
