@@ -176,7 +176,7 @@ var card=scoreCard ();
 	</div>
 
 	<div role="main" class="ui-content jqm-content">
-		<h1 class="page-header">Members of the European parliament</h1>
+		<h1 class="starthead">Do MEPs care about the climate?</h1>
 		<p><b>Click on the graphs to filter the Members of the European parliament by country or party</b></p>
 
 			<div id="ep2014list">
@@ -197,7 +197,10 @@ var card=scoreCard ();
 			</div>
 			<div class="dc-data-grid">
 			</div>
+			</div>
 
+			<div data-role="popup" id="infobox">
+			<p>Information about votes goes here.</p>
 			</div>
 	</div>
 </div>
@@ -225,74 +228,6 @@ $(function() {
 
 });      
 </script>
-
-<style>
-
-#ep2014list table, .dc-data-grid {clear:both;}
-.dc-table-label {background: #F5F5F5; font-weight:bold; }
-.x line {stroke:none;}
-
-body {font-family: arial, helvetica, sans-serif;}
-
-.dc-data-grid, .dc-grid-group {clear:both}
-.dc-data-count {clear:both;}
-.dc-grid-group {
-  background-color: #F5F5F5;
-border: 1px solid #E3E3E3;
-        border-radius: 4px;
-
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-        margin-bottom: 20px;
-        min-height: 20px;
-padding: 10px;
-}
-
-.score {
-position:absolute;
-right:1px;
-color:#111;
-background: rgba(255, 255, 255, 0.31);
-            text-shadow: lightgrey 1.5px 1.5px;
-width: 100%;
-       font-size: 40px;
-padding: 1px 1px;
-bottom: 15px;
-        font-weight: bold;
-}
-
-.dc-grid-item>div {
-padding:5px;
-        border-color: #E7E7E7;
-        border-radius: 4px;
-        text-align:center;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-height:354px;
-       margin-bottom:5px;
-}
-
-.party {font-size:0.9em;font-style:italic; padding-top:5px;}
-
-.dc-grid-item {
-position:relative;
-float:left;
-      min-height:354px;
-margin:0 10px 0px 0;
-width:200px;
-      background-color: #F8F8F8;
-      border-color: #E7E7E7;
-      border-radius: 4px;
-      text-align:center;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-}
-.dc-grid-item img {width:170px;height:215px}
-.dc-grid-top h1 {font-size:22px;}
-.dc-grid-top h2 {font-size:14px;}
-
-aa.age {display:none}
-
-</style>
-
-
 
 </body>
 </html>
