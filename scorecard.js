@@ -52,7 +52,7 @@ votes.prototype.getEffort = function (mepid) {
   }
   var mep = this.rollcalls[this.mepindex[mepid]];
   _.each(this.all, function (vote) {
-    if (mep[vote.dbid]) { 
+    if (mep[vote.dbid]) { // skip the vote the mep wasn't an mep 
       ++nbvote;
       if (Math.abs(mep[vote.dbid]) == 1) // yes or no
         ++effort;
@@ -264,6 +264,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       function(a,d) {a.count -=1; a.score -=d.scores[0]; return a; },
       function() {return {count:0,score:0}; }
       );
+
   //  var countryScore   = country.group().reduceSum(function(d) { return d.scores[0]; });
   bar_country
     .colorCalculator(function(d, i) {
@@ -284,13 +285,13 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .elasticY(true)
     .yAxisLabel("#MEPs")
     .dimension(country)
-    .group(countryGroup);
+    .group(countryGroup)
 
   bar_country.on("postRender", function(c) {rotateBarChartLabels();} );
 
 
   function rotateBarChartLabels() {
-    d3.selectAll(selector+ ' .country .axis.x text')
+    d3.selectAll(selector+ ' .party .axis.x text')
       .style("text-anchor", "end" )
       .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
   }
@@ -335,6 +336,17 @@ function chartParty (selector, ndx, color) {
       if (typeof d.party == "undefined") return "";
       return d.party;
       });
+ var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .html(function(p) { return '<span><h2>' +
+        p.key + "</h2><ul>" + 
+                "<li>MEPs: " +p.value.count + "</li>" +
+                "<li>effort: " +Math.floor (p.value.effort/p.value.count) + "</li>" +
+                "<li>score: "+Math.floor (p.value.score/p.value.count); 
+       '</li></ul></span>' })
+    .offset([-12, 0])
+
+
   var partyGroup   = party.group().reduce(
       function(a,d) {a.count +=1; a.score +=d.scores[0]; a.effort += d.effort; return a; },
       function(a,d) {a.count -=1; a.score -=d.scores[0]; a.effort -= d.effort; return a; },
@@ -378,11 +390,22 @@ function chartParty (selector, ndx, color) {
     .renderLabel(false)
     .renderTitle(true)
     .title(function (p) {
-        return p.key + "\n" + 
-                "count: " +p.value.count + "\n" +
+        return "<h2>"+p.key + "</h2>" + 
+                "meps: " +p.value.count + "\n" +
                 "effort: " +p.value.effort/p.value.count + "\n" +
                 "score: "+p.value.score/p.value.count + "\n";
-    });
+    })
+    .on("postRender", function(c) {
+      c.svg().selectAll ("circle")
+        .call(tip)
+        .on('mouseover', function(d) {
+          tip.attr('class', 'd3-tip animate').show(d)
+        })
+        .on('mouseout', function(d) {
+          tip.attr('class', 'd3-tip').show(d)
+          tip.hide()
+        })
+    } );
 
 
 }
