@@ -51,6 +51,10 @@ top: 208px;
 font-weight: bold;
 }
 
+#thumbsup {
+	float:left;
+}
+
 /*Popup modal styles*/
 
 #infobox {
