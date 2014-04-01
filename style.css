@@ -17,6 +17,8 @@ font-weight: 300;
 	text-shadow:none;
 }
 
+
+
 #ep2014list table, .dc-data-grid {clear:both;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
 .x line {stroke:none;}
@@ -37,16 +39,47 @@ padding: 10px;
 }
 
 .score {
-position:absolute;
-right:1px;
-color:#111;
-background: rgba(255, 255, 255, 0.31);
-            text-shadow: lightgrey 1.5px 1.5px;
-width: 100%;
-       font-size: 40px;
+position: absolute;
+right: 15px;
+color: #111;
+background: rgba(255, 255, 255, 0.29);
+font-size: 40px;
 padding: 1px 1px;
-bottom: 15px;
-        font-weight: bold;
+top: 208px;
+font-weight: bold;
+}
+
+/*Popup modal styles*/
+
+#infobox {
+margin-left:auto;
+margin-right:auto;
+text-shadow:none;
+width:60%;
+}
+
+.ui-block-a {
+background-color:#BEEFD8;
+padding:10px;
+width:15%;
+}
+
+.ui-block-b {
+background-color:#BEEFD8;
+padding:10px;
+width:15%;
+}
+
+/* stack all grids below 40em (640px) */
+@media all and (max-width: 35em) {
+	.my-breakpoint .ui-block-a,
+	.my-breakpoint .ui-block-b,{
+		width: 100%;
+		float: none;
+	}
+	#infobox {
+		width:100%;
+	}	
 }
 
 .dc-grid-item>div {
@@ -55,11 +88,11 @@ padding:5px;
         border-radius: 4px;
         text-align:center;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-height:354px;
+height:339px;
        margin-bottom:5px;
 }
 
-.party {font-size:0.9em;font-style:italic; padding-top:5px;}
+.party {font-size:0.9em; padding-top:5px;color:#121212;text-decoration:none;}
 
 .dc-grid-item {
 position:relative;
@@ -75,7 +108,71 @@ width:200px;
 }
 .dc-grid-item img {width:170px;height:215px}
 .dc-grid-top h1 {font-size:22px;}
-.dc-grid-top h2 {font-size:14px;}
+.dc-grid-top h2 {font-size:14px;color: #121212;text-decoration:none;}
+
+
+
+
+/*Flag sprites CSS*/
+.flag {
+	width: 25px;
+	height: 15px;
+	background:url(flags.png) no-repeat
+}
+
+.flag.flag-ad {background-position: -25px 0}
+.flag.flag-al {background-position: -50px 0}
+.flag.flag-at {background-position: -75px 0}
+.flag.flag-ba {background-position: -100px 0}
+.flag.flag-be {background-position: -125px 0}
+.flag.flag-bg {background-position: -150px 0}
+.flag.flag-by {background-position: 0 -15px}
+.flag.flag-ch {background-position: -25px -15px}
+.flag.flag-cz {background-position: -50px -15px}
+.flag.flag-de {background-position: -75px -15px}
+.flag.flag-dk {background-position: -100px -15px}
+.flag.flag-ee {background-position: -125px -15px}
+.flag.flag-es {background-position: -150px -15px}
+.flag.flag-fi {background-position: 0 -30px}
+.flag.flag-fo {background-position: -25px -30px}
+.flag.flag-fr {background-position: -50px -30px}
+.flag.flag-gb {background-position: -75px -30px}
+.flag.flag-gi {background-position: -100px -30px}
+.flag.flag-gr {background-position: -125px -30px}
+.flag.flag-hr {background-position: -150px -30px}
+.flag.flag-hu {background-position: 0 -45px}
+.flag.flag-ie {background-position: -25px -45px}
+.flag.flag-is {background-position: -50px -45px}
+.flag.flag-it {background-position: -75px -45px}
+.flag.flag-li {background-position: -100px -45px}
+.flag.flag-lt {background-position: -125px -45px}
+.flag.flag-lu {background-position: -150px -45px}
+.flag.flag-lv {background-position: 0 -60px}
+.flag.flag-mc {background-position: -25px -60px}
+.flag.flag-md {background-position: -50px -60px}
+.flag.flag-me {background-position: -75px -60px}
+.flag.flag-mk {background-position: -100px -60px}
+.flag.flag-mt {background-position: -125px -60px}
+.flag.flag-nl {background-position: -150px -60px}
+.flag.flag-no {background-position: 0 -75px}
+.flag.flag-pl {background-position: -25px -75px}
+.flag.flag-pt {background-position: -50px -75px}
+.flag.flag-ro {background-position: -75px -75px}
+.flag.flag-rs {background-position: -100px -75px}
+.flag.flag-ru {background-position: -125px -75px}
+.flag.flag-se {background-position: -150px -75px}
+.flag.flag-si {background-position: 0 -90px}
+.flag.flag-sk {background-position: -25px -90px}
+.flag.flag-sm {background-position: -50px -90px}
+.flag.flag-ua {background-position: -75px -90px}
+.flag.flag-va {background-position: -100px -90px}
+/*End*/
+
+
+/*Hide some stuff*/
+a:-webkit-any-link {
+text-decoration: none;
+}
 
 .age {display:none}
 .gender {display:none}

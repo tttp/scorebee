@@ -176,7 +176,7 @@ var card=scoreCard ();
 	</div>
 
 	<div role="main" class="ui-content jqm-content">
-		<h1 class="starthead">Do MEPs care about the climate?</h1>
+		<h1 class="starthead">Your title goes here</h1>
 		<p><b>Click on the graphs to filter the Members of the European parliament by country or party</b></p>
 
 			<div id="ep2014list">
@@ -199,8 +199,24 @@ var card=scoreCard ();
 			</div>
 			</div>
 
-			<div data-role="popup" id="infobox">
-			<p>Information about votes goes here.</p>
+			<div data-role="popup" id="infobox" class="ui-content">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<div class="ui-content">Photo goes here!</div>
+			<div class ="ui-content">Flag goes here!</div>
+			<div class = "ui-content">Score goes here!</div>
+			<div class = "returning ui-content">Returning candidate?</div>
+			<div class="ui-grid-a my-breakpoint">
+			  <div class="ui-block-a ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-b ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-a ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-b ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-a ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-b ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-a ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-b ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-a ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse ui-content gas reduction targets of at least -55% by 2030.</div>
+			  <div class="ui-block-b ui-content">To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.</div>
+			</div><!-- /votes grid -->
 			</div>
 	</div>
 </div>
@@ -226,7 +242,14 @@ $(function() {
         _grid ();
       });      
 
+$( "#infobox" ).popup();
+
+
 });      
+</script>
+
+<script>
+$onclick()
 </script>
 
 </body>
