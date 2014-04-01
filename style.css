@@ -1,5 +1,6 @@
 .jqm-demos .jqm-header {
 border-top: 4px solid #3eb249;
+background-color:#fff;
 }
 
 .jqm-demos .jqm-content > h1.starthead {
@@ -15,6 +16,8 @@ font-weight: 300;
 
 .ui-page-theme-a {
 	text-shadow:none;
+	background:url(mochaGrunge.png);
+	color: #131313
 }
 
 
@@ -28,13 +31,12 @@ body {font-family: sans-serif, arial, helvetica;}
 .dc-data-grid, .dc-grid-group {clear:both}
 .dc-data-count {clear:both;}
 .dc-grid-group {
-  background-color: #F5F5F5;
-border: 1px solid #E3E3E3;
+		/*background-color: #F5F5F5;*/
+		/*border: 1px solid #E3E3E3;
         border-radius: 4px;
-
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-        margin-bottom: 20px;
-        min-height: 20px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;*/
+margin-bottom: 20px;
+min-height: 20px;
 padding: 10px;
 }
 
@@ -84,12 +86,11 @@ width:15%;
 
 .dc-grid-item>div {
 padding:5px;
-        border-color: #E7E7E7;
-        border-radius: 4px;
-        text-align:center;
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
-height:339px;
-       margin-bottom:5px;
+    border-color: #E7E7E7;
+    border-radius: 4px;
+    text-align:center;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+height:320px;
 }
 
 .party {font-size:0.9em; padding-top:5px;color:#121212;text-decoration:none;}
@@ -97,19 +98,20 @@ height:339px;
 .dc-grid-item {
 position:relative;
 float:left;
-      min-height:354px;
+      min-height:320px;
 margin:0 10px 0px 0;
 width:200px;
-      background-color: #F8F8F8;
-      border-color: #E7E7E7;
-      border-radius: 4px;
-      text-align:center;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+  background-color: #F8F8F8;
+  border-color: #E7E7E7;
+  border-radius: 4px;
+  text-align:center;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+margin-bottom: 8px;
 }
+
 .dc-grid-item img {width:170px;height:215px}
 .dc-grid-top h1 {font-size:22px;}
 .dc-grid-top h2 {font-size:14px;color: #121212;text-decoration:none;}
-
 
 
 
