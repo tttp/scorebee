@@ -11,7 +11,7 @@ var eu_groups = {
 "Array":"pink"
 };
 
-var scoreCard = function () {
+var scoreCard = function (list_votes) {
 
 var votes = function (all) {
   this.all = all;// votes to be taken into account. [dbid] is the voteid key
@@ -94,7 +94,7 @@ votes.prototype.getScore = function (mepid) {
     return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
 }
 
-var vote = new votes (climate_votes);
+var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
