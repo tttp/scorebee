@@ -282,7 +282,7 @@ $(function() {
         _grid ();
       });      
 
-    d3.csv("votes_climate.csv", function(d) {return d;}
+    d3.csv("data/votes_climate.csv", function(d) {return d;}
       ,function(error, rows) {
         card.vote.setRollCall (rows);
         _grid ();
