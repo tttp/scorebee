@@ -1,3 +1,16 @@
+var eu_groups = {
+"GUE/NGL":"#df73be",
+"S&D":"#ec2335",
+"Verts/ALE":"#67bd1b",
+"ALDE":"#f1cb01",
+"EFD":"#60c0e2",
+"PPE":"blue",
+"EPP":"blue",
+"ECR":"darkblue",
+"NA/NI":"grey",
+"Array":"pink"
+};
+
 var scoreCard = function () {
 
 var votes = function (all) {
