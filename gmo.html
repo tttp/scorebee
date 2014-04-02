@@ -1,0 +1,224 @@
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Scorecard demo</title>
+<link rel="stylesheet" type="text/css" href="dc.css"/>
+
+<!-- Jquery mobile css and js -->
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+
+<!-- Font Awesome CSS Sprites -->
+<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+<!-- Our styles -->
+<link rel="stylesheet" type="text/css" href="style.css"/>
+
+</head>
+<body>
+
+<script type="text/javascript" src="js/d3.v3.js"></script>
+<script type="text/javascript" src="js/crossfilter.js"></script>
+<script type="text/javascript" src="js/dc.js"></script>
+<script src="js/d3-tip.min.js"></script>
+<script src="scorecard.js"></script>
+<!--script type="text/javascript" src="../../src/data-grid.js"></script-->
+<script type="text/javascript" src="js/underscore-min.js"></script>
+<!--script type="text/javascript" src="queue.v1.min.js"></script-->
+
+<script src="jquery.min.js"></script>
+<script src="jquery.lazyload.js"></script>
+
+<script>
+
+var votes=  [
+                {
+                    "id": "A7-0170/2011|AM 1",
+                    "dbid": 2039,
+                    "weight": 1,
+                    "title": "Legal certainty for national GMO regulation",
+                    "description": "The amendment strengthens the ability of national governments to regulate GMOs. Government can assess GMOs according to the environmental or health impacts linked to their cultivation.",
+                    "recommendation": 1,
+                    "link": "http://www.votewatch.eu/en/possibility-for-member-states-to-restrict-or-prohibit-the-cultivation-of-gmos-in-their-territory-dra.html"
+                },
+                {
+                    "id": "A7-0170/2011|AM 41",
+                    "dbid": 2041,
+                    "weight": 1,
+                    "title": "Reasonable grounds for national GMO restrictions",
+                    "description": "Local communities and regional authorities should be given the right to reject GMO cultivation on their territory. The amendment gives communities greater freedom to reject GMOs for social and environmental reasons.",
+                    "recommendation": 1,
+                    "link": "http://www.votewatch.eu/en/possibility-for-member-states-to-restrict-or-prohibit-the-cultivation-of-gmos-in-their-territory-dra-3.html"
+                },
+				{
+                    "id": "A7-0170/2011|AM 44",
+                    "dbid": 2043,
+                    "weight": 1,
+                    "title": "Stronger risk assessment for GMOs",
+                    "description": "The European Commission is asked to assess the long-term environmental effects of GMO cultivation and the associated use of herbicides. The Commission is also asked to ensure that all research is carried out independently.",
+                    "recommendation": 1,
+                    "link": "http://www.votewatch.eu/en/possibility-for-member-states-to-restrict-or-prohibit-the-cultivation-of-gmos-in-their-territory-dra-5.html"
+                },
+				{
+                    "id": "B7-0007/2014",
+                    "dbid": 5428,
+                    "weight": 1,
+                    "title": "Resolution to reject GMO authorisation in Europe",
+                    "description": "The resolution rejects the authorisation of the GM maize 1507 by the European Commission. The toxins used in the cultivation of maize 1507 could lead to reduction on biodiversity.",
+                    "recommendation": 1,
+                    "link": "http://www.votewatch.eu/en/motion-for-a-resolution-pursuant-to-rule-88-2-and-3-of-the-rules-of-procedure-on-the-proposal-for-a-.html"
+                },
+    ];
+
+
+
+var card=scoreCard (votes);
+
+</script>
+
+<div data-role="page" class="jqm-demos" data-quicklinks="false" id="meps">
+
+	<div data-role="header" class="jqm-header"  onclick="document.location.href='index.html'" style="cursor:pointer">
+	<h2>
+		<img alt="" id="logo" />
+		<p>Scoring the European Parliament – <strong>score-ep.org</strong></p>
+	</h2>
+	</div>
+
+	<div role="main" class="ui-content jqm-content">
+		<h1 class="starthead">GMO</h1>
+		<p><b>Click on the graphs to filter the Members of the European parliament by country or party</b></p>
+
+			<div id="ep2014list">
+			<div class="group"></div>
+			<div class="country"></div>
+			<div class="gender"></div>
+			<div class="age"></div>
+			<div class="bar_score"></div>
+			<div class="party"></div>
+			<div class="list"></div>
+			<div style="clear:both;">
+			<div class="dc-data-count">
+			<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
+			href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+			</div>
+			</div>
+			<div class="nokparty">
+			</div>
+			<div class="dc-data-grid">
+			</div>
+			</div>
+
+			<div data-role="popup" id="infobox" class="ui-content">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<div class="ui-content">Photo goes here!</div>
+			<div class ="ui-content">Flag goes here!</div>
+			<div class = "ui-content">Score goes here!</div>
+			<div class = "returning ui-content">Returning candidate?</div>
+			<div class="ui-grid-a my-breakpoint">
+			  <div class="ui-block-a ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-up"></i>
+				  </div>
+			  An EU greenhouse gas reduction target of 50% by 2030
+			  </div>
+			  <div class="ui-block-b ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-up"></i>
+				  </div>
+			  Phasing out fossil fuel subsidies
+			  </div>
+			  <div class="ui-block-a ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-up"></i>
+				  </div>
+			  'Back-loading' the EU Emissions Trading System
+			  </div>
+			  <div class="ui-block-b ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-up"></i>
+				  </div>
+			  Increasing European renewable energy supply
+			  </div>
+			  <div class="ui-block-a ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-down"></i>
+				  </div>
+			  3 Binding Targets on the EU 2050 Roadmap
+			  </div>
+			  <div class="ui-block-b ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-up"></i>
+				  </div>
+			  Reporting greenhouse gas emissions across Europe
+			  </div>
+			  <div class="ui-block-a ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-down"></i>
+				  </div>
+			  Measures to reduce energy consumption
+			  </div>
+			  <div class="ui-block-b ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-up"></i>
+				  </div>
+			  Increasing 2020 emissions reductions targets to 30%
+			  </div>
+			  <div class="ui-block-a ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-down"></i>
+				  </div>
+			  Climate finance for the world's poorest
+			  </div>
+			  <div class="ui-block-b ui-content">
+				  <div class="thumbsup">
+					  <i class="fa fa-thumbs-o-up"></i>
+				  </div>
+			  Developing a common EU position ahead of the United Nations Conference on Sustainable Development
+			  </div>
+			  <div class="ui-block-a ui-content">
+				<div class="thumbsup">
+					  <i class="fa fa-thumbs-o-up"></i>
+				  </div>
+			  'The EU strategy for the Copenhagen Conference on Climate Change (COP 15)</div>
+			</div><!-- /votes grid -->
+			</div>
+	</div>
+</div>
+
+<script>
+var meps = [];
+var mepvotes = [];
+
+$(function() {
+  var _grid = _.after(2, function () {
+    card.grid ("#ep2014list");
+  });
+
+    d3.csv("mep.csv", function(d) {return d;}
+      ,function(error, rows) {
+        meps = rows;
+        _grid ();
+      });      
+
+    d3.csv("data/foe_gmo.csv", function(d) {return d;}
+      ,function(error, rows) {
+        card.vote.setRollCall (rows);
+        _grid ();
+      });      
+
+//$( "#infobox" ).popup();
+
+
+});      
+</script>
+
+<script>
+//$onclick()
+</script>
+
+</body>
+</html>
