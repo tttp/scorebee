@@ -1,3 +1,10 @@
+var tplPopup = null;
+
+jQuery(function($){
+  tplPopup = _.template ($("#infobox_tpl").text());
+});
+
+
 var eu_groups = {
 "GUE/NGL":"#df73be",
 "S&D":"#ec2335",
@@ -336,7 +343,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       grid.selectAll (".dc-grid-item")
         .on('click', function(d) {
 console.log(d);
-            $( "#infobox" ).popup( "open" );
+            $( "#infobox" ).html(tplPopup(d)).popup( "open" );
         });
         $("img.lazy-load").lazyload ({
 effect : "fadeIn"
