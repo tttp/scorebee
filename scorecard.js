@@ -233,7 +233,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .width(250)
     .height(200)
     .outerPadding(0)
-    .gap(1)
+    .gap(0)
     .margins({top: 10, right: 10, bottom: 20, left: 30})
     .x(d3.scale.linear().domain([0, 100]))
     .elasticY(true)
@@ -375,12 +375,15 @@ effect : "fadeIn"
 
   dc.renderAll();
   var hash = window.location.hash;
-console.log(hash);
    if(hash.indexOf('#mep') === 0) { 
-     mep = getMEP (hash.substring(4));
+     var mep = getMEP (hash.substring(4));
      mep.votes=vote.getVotes(mep.epid);
      $( "#infobox" ).html(tplPopup(mep)).popup( "open" );
+   } else if (hash.length == 3){ //country
+      var iso=hash.substring(1);
+//      bar_country.filter (); 
    }
+   
 
 
 }
