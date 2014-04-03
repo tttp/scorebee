@@ -153,10 +153,14 @@ function grid (selector) {
     //calculate age
     var dateFormat = d3.time.format("%Y-%m-%d");
     var now = Date.now();
+    var empty = [];
     data.forEach(function (e,i) { // remove the meps that have no votes
       if (!vote.exists(e.epid)) {
-        meps.splice(i, 1);
+        empty.unshift (i);
       }
+    });
+    empty.forEach(function (i) { 
+      meps.splice(i, 1);
     });
     data.forEach(function (e,i) {
       e.effort = vote.getEffort (e.epid);
