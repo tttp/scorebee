@@ -1,3 +1,6 @@
+$.mobile.hashListeningEnabled = false;
+$.mobile.pushStateEnabled = false;
+
 var tplPopup = null;
 
 jQuery(function($){
