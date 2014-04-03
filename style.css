@@ -21,7 +21,6 @@ font-weight: 300;
 }
 
 
-
 #ep2014list table, .dc-data-grid {clear:both;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
 .x line {stroke:none;}
@@ -257,3 +256,8 @@ text-decoration: none;
 .bar_score {position:relative}
 .bar_score svg {position:relative;}
 .bar_score div#avg_score {position:absolute;margin:20px 0 0 45px;font-size:140; color:#fff;opacity:0.1}
+
+.graph_titles h1 {
+	font-size:1em;
+	margin:0.5em;
+}
