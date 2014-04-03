@@ -226,7 +226,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
         total += a.scores[0];
       }); 
       var avg= total/nb;
-        $(".bar_score div#avg_score").text(Math.round(avg * 100) / 100);
+        $(".bar_score div#avg_score").text(Math.round(avg));
     });
 
 
