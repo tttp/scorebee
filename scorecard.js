@@ -86,6 +86,11 @@ votes.prototype.getEffort = function (mepid) {
   },this);
   return effort/nbvote * 100; 
 }
+
+votes.prototype.exists = function (mepid) {
+  return this.mepindex.hasOwnProperty(mepid);
+}
+
 votes.prototype.getVotes = function (mepid) {
   if (! this.mepindex.hasOwnProperty(mepid)) {
     console || console.log ("mep missing "+ mepid);
@@ -110,7 +115,7 @@ votes.prototype.getScore = function (mepid) {
   if (nbvote == 0) 
     return 50; // the dude wasn't around for the votes
 //  return Math.floor (100*(score / nbvote)); // from -100 to 100
-    return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
+  return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
 }
 
 var vote = new votes (list_votes);
@@ -128,6 +133,8 @@ var getMEP = function (id) {
 
 
 function grid (selector) {
+  adjust (meps);
+
   var ndx = crossfilter(meps),
       all = ndx.groupAll();
 
@@ -146,15 +153,19 @@ function grid (selector) {
     //calculate age
     var dateFormat = d3.time.format("%Y-%m-%d");
     var now = Date.now();
-    data.forEach(function (e) {
-        e.effort = vote.getEffort (e.epid);
-        e.scores = [getScore(e),getScore(e),getScore(e),getScore(e)];
-        e.birthdate = dateFormat.parse(e.birthdate);
-        e.age= ~~((now - e.birthdate) / (31557600000));// 24 * 3600 * 365.25 * 1000
-        });
+    data.forEach(function (e,i) { // remove the meps that have no votes
+      if (!vote.exists(e.epid)) {
+        meps.splice(i, 1);
+      }
+    });
+    data.forEach(function (e,i) {
+      e.effort = vote.getEffort (e.epid);
+      e.scores = [getScore(e),getScore(e),getScore(e),getScore(e)];
+      e.birthdate = dateFormat.parse(e.birthdate);
+      e.age= ~~((now - e.birthdate) / (31557600000));// 24 * 3600 * 365.25 * 1000
+    });
   }
 
-  adjust (meps);
 
   var pie_group = dc.pieChart(selector +  " .group").innerRadius(20).radius(70);
   var group = ndx.dimension(function(d) {
