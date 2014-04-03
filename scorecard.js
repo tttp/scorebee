@@ -230,12 +230,12 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       });
   var scoreGroup = score.group().reduceSum (function(d) { return 1;});
   var bar_score = dc.barChart (".bar_score")
-    .width(250)
-    .height(200)
-    .outerPadding(0)
+    .width(245)
+    .height(130)
+    .outerPadding(5)
     .gap(0)
     .margins({top: 10, right: 10, bottom: 20, left: 30})
-    .x(d3.scale.linear().domain([0, 100]))
+    .x(d3.scale.linear().domain([0, 101]))
     .elasticY(true)
     .round(dc.round.floor)
     .colorCalculator(function(d, i) {
