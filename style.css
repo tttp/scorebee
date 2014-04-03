@@ -255,7 +255,7 @@ text-decoration: none;
 
 .bar_score {position:relative}
 .bar_score svg {position:relative;}
-.bar_score div#avg_score {position:absolute;margin:20px 0 0 45px;font-size:140; color:#fff;opacity:0.1}
+.bar_score div#avg_score {position:absolute;margin:20px 0 0 45px;font-size:140; color:#fff;opacity:0.8}
 
 .graph_titles h1 {
 	font-size:1em;
