@@ -80,14 +80,14 @@ width:15%;
 }
 
 /* stack all grids below 40em (640px) */
-@media all and (max-width: 35em) {
+@media all and (max-width: 45em) {
 	.my-breakpoint .ui-block-a,
 	.my-breakpoint .ui-block-b,{
-		width: 100%;
+		width: 90%;
 		float: none;
 	}
 	#infobox {
-		width:100%;
+		width:90%;
 	}	
 }
 

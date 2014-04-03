@@ -362,8 +362,9 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       grid.selectAll (".dc-grid-item")
         .on('click', function(d) {
           d.votes=vote.getVotes(d.epid);
-console.log(d); //todo, remove
+	console.log(d); //todo, remove
             $( "#infobox" ).html(tplPopup(d)).popup( "open" );
+
         });
         $("img.lazy-load").lazyload ({
 effect : "fadeIn"

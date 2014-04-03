@@ -194,12 +194,15 @@ var card=scoreCard (votes);
 </div>
 <script type="text/tpl" id="infobox_tpl">
 			<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-xav example <%= country %> in <%= eugroup %> <%= first_name %> <%= last_name %>
-
-			<div class="ui-content">Photo goes here!</div>
-			<div class ="ui-content">Flag goes here!</div>
-			<div class = "ui-content">Score goes here!</div>
-			<div class = "returning ui-content">Returning candidate?</div>
+			xav example </br> 
+			<img dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' src='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' width=170 height=216 /> 
+			Age: <%= age %>
+			Country: <%= country %> 
+			European party: <%= eugroup %> 
+			Name: <%= first_name %> <%= last_name %> 	
+			EPID: <% epid %>	
+			Party: <%= party %>
+			votes: <%= votes %>
 			<div class="ui-grid-a my-breakpoint">
 			  <span class="ui-block-a ui-content">
 				  <span class="thumbs">
@@ -292,15 +295,9 @@ $(function() {
         card.vote.setRollCall (rows);
         _grid ();
       });      
-
-//? Laurence  $( "#infobox" ).popup();
   
   
 });      
-</script>
-
-<script>
-//? Laurence $onclick()
 </script>
 
 </body>
