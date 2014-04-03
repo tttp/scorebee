@@ -301,11 +301,11 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .dimension(country)
     .group(countryGroup)
 
-  bar_country.on("postRender", function(c) {rotateBarChartLabels();} );
+  bar_country.on("postRender", function(c) {rotateBarChartLabels(c);} );
 
 
-  function rotateBarChartLabels() {
-    d3.selectAll(selector+ ' .party .axis.x text')
+  function rotateBarChartLabels(c) {
+    c.svg().selectAll('.axis.x text')
       .style("text-anchor", "end" )
       .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
   }
