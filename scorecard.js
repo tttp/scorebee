@@ -98,7 +98,7 @@ var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
-var tpl = _.template("<div style='background-color:<%= color %>;'><a href = '#infobox' data-rel='popup' data-transition='fade' data-overlay-theme='a' data-position-to='window'><div class='score'><%= score %></div><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><img class='lazy-load' dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='party'><%= party %></div></a></div>");
+var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><div class='score'><%= score %></div><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><img class='lazy-load' dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='party'><%= party %></div></div>");
 
 
 function grid (selector) {
@@ -333,6 +333,11 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       })
   .order(d3.ascending)
     .renderlet(function (grid) {
+      grid.selectAll (".dc-grid-item")
+        .on('click', function(d) {
+console.log(d);
+            $( "#infobox" ).popup( "open" );
+        });
         $("img.lazy-load").lazyload ({
 effect : "fadeIn"
 })
@@ -342,7 +347,11 @@ effect : "fadeIn"
 
 
 dc.renderAll();
+
 }
+
+
+
 
 function chartParty (selector, ndx, color) {
   var bubble_party = dc.bubbleChart(selector + " .party");
