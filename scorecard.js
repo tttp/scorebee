@@ -113,7 +113,7 @@ function grid (selector) {
   var color = d3.scale.linear()
     .clamp(true)
     .domain([0, 49, 50, 51, 100])
-    .range(["#b00000","#f4d8d8","#ccc","#d0e5cc","#3a6033"])
+    .range(["#CF1919","#FA9B9B","#ccc","#d0e5cc","#2C851C"])
     .interpolate(d3.interpolateHcl);
 
   function adjust (data) {
