@@ -29,7 +29,7 @@
 <script type="text/javascript" src="js/underscore-min.js"></script>
 <!--script type="text/javascript" src="queue.v1.min.js"></script-->
 
-<script src="jquery.min.js"></script>
+<!--script src="jquery.min.js"></script-->
 <script src="jquery.lazyload.js"></script>
 
 <script>
@@ -191,7 +191,11 @@ var card=scoreCard (votes);
 			</div>
 
 			<div data-role="popup" id="infobox" class="ui-content">
+</div>
+<script type="text/tpl" id="infobox_tpl">
 			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+xav example <%= country %> in <%= eugroup %> <%= first_name %> <%= last_name %>
+
 			<div class="ui-content">Photo goes here!</div>
 			<div class ="ui-content">Flag goes here!</div>
 			<div class = "ui-content">Score goes here!</div>
@@ -265,6 +269,7 @@ var card=scoreCard (votes);
 			</div><!-- /votes grid -->
 			</div>
 	</div>
+</script>
 </div>
 
 <script>
