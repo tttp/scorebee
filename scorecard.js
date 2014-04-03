@@ -81,6 +81,13 @@ votes.prototype.getEffort = function (mepid) {
   },this);
   return effort/nbvote * 100; 
 }
+votes.prototype.getVotes = function (mepid) {
+  if (! this.mepindex.hasOwnProperty(mepid)) {
+    console || console.log ("mep missing "+ mepid);
+    return {};//we don't have that mep?
+  }
+  return this.rollcalls[this.mepindex[mepid]];
+}
 
 votes.prototype.getScore = function (mepid) {
   var score = nbvote = 0;
@@ -342,7 +349,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .renderlet(function (grid) {
       grid.selectAll (".dc-grid-item")
         .on('click', function(d) {
-console.log(d);
+          d.votes=vote.getVotes(d.epid);
+console.log(d); //todo, remove
             $( "#infobox" ).html(tplPopup(d)).popup( "open" );
         });
         $("img.lazy-load").lazyload ({
