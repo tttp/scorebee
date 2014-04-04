@@ -165,33 +165,40 @@ var card=scoreCard (votes);
 	</div>
 
 	<div role="main" class="ui-content jqm-content">
+	<div id="block1">
 		<h1 class="starthead">Your title goes here</h1>
-		<p><b>Click on the graphs to filter the Members of the European parliament by country or party</b></p>
-
-			<div id="ep2014list">
+	</div>
+	<div id="block2">
+		<div id="ep2014list">
 			<div class="country"><div class="graph_titles"><h1>Choose your country:</h1></div></div>
 			<div class="gender"></div>
 			<div class="age"></div>
 			<div class="bar_score"><div class="graph_titles"><h1>Combined score:</h1></div><div id="avg_score"></div></div>
+		    <div class="group"><div class="graph_titles"><h1>European Party:</h1></div></div>
 			<div class="party"><div class="graph_titles"><h1>Select political party:</h1></div></div>
 			<div class="list"></div>
-		    <div class="group"><div class="graph_titles"><h1>European Party:</h1></div></div>
 			<div style="clear:both;">
-			<div id="search-box">
-					<form>
-					    <input data-type="search" id="search-input">
-					</form>
-				</div>
-			<div class="dc-data-count">
-			<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
-			href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
-			</div>	
 			</div>
+		</div>
+	</div>	
+	<div id="block3">		
+		<div id="search-box">
+		<p><b>Search by name or click on the graphs above to filter MEPs</b></p>
+				<form>
+				    <input data-type="search" id="search-input">
+				</form>
+			</div>
+		<div class="dc-data-count">
+		<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
+		href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>		
+		</div>	
+	</div>		
+			
 			<div class="nokparty">
 			</div>
 			<div class="dc-data-grid">
 			</div>
-			</div>
+			
 
 			<div data-role="popup" id="infobox" class="ui-content">
 </div>
@@ -199,13 +206,15 @@ var card=scoreCard (votes);
 			<span><a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
 			<img dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' src='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:50px"/> </span>
 				<ul id="infobox_info">
-					<li><%= first_name %> <%= last_name %></li>
-					<li><%= age %></li>
-					<li><%= country %></li>
-					<li><%= party %></li>
-					<li><%= eugroup %> </li>
+					<li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
+					<li>Age: <strong><%= age %></strong></li>
+					<li>Country: <strong><%= country %></strong></li>
+					<li>National party: <strong><%= party %></strong></li>
+					<li>European Party:<strong> <%= eugroup %> </strong></li>
+					<span id="score">
+					<%= score %>
+					</span>
 				</ul>	
-			votes: <%= votes[220] %>
 			<div style="clear:both;margin-bottom: 20px;"></div>
 			<div class="ui-grid-a my-breakpoint">
 			  <span class="ui-block-a ui-content">

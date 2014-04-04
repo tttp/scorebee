@@ -113,7 +113,18 @@ padding:5px;
 height:320px;
 }
 
-.party {font-size:0.9em; padding-top:5px;color:#121212;text-decoration:none;}
+.party {
+	font-size:0.9em;
+	padding-top:5px;
+	color:#121212;
+	text-decoration:none;
+	height: 170px;
+}
+
+.group {
+	width: 180px;
+	height: 220px;
+}
 
 .dc-grid-item {
 position:relative;
@@ -261,7 +272,11 @@ text-decoration: none;
   }
 
 
-.bar_score {position:relative}
+.bar_score {
+position:relative;
+width: 245px;
+}
+
 .bar_score svg {position:relative;}
 .bar_score div#avg_score {position:absolute;margin:-26px 0 0 45px;font-size:130; color:#fff;opacity:1}
 
@@ -301,4 +316,8 @@ width:300px;
 
 #infobox_info li{
 list-style-type: none;
+}
+
+#score {
+	font-size: 6em;
 }
