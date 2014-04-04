@@ -466,12 +466,6 @@ function chartParty (selector, ndx, color) {
     .renderVerticalGridLines(true)
     .renderLabel(false)
     .renderTitle(false)
-    .title(function (p) {
-        return "p.key" + "\n"+ 
-                "meps: " +p.value.count + "\n" +
-                "effort: " +p.value.effort/p.value.count + "\n" +
-                "score: "+p.value.score/p.value.count + "\n";
-    })
     .on("postRender", function(c) {
       c.svg().selectAll ("circle")
         .call(tip)
