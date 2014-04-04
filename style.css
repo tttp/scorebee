@@ -321,6 +321,8 @@ list-style-type: none;
 
 .country {width:450px;}
 
+.ui-header h2.ui-title b {color:#2c851c}
+
 .resetall {clear:both}
 #search-box label {float:none;width:100%}
 #search-box ui-input-search {width:auto;float:none;}

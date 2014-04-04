@@ -451,7 +451,7 @@ function chartParty (selector, ndx, color) {
       return d.value.count;
       })
   .width(444)
-    .height(200)
+    .height(240)
     .margins({top: 20, right: 20, bottom: 95, left: 30})
     .yAxisLabel("Effort")
     .dimension(party)
