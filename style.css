@@ -14,9 +14,14 @@ font-family: 'Open Sans', sans-serif;
 font-weight: 300;
 }
 
-.ui-page-theme-a, .ui-page-theme-a a{
+.ui-page-theme-a {
 	text-shadow:none;
 	background:url(mochaGrunge.png);
+	color: #131313;
+	text-shadow:none;
+}
+
+.ui-page-theme-a a {
 	color: #131313
 }
 
@@ -260,4 +265,10 @@ font-weight: bold;
 
 .dc-data-count .total-count {
 color: #FFF;
+}
+
+.landing-button {
+	margin-left:auto;
+	margin-right:auto;
+	width:50%;
 }
