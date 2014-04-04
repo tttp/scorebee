@@ -71,8 +71,8 @@ votes.prototype.setRollCall = function (rolls) {
 
 votes.prototype.getEffort = function (mepid) {
   var effort = 0; nbvote = 0;
-  if (! this.mepindex[mepid]) {
-    console || console.log ("mep missing "+ mepid);
+  if (! this.exists(mepid)) {
+    console || Console.log ("mep missing "+ mepid);
     return 0;//we don't have that mep?
   }
   var mep = this.rollcalls[this.mepindex[mepid]];
@@ -92,7 +92,7 @@ votes.prototype.exists = function (mepid) {
 }
 
 votes.prototype.getVotes = function (mepid) {
-  if (! this.mepindex.hasOwnProperty(mepid)) {
+  if (! this.exists(mepid)) {
     console || console.log ("mep missing "+ mepid);
     return {};//we don't have that mep?
   }
