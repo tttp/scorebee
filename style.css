@@ -265,7 +265,7 @@ text-decoration: none;
 
 .bar_score {position:relative}
 .bar_score svg {position:relative;}
-.bar_score div#avg_score {position:absolute;margin:-26px 0 0 45px;font-size:130; color:#fff;opacity:0.1}
+.bar_score div#avg_score {position:absolute;margin:-26px 0 0 45px;font-size:130; color:#fff;opacity:1}
 
 
 .dc-data-count .filter-count {
@@ -284,11 +284,19 @@ color: #FFF;
 }
 
 .graph_titles {
-	font-size: 0.7em;
+font-size: 0.5em;
+color: #232323;
+margin-left: auto;
+margin-right: auto;
+width:300px;
 }
 
 #search-box {
 	margin-left:auto;
 	margin-right:auto;
 	width:50%;
+}
+
+.parties-box {
+	width:230px;
 }
