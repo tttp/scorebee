@@ -14,6 +14,11 @@ We then rank all the MEPs, give a score of 0 for the worse, and 100 to the best.
 
 ## Party/Group/Country score
 We take the score of each MEP that belong to the party/group/country and calculate the average. 
+
+It means that a party with two MEPs, one that voted once only, say against our recommendation and the other that voted all the time following the recommendation will have the same weight and the party score will be average.
+
+It's simplier to explain (and calculate) as the focus is on the seat, not on each vote, but might seem unfair for the MEP that is the most active. The solution would be that MEPs votes all the time.
+
 You might notice when you explore the data that some MEPs from the same party belong to different group. Welcome to European politics.
 
 #Effort/Laziness
