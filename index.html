@@ -160,20 +160,19 @@ var card=scoreCard (votes);
 <div data-role="page" class="jqm-demos" data-quicklinks="false" id="meps">
 
 	<div data-role="header" class="jqm-header"  onclick="document.location.href='landing.html'" style="cursor:pointer">
-		<h2>Scoring the European Parliament</h2>
+		<h2>Scoring the European Parliament, focus on Climate Change</h2>
 		<a href="#" data-icon="gear" class="ui-btn-right">Help</a>
 	</div>
 
 	<div role="main" class="ui-content jqm-content">
 	<div id="block1">
-		<h1 class="starthead">Your title goes here</h1>
+		<!--h1 class="starthead">Your title goes here</h1-->
 	</div>
 	<div id="block2">
 		<div id="ep2014list">
 			<div class="country"><div class="graph_titles"><h1>Choose your country:</h1></div></div>
 			<div class="gender"></div>
 			<div class="age"></div>
-			<div class="bar_score"><div class="graph_titles"><h1>Combined score:</h1></div><div id="avg_score"></div></div>
 		    <div class="group"><div class="graph_titles"><h1>European Party:</h1></div></div>
 			<div class="party"><div class="graph_titles"><h1>Select political party:</h1></div></div>
 			<div class="list"></div>
@@ -182,15 +181,19 @@ var card=scoreCard (votes);
 		</div>
 	</div>	
 	<div id="block3">		
-		<div id="search-box" class="ui-field-contain">
-		<label>Click on the graphs or type a name</label>
-				    <input type="search" data-mini="true" data-type="broken-i-hate-jqm-search" id="search-input" data-clear-btn="true">
-	  </div>
+<div id="search-box" class="ui-field-contain">
+<label>Click on the graphs or type a name</label>
+        <input type="search" data-mini="true" data-type="broken-i-hate-jqm-search" id="search-input" data-clear-btn="true">
+</div>
+  <div class="dc-data-count">
+  Combined score of <span class="filter-count"></span> selected
+<div class="outof">out of <span class="total-count"></span> MEPs</div>
+<div class="bar_score">
+<div id="avg_score"></div>
+</div>	
+<button  class="ui-btn ui-mini ui-corner-all ui-shadow resetall"><a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a></button>
 
-		<div class="dc-data-count">
-		<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
-		href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>		
-		</div>	
+	</div>		
 	</div>		
 			
 			<div class="nokparty">

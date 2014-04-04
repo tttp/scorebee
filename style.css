@@ -1,3 +1,6 @@
+#block2 {float:right;width: 78%; min-width:400px;}
+#block3 {float:left;width: 20%; min-width:320px;}
+ 
 .jqm-demos .jqm-header {
 border-top: 4px solid #3eb249;
 background-color:#fff;
@@ -31,27 +34,21 @@ font-weight: 300;
 	color:#000;
 }
 
-#ep2014list table, .dc-data-grid {clear:both;}
+a#ep2014list table, .dc-data-grid {clear:both;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
 .x line {stroke:none;}
 
 body {font-family: sans-serif, arial, helvetica;}
 
 .dc-data-grid, .dc-grid-group {clear:both}
-.dc-data-count {
-	margin-left:auto;
-	margin-right:auto;
-	float:none !important;
-	clear:both;
-	width: 300px;
-}
+
 .dc-grid-group {
 		/*background-color: #F5F5F5;*/
 		/*border: 1px solid #E3E3E3;
         border-radius: 4px;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;*/
 min-height: 20px;
-padding: 5px 5 5 10;
+padding: 5px 5px 5px 20px;
 }
 
 .score {
@@ -118,12 +115,13 @@ height:320px;
 	padding-top:5px;
 	color:#121212;
 	text-decoration:none;
-	height: 170px;
+	height: 241px;
 }
 
 .group {
-	width: 180px;
-	height: 220px;
+	width: 150px;
+  margin:0 10px;
+	height: 241px;
 }
 
 .dc-grid-item {
@@ -278,6 +276,7 @@ text-decoration: none;
 .bar_score {
 position:relative;
 width: 245px;
+margin-top:10px;
 }
 
 .bar_score svg {position:relative;}
@@ -307,12 +306,6 @@ margin-right: auto;
 width:300px;
 }
 
-#search-box {
-	margin-left:auto;
-	margin-right:auto;
-	width:50%;
-}
-
 .parties-box {
 	width:230px;
 }
@@ -325,4 +318,9 @@ list-style-type: none;
 	font-size: 6em;
 }
 
-.ui-input-search { width:300px}
+
+.country {width:450px;}
+
+.resetall {clear:both}
+#search-box label {float:none;width:100%}
+#search-box ui-input-search {width:auto;float:none;}
