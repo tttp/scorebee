@@ -80,18 +80,17 @@ margin-left:auto;
 margin-right:auto;
 text-shadow:none;
 width:60%;
+border: 5px #4E4E4E solid;
 }
 
 .ui-block-a {
-background-color:#BEEFD8;
-padding:10px;
 width:15%;
+margin-top:5px;
 }
 
 .ui-block-b {
-background-color:#BEEFD8;
-padding:10px;
 width:15%;
+margin-top:5px;
 }
 
 /* stack all grids below 40em (640px) */
