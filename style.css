@@ -318,6 +318,8 @@ list-style-type: none;
 	font-size: 6em;
 }
 
+.group .deselected path {opacity:1}
+.group path {opacity:0.5}
 
 .country {width:450px;}
 
