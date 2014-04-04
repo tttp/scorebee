@@ -59,14 +59,14 @@ padding: 10px;
 position: absolute;
 right: 15px;
 color: #111;
-background: rgba(255, 255, 255, 0.5);
+background: rgba(255, 255, 255, 0.65);
 font-size: 40px;
 padding: 1px 1px;
 top: 208px;
 font-weight: bold;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
-border-radius: 10px;
+-webkit-border-radius: 6x;
+-moz-border-radius: 6px;
+border-radius: 6px;
 }
 
 #thumbsup {
@@ -298,4 +298,8 @@ width:300px;
 
 .parties-box {
 	width:230px;
+}
+
+#infobox_info li{
+list-style-type: none;
 }
