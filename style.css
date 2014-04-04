@@ -14,13 +14,16 @@ font-family: 'Open Sans', sans-serif;
 font-weight: 300;
 }
 
-.ui-page-theme-a {
+.ui-page-theme-a, .ui-page-theme-a a{
 	text-shadow:none;
 	background:url(mochaGrunge.png);
 	color: #131313
 }
 
 
+.ui-page-theme-a a:visited, html .ui-bar-a a:visited, html .ui-body-a a:visited, html body .ui-group-theme-a a:visited {
+	color:#000;
+}
 
 #ep2014list table, .dc-data-grid {clear:both;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
@@ -248,3 +251,13 @@ text-decoration: none;
 .bar_score {position:relative}
 .bar_score svg {position:relative;}
 .bar_score div#avg_score {position:absolute;margin:-26px 0 0 45px;font-size:130; color:#fff;opacity:0.1}
+
+
+.dc-data-count .filter-count {
+color: #FFF;
+font-weight: bold;
+}
+
+.dc-data-count .total-count {
+color: #FFF;
+}
