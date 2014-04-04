@@ -182,12 +182,11 @@ var card=scoreCard (votes);
 		</div>
 	</div>	
 	<div id="block3">		
-		<div id="search-box">
-		<p><b>Search by name or click on the graphs above to filter MEPs</b></p>
-				<form>
-				    <input data-type="search" id="search-input">
-				</form>
-			</div>
+		<div id="search-box" class="ui-field-contain">
+		<label>Click on the graphs or type a name</label>
+				    <input type="search" data-mini="true" data-type="broken-i-hate-jqm-search" id="search-input" data-clear-btn="true">
+	  </div>
+
 		<div class="dc-data-count">
 		<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
 		href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>		

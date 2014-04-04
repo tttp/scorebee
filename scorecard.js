@@ -6,6 +6,13 @@ $.mobile.pushStateEnabled = false;
 var tplPopup = null;
 
 jQuery(function($){
+$("#search-input").keyup (function () {
+  var s = $(this ).val().toLowerCase();
+  wall.dimension().filter(function (d) { return d.indexOf (s) !== -1;} ); 
+  dc.redrawAll();
+  console.log ($(this ).val());
+});
+
   tplPopup = _.template ($("#infobox_tpl").text());
 });
 
@@ -357,8 +364,12 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .dimension(ndx)
     .group(all);
 
-  dc.dataGrid(".dc-data-grid")
-    .dimension(country)
+  var name = ndx.dimension(function(d) {
+      return d.first_name.toLowerCase() + " "+ d.last_name.toLowerCase() + " " + d.party.toLowerCase();
+      });
+
+  wall = dc.dataGrid(".dc-data-grid")
+    .dimension(name)
     .group(function (d) {
         return d.country;
         })

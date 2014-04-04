@@ -324,3 +324,5 @@ list-style-type: none;
 #score {
 	font-size: 6em;
 }
+
+.ui-input-search { width:300px}
