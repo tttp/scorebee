@@ -1,6 +1,7 @@
 .jqm-demos .jqm-header {
 border-top: 4px solid #3eb249;
 background-color:#fff;
+padding: 0;
 }
 
 .jqm-demos .jqm-content > h1.starthead {
@@ -8,7 +9,7 @@ font-size: 3.5em;
 width: 50%;
 min-width: 300px;
 max-width: 600px;
-margin: 0.3em auto 1em auto;
+margin: 0em auto 0em auto;
 text-align: center;
 font-family: 'Open Sans', sans-serif;
 font-weight: 300;
