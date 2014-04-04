@@ -71,8 +71,8 @@ votes.prototype.setRollCall = function (rolls) {
 
 votes.prototype.getEffort = function (mepid) {
   var effort = 0; nbvote = 0;
-  if (! this.mepindex[mepid]) {
-    console || console.log ("mep missing "+ mepid);
+  if (! this.exists(mepid)) {
+    console || Console.log ("mep missing "+ mepid);
     return 0;//we don't have that mep?
   }
   var mep = this.rollcalls[this.mepindex[mepid]];
@@ -86,8 +86,13 @@ votes.prototype.getEffort = function (mepid) {
   },this);
   return effort/nbvote * 100; 
 }
+
+votes.prototype.exists = function (mepid) {
+  return this.mepindex.hasOwnProperty(mepid);
+}
+
 votes.prototype.getVotes = function (mepid) {
-  if (! this.mepindex.hasOwnProperty(mepid)) {
+  if (! this.exists(mepid)) {
     console || console.log ("mep missing "+ mepid);
     return {};//we don't have that mep?
   }
@@ -110,7 +115,7 @@ votes.prototype.getScore = function (mepid) {
   if (nbvote == 0) 
     return 50; // the dude wasn't around for the votes
 //  return Math.floor (100*(score / nbvote)); // from -100 to 100
-    return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
+  return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
 }
 
 var vote = new votes (list_votes);
@@ -128,6 +133,8 @@ var getMEP = function (id) {
 
 
 function grid (selector) {
+  adjust (meps);
+
   var ndx = crossfilter(meps),
       all = ndx.groupAll();
 
@@ -146,15 +153,23 @@ function grid (selector) {
     //calculate age
     var dateFormat = d3.time.format("%Y-%m-%d");
     var now = Date.now();
-    data.forEach(function (e) {
-        e.effort = vote.getEffort (e.epid);
-        e.scores = [getScore(e),getScore(e),getScore(e),getScore(e)];
-        e.birthdate = dateFormat.parse(e.birthdate);
-        e.age= ~~((now - e.birthdate) / (31557600000));// 24 * 3600 * 365.25 * 1000
-        });
+    var empty = [];
+    data.forEach(function (e,i) { // remove the meps that have no votes
+      if (!vote.exists(e.epid)) {
+        empty.unshift (i);
+      }
+    });
+    empty.forEach(function (i) { 
+      meps.splice(i, 1);
+    });
+    data.forEach(function (e,i) {
+      e.effort = vote.getEffort (e.epid);
+      e.scores = [getScore(e),getScore(e),getScore(e),getScore(e)];
+      e.birthdate = dateFormat.parse(e.birthdate);
+      e.age= ~~((now - e.birthdate) / (31557600000));// 24 * 3600 * 365.25 * 1000
+    });
   }
 
-  adjust (meps);
 
   var pie_group = dc.pieChart(selector +  " .group").innerRadius(20).radius(70);
   var group = ndx.dimension(function(d) {
@@ -230,12 +245,12 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       });
   var scoreGroup = score.group().reduceSum (function(d) { return 1;});
   var bar_score = dc.barChart (".bar_score")
-    .width(250)
-    .height(200)
-    .outerPadding(0)
-    .gap(1)
+    .width(245)
+    .height(130)
+    .outerPadding(5)
+    .gap(0)
     .margins({top: 10, right: 10, bottom: 20, left: 30})
-    .x(d3.scale.linear().domain([0, 100]))
+    .x(d3.scale.linear().domain([0, 101]))
     .elasticY(true)
     .round(dc.round.floor)
     .colorCalculator(function(d, i) {
@@ -376,12 +391,15 @@ effect : "fadeIn"
 
   dc.renderAll();
   var hash = window.location.hash;
-console.log(hash);
    if(hash.indexOf('#mep') === 0) { 
-     mep = getMEP (hash.substring(4));
+     var mep = getMEP (hash.substring(4));
      mep.votes=vote.getVotes(mep.epid);
      $( "#infobox" ).html(tplPopup(mep)).popup( "open" );
+   } else if (hash.length == 3){ //country
+      var iso=hash.substring(1);
+//      bar_country.filter (); 
    }
+   
 
 
 }

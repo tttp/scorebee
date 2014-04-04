@@ -21,6 +21,7 @@ font-weight: 300;
 }
 
 
+
 #ep2014list table, .dc-data-grid {clear:both;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
 .x line {stroke:none;}
@@ -29,10 +30,6 @@ body {font-family: sans-serif, arial, helvetica;}
 
 .dc-data-grid, .dc-grid-group {clear:both}
 .dc-data-count {clear:both;}
-.dc-data-count span, .dc-data-count a {color:#000;}
-.dc-data-count .filter-count {color: #000;}
-.dc-data-count .total-count {color: #000;}
-
 .dc-grid-group {
 		/*background-color: #F5F5F5;*/
 		/*border: 1px solid #E3E3E3;
@@ -80,14 +77,14 @@ width:15%;
 }
 
 /* stack all grids below 40em (640px) */
-@media all and (max-width: 45em) {
+@media all and (max-width: 35em) {
 	.my-breakpoint .ui-block-a,
 	.my-breakpoint .ui-block-b,{
-		width: 90%;
+		width: 100%;
 		float: none;
 	}
 	#infobox {
-		width:90%;
+		width:100%;
 	}	
 }
 
@@ -247,21 +244,7 @@ text-decoration: none;
     -webkit-animation: bounceIn 0.2s ease-out;
   }
 
-.landing-button {
-	width:80%;
-	margin-left:auto;
-	margin-right:auto;
-}
 
 .bar_score {position:relative}
 .bar_score svg {position:relative;}
-.bar_score div#avg_score {position:absolute;margin:20px 0 0 45px;font-size:140; color:#fff;opacity:0.8}
-
-.graph_titles h1 {
-	font-size:1em;
-	margin:0.5em;
-}
-
-.thumbs {
-
-}
+.bar_score div#avg_score {position:absolute;margin:-26px 0 0 45px;font-size:130; color:#fff;opacity:0.1}
