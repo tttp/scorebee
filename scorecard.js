@@ -228,8 +228,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
   .group(groupGender);
 
   pie_group
-    .width(200)
-    .height(200)
+    .width(140)
+    .height(140)
     .dimension(group)
     .colorCalculator(function(d, i) {
       if (eu_groups[d.key])
@@ -281,8 +281,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       return d.scores[0];});
 
   pie_party =dc.pieChart(selector +  " .party").innerRadius(20).radius(70)
-    .width(200)
-    .height(200)
+    .width(160)
+    .height(160)
     .dimension(party)
     .colors(d3.scale.category10())
     .group(partyGroup)
@@ -465,9 +465,9 @@ function chartParty (selector, ndx, color) {
     .renderHorizontalGridLines(false)
     .renderVerticalGridLines(true)
     .renderLabel(false)
-    .renderTitle(true)
+    .renderTitle(false)
     .title(function (p) {
-        return "<h2>"+p.key + "</h2>" + 
+        return "p.key" + "\n"+ 
                 "meps: " +p.value.count + "\n" +
                 "effort: " +p.value.effort/p.value.count + "\n" +
                 "score: "+p.value.score/p.value.count + "\n";
