@@ -415,26 +415,49 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 
 
 function chartGroup (selector,ndx,color) {
-  var pie_group = dc.pieChart(selector +  " .group").innerRadius(20).radius(70);
-  var group = ndx.dimension(function(d) {
-      if (typeof d.eugroup == "undefined") return "";
-      return d.eugroup;
-      });
-  var groupGroup   = group.group().reduceSum(function(d) {   return 1; });
+  var chart = dc.pieChart(selector +  " .group").innerRadius(20).radius(70);
+  var dimension = ndx.dimension(function(d) {
+    if (typeof d.eugroup == "undefined") return "";
+    return d.eugroup;
+  });
+  var group   = dimension.group().reduce(
+    function(a,d) {a.count +=1; a.score +=d.scores[0]; a.effort += d.effort; return a; },
+    function(a,d) {a.count -=1; a.score -=d.scores[0]; a.effort -= d.effort; return a; },
+    function() {return {count:0,score:0,effort:0}; }
+  ).order(function (p) {return p.count});
 
-  pie_group
+ var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .html(function(p) { return '<span><h2>' +  p.data.key + "</h2><ul>" + 
+                "<li>MEPs: " +p.data.value.count + "</li>" +
+                "<li>effort: " +Math.floor (p.data.value.effort/p.data.value.count) + "</li>" +
+                "<li>score: "+Math.floor (p.data.value.score/p.data.value.count); 
+       '</li></ul></span>' })
+    .offset([-12, 0])
+
+
+  chart
     .width(140)
     .height(140)
-    .dimension(group)
-    .colorCalculator(function(d, i) {
-      if (eu_groups[d.key])
-        return eu_groups[d.key];
-      return "pink";
+    .dimension(dimension)
+    .valueAccessor (function(d) {
+      return d.value.count;
     })
-    .group(groupGroup)
-    .renderlet(function (chart) {
-        });
-
+    .colorCalculator(function(d, i) {
+      return color(d.value.score/d.value.count);
+    })
+    .group(group)
+    .on("postRender", function(c) {
+      c.svg().selectAll ("path")
+        .call(tip)
+        .on('mouseover', function(d) {
+          tip.attr('class', 'd3-tip animate').show(d)
+        })
+        .on('mouseout', function(d) {
+          tip.attr('class', 'd3-tip').show(d)
+          tip.hide()
+        })
+    } );
 }
 
 function chartParty (selector, ndx, color) {

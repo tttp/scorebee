@@ -319,11 +319,12 @@ list-style-type: none;
 }
 
 .group .deselected path {opacity:1}
-.group path {opacity:0.5}
+.group  path {stroke:lightgrey}
 
 .country {width:450px;}
 
 .ui-header h2.ui-title b {color:#2c851c}
+
 
 .resetall {clear:both}
 #search-box label {float:none;width:100%}
