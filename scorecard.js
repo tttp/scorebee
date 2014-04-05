@@ -4,16 +4,25 @@ $.mobile.pushStateEnabled = false;
 
 
 var tplPopup = null;
+var ndx = null; //workaround for now...
 
 jQuery(function($){
 $("#search-input").keyup (function () {
   var s = $(this ).val().toLowerCase();
   wall.dimension().filter(function (d) { return d.indexOf (s) !== -1;} ); 
+  $(".resetall").attr("disabled",true);
   dc.redrawAll();
   console.log ($(this ).val());
 });
 
   tplPopup = _.template ($("#infobox_tpl").text());
+
+  $(".resetall").click(function() {
+    $("#search-input").val("");
+    $(".resetall").attr("disabled",false);
+    dc.filterAll(); 
+    dc.renderAll();
+  });
 });
 
 
@@ -124,7 +133,6 @@ votes.prototype.getScore = function (mepid) {
 //  return Math.floor (100*(score / nbvote)); // from -100 to 100
   return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
 }
-
 var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
@@ -142,8 +150,8 @@ var getMEP = function (id) {
 function grid (selector) {
   adjust (meps);
 
-  var ndx = crossfilter(meps),
-      all = ndx.groupAll();
+  ndx = crossfilter(meps);//global.
+  var    all = ndx.groupAll();
 
   function getScore (mep) {
     return vote.getScore (mep.epid);
@@ -177,13 +185,6 @@ function grid (selector) {
     });
   }
 
-
-  var pie_group = dc.pieChart(selector +  " .group").innerRadius(20).radius(70);
-  var group = ndx.dimension(function(d) {
-      if (typeof d.eugroup == "undefined") return "";
-      return d.eugroup;
-      });
-  var groupGroup   = group.group().reduceSum(function(d) {   return 1; });
 
   //var chart_age = dc.barChart(selector + " .age");
   var chart_age = dc.lineChart(selector + " .age");
@@ -234,19 +235,6 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       })
   .group(groupGender);
 
-  pie_group
-    .width(140)
-    .height(140)
-    .dimension(group)
-    .colorCalculator(function(d, i) {
-      if (eu_groups[d.key])
-        return eu_groups[d.key];
-      return "pink";
-    })
-    .group(groupGroup)
-    .renderlet(function (chart) {
-        });
-
   var score = ndx.dimension (function(d) {
       return d.scores[0];
       });
@@ -273,8 +261,18 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
         ++nb;
         total += a.scores[0];
       }); 
-      var avg= total/nb;
+      if (nb) {
+        var avg= total/nb;
         $(".bar_score div#avg_score").text(Math.round(avg));
+      } else {
+        $(".bar_score div#avg_score").text("");
+      }
+      //why doesn't it work? if (chart.dimension().size() !== chart.group().value()) {
+      if (ndx.size() !== nb) {
+         $(".resetall").attr("disabled",false);
+      } else {  
+        $(".resetall").attr("disabled",true);
+      }
     });
 
 
@@ -359,6 +357,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
   }
 
   chartParty (selector, ndx, color);
+  chartGroup  (selector, ndx, color);
+
 
   dc.dataCount(".dc-data-count")
     .dimension(ndx)
@@ -392,9 +392,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
             $( "#infobox" ).html(tplPopup(d)).popup( "open" );
 
         });
-        $("img.lazy-load").lazyload ({
-effect : "fadeIn"
-})
+        $("img.lazy-load").lazyload ({effect : "fadeIn"})
         .removeClass("lazy-load");
         });
 
@@ -416,7 +414,28 @@ effect : "fadeIn"
 }
 
 
+function chartGroup (selector,ndx,color) {
+  var pie_group = dc.pieChart(selector +  " .group").innerRadius(20).radius(70);
+  var group = ndx.dimension(function(d) {
+      if (typeof d.eugroup == "undefined") return "";
+      return d.eugroup;
+      });
+  var groupGroup   = group.group().reduceSum(function(d) {   return 1; });
 
+  pie_group
+    .width(140)
+    .height(140)
+    .dimension(group)
+    .colorCalculator(function(d, i) {
+      if (eu_groups[d.key])
+        return eu_groups[d.key];
+      return "pink";
+    })
+    .group(groupGroup)
+    .renderlet(function (chart) {
+        });
+
+}
 
 function chartParty (selector, ndx, color) {
   var bubble_party = dc.bubbleChart(selector + " .party");
