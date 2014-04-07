@@ -4,6 +4,7 @@ $.mobile.pushStateEnabled = false;
 
 
 var tplPopup = null;
+var tplScore = null;
 var ndx = null; //workaround for now...
 
 jQuery(function($){
@@ -16,6 +17,7 @@ $("#search-input").keyup (function () {
 });
 
   tplPopup = _.template ($("#infobox_tpl").text());
+  tplScore = _.template ($("#score_tpl").text());
 
   $(".resetall").click(function() {
     $("#search-input").val("");
@@ -45,12 +47,15 @@ var votes = function (all) {
   this.all = all;// votes to be taken into account. [dbid] is the voteid key
   this.index = {}; // column number in the cvs of a voteid
   this.mepindex = {}; //row number in the csv of a mepid
+  this.type = {1:"pro","-1":"against",0:"abstention","":"absent"};
+  this.direction = {1:"up","-1":"down"}; 
   _.each (all, function(v,i) {
     v.pro = v.against = v.abstention = v.absent = 0;
     v.date = new Date (v.date);
     if (typeof v.dbid !== "undefined") {
       this.index[v.dbid] = i;
     }
+
   },this);
 };
 
@@ -62,13 +67,13 @@ votes.prototype.get = function (id) { //return the detail of a vote based on its
 
 votes.prototype.setRollCall = function (rolls) {
   //var type = {1:"pro","-1":"against",0:"abstention","":"absent"};
-  var type = {1:"pro","-1":"against",0:"abstention","":"absent"};
+
   this.rollcalls = rolls;
   _.each (rolls, function(v,i) {
     var mep =v;
     this.mepindex[v.mep] = i;
     _.each(this.all, function (vote,id) {
-      ++vote[type[mep[vote.dbid]]]; //type is one of pro against abstention absent
+      ++vote[this.type[mep[vote.dbid]]]; //type is one of pro against abstention absent
     }, this);
   }, this);
   // coef calculation
@@ -350,8 +355,14 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       grid.selectAll (".dc-grid-item")
         .on('click', function(d) {
           d.votes=vote.getVotes(d.epid);
-	console.log(d); //todo, remove
-            $( "#infobox" ).html(tplPopup(d)).popup( "open" );
+
+          var v = {d:vote.all};
+         _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
+  x.direction = vote.direction [x.mep];
+  x.type = vote.type [x.mep*x.recommendation];
+});
+console.log(v);
+            $( "#infobox" ).html(tplPopup(d) + tplScore(v) ).popup( "open" );
 
         });
         $("img.lazy-load").lazyload ({effect : "fadeIn"})
@@ -494,10 +505,9 @@ function chartParty (selector, ndx, color) {
         })
     } );
 
+  }
 
-}
-
-this.vote = vote;
-this.grid = grid;
-return this;
+  this.vote = vote;
+  this.grid = grid;
+  return this;
 };

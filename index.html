@@ -204,86 +204,36 @@ var card=scoreCard (votes);
 
 			<div data-role="popup" id="infobox" class="ui-content">
 </div>
+
+
 <script type="text/tpl" id="infobox_tpl">
-			<span><a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-			<img dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' src='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:50px"/> </span>
-				<ul id="infobox_info">
-					<li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
-					<li>Age: <strong><%= age %></strong></li>
-					<li>Country: <strong><%= country %></strong></li>
-					<li>National party: <strong><%= party %></strong></li>
-					<li>European Party:<strong> <%= eugroup %> </strong></li>
-					<span id="score">
-					<%= score %>
-					</span>
-				</ul>	
-			<div style="clear:both;margin-bottom: 20px;"></div>
-			<div class="ui-grid-a my-breakpoint">
-			  <span class="ui-block-a ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </span>
-			  An EU greenhouse gas reduction target of 50% by 2030
-			  </span>
-			  <span class="ui-block-b ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </span>
-			  Phasing out fossil fuel subsidies
-			  </span>
-			  <span class="ui-block-a ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </span>
-			  'Back-loading' the EU Emissions Trading System
-			  </span>
-			  <span class="ui-block-b ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </span>
-			  Increasing European renewable energy supply
-			  </span>
-			  <span class="ui-block-a ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-down"></i>
-				  </span>
-			  3 Binding Targets on the EU 2050 Roadmap
-			  </span>
-			  <span class="ui-block-b ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </span>
-			  Reporting greenhouse gas emissions across Europe
-			  </span>
-			  <span class="ui-block-a ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-down"></i>
-				  </span>
-			  Measures to reduce energy consumption
-			  </span>
-			  <span class="ui-block-b ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </span>
-			  Increasing 2020 emissions reductions targets to 30%
-			  </span>
-			  <span class="ui-block-a ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-down"></i>
-				  </span>
-			  Climate finance for the worlds poorest
-			  </span>
-			  <span class="ui-block-b ui-content">
-				  <span class="thumbs">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </span>
-			  Developing a common EU position ahead of the United Nations Conference on Sustainable Development
-			  </span>
-			</div><!-- /votes grid -->
-			</div>
-	</div>
+	<span><a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+  	<img dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' src='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:50px"/> </span>
+		<ul id="infobox_info">
+			<li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
+			<li>Age: <strong><%= age %></strong></li>
+			<li>Country: <strong><%= country %></strong></li>
+			<li>National party: <strong><%= party %></strong></li>
+			<li>European Party:<strong> <%= eugroup %> </strong></li>
+			<span id="score"><%= score %></span>
+	  </ul>	
 </script>
-</div>
+
+<script type="text/tpl" id="score_tpl">
+<div class="ui-grid-a my-breakpoint">
+<% _.each (d, function (v) { %>
+  <div class="ui-block-a ui-content">
+		  <span class="thumbs">
+	  	  <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
+  	  </span>
+<span class="<%= v.type %>">mep voted: <%= v.mep %>  we wanted <%= v.recommendation %> </span>
+<h3><%= v.id %></h3>
+<%= v.description %>
+	</div>
+<% }); %>
+</div><!-- /votes grid -->
+<div style="clear:both;margin-bottom: 20px;"></div>
+</script>
 
 <script>
 var meps = [];

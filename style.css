@@ -329,3 +329,6 @@ list-style-type: none;
 .resetall {clear:both}
 #search-box label {float:none;width:100%}
 #search-box ui-input-search {width:auto;float:none;}
+
+.pro {background:green}
+.against {background:red}
