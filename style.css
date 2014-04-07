@@ -330,5 +330,6 @@ list-style-type: none;
 #search-box label {float:none;width:100%}
 #search-box ui-input-search {width:auto;float:none;}
 
+.abstention {background:lightgrey}
 .pro {background:green}
 .against {background:red}
