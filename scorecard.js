@@ -81,6 +81,7 @@ votes.prototype.setRollCall = function (rolls) {
     }, this);
     _.each(this.all, function (vote) {
       vote.weight = 1+(vote.weight-min)/(max-min);
+vote.weight = 1;
     }, this);
   
 }
