@@ -406,7 +406,8 @@ function chartGroup (selector,ndx,color) {
       return d.value.count;
     })
     .colorCalculator(function(d, i) {
-      return color(d.value.score/d.value.count);
+      return eu_groups[d.key];
+      //return color(d.value.score/d.value.count);
     })
     .group(group)
     .on("postRender", function(c) {
