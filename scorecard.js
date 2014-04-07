@@ -276,45 +276,6 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       }
     });
 
-
-  var party = ndx.dimension (function(d) {
-      if (typeof d.party == "undefined") return "";
-      return d.party;
-      });
-
-  var partyGroup = party.group().reduceSum (function(d) { 
-      return 1;
-      return d.scores[0];});
-
-  pie_party =dc.pieChart(selector +  " .party").innerRadius(20).radius(70)
-    .width(160)
-    .height(160)
-    .dimension(party)
-    .colors(d3.scale.category10())
-    .group(partyGroup)
-    .renderlet(function (chart) {
-        });
-
-  /*  var bar_topic = dc.barChart (selector + ".topic");
-      var topic = ndx.dimension (function(d) {
-//        return do something;
-      });
-      var topicGroup = topic.group().reduceSum (function(d) { return 0.6;});
-      bar_topic
-      .width(200)
-      .height(100)
-      .outerPadding(0)
-      .gap(1)
-      .margins({top: 0, right: 0, bottom: 10, left: 30})
-      .x(d3.scale.ordinal())
-      .xUnits(dc.units.ordinal)
-      .brushOn(false)
-      .elasticY(true)
-      .yAxisLabel("#topics")
-      .dimension(topic)
-      .group(topicGroup);
-   */
-
   var bar_country = dc.barChart(selector + " .country");
   var country = ndx.dimension(function(d) {
       if (typeof d.country == "undefined") return "";
