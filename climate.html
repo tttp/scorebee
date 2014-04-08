@@ -161,8 +161,19 @@ var card=scoreCard (votes);
 
 	<div data-role="header" class="jqm-header"  onclick="document.location.href='landing.html'" style="cursor:pointer">
 		<h3>Scoring the European Parliament: Climate Change</h3>
-		<a href="#" data-icon="gear" class="ui-btn-right">Help</a>
-	</div>
+    <div class="menu-holder">
+      <div data-role="collapsible" data-collapsed="false">
+      <h4>Heading</h4>
+      <ul data-role="listview">
+          <li><a href="#">List item 1</a></li>
+          <li><a href="#">List item 2</a></li>
+          <li><a href="#">List item 3</a></li>
+      </ul>
+      </div>
+     </div> 
+    </ul>
+</div>
+
 
 	<div role="main" class="ui-content">
 	<div id="block1">
@@ -223,7 +234,7 @@ var card=scoreCard (votes);
 <script type="text/tpl" id="score_tpl">
 <div class="ui-grid-a my-breakpoint">
 <% _.each (d, function (v) { %>
-  <div class="ui-content">
+  <div class="ui-content vote_box">
 		  <span class="thumbs">
 	  	  <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
   	  </span>

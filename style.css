@@ -343,3 +343,17 @@ list-style-type: none;
   pointer-events: auto;
 }
 
+.vote_box {
+-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+width: 50%;
+min-width:200px;
+display: block;
+float: left;
+height:200px;
+}
+
+.menu-holder {
+  width: 99px;
+float: right;
+top: 10px;
+}
