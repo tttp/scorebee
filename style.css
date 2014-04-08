@@ -356,8 +356,8 @@ right: 60px;
 
 .abstention {background:lightgrey}
 .absent {background:white;text-decoration:line-through}
-.pro {background:green}
-.against {background:red}
+.pro {background:green; color:#eee}
+.against {background:red; color:#eee}
 
 .dc-chart g.axis.x text{
   cursor:pointer;
