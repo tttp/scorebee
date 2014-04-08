@@ -143,7 +143,7 @@ var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
-var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><div class='score'><%= score %></div><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><img class='lazy-load' dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='party'><%= party %></div></div>");
+var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><div class='score' style='font-size:<%= size %>px;'><%= score %></div><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><img class='lazy-load' dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='party'><%= party %></div></div>");
 
 var getMEP = function (id) {
     for (var i in meps) {
@@ -314,14 +314,18 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .dimension(country)
     .group(countryGroup)
 
-  bar_country.on("postRender", function(c) {rotateBarChartLabels(c);} );
+  bar_country.on("postRender", function(c) {adjustBarChartLabels(c);} );
 
-
-  function rotateBarChartLabels(c) {
-    c.svg().selectAll('.axis.x text')
-      .style("text-anchor", "end" )
+  function adjustBarChartLabels(chart) {
+    chart.svg().selectAll('.axis.x text')
+      .on("click",function(d) { 
+        chart.filter(d);
+        dc.redrawAll();}
+      )
+      .style("text-anchor", "end" )      
       .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
   }
+
 
   chartParty (selector, ndx, color);
   chartGroup  (selector, ndx, color);
@@ -344,6 +348,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .html (function(d) { 
         d.score = d.scores [0];
         d.color = color(d.score);
+        d.size = 20+ 20*d.effort/100;
 
         return tpl(d);
         })
