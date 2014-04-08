@@ -5,10 +5,22 @@
 border-top: 4px solid #3eb249;
 background-color:#fff;
 padding: 0;
+min-height:0px;
+}
+
+.ui-page {
+  min-height:0px;
 }
 
 .ui-title{
   margin: 0 10%;
+}
+
+.center-wrapper{
+text-align: center;
+}
+.center-wrapper * {
+margin: 1 auto;
 }
 
 .jqm-demos .jqm-content > h1.starthead {
