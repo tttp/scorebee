@@ -369,9 +369,9 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 console.log(v);
 
             $( "#infobox").modal('show');
-            $( "#infobox").on('show', function(){
-              $( "#infobox" ).html(tplPopup(d) + tplScore(v) );
-            });
+            // $( "#infobox").on('show', function(){
+              $( ".infobox_content" ).html(tplPopup(d) + tplScore(v) );
+            // });
             
 
         });
