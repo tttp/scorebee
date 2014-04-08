@@ -381,3 +381,10 @@ top: 10px;
 .votes_div {
   margin-top: 75px;
 }
+
+.modal {
+background-color: #FFF;
+max-height: 70%;
+top: 10%;
+bottom: 10%;
+}

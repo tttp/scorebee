@@ -367,7 +367,12 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
   x.type = vote.type [x.mep*x.recommendation];
 });
 console.log(v);
-            $( "#infobox" ).html(tplPopup(d) + tplScore(v) ).popup( "open" );
+
+            $( "#infobox").modal('show');
+            $( "#infobox").on('show', function(){
+              $( "#infobox" ).html(tplPopup(d) + tplScore(v) );
+            });
+            
 
         });
         $("img.lazy-load").lazyload ({effect : "fadeIn"})
@@ -381,7 +386,7 @@ console.log(v);
    if(hash.indexOf('#mep') === 0) { 
      var mep = getMEP (hash.substring(4));
      mep.votes=vote.getVotes(mep.epid);
-     $( "#infobox" ).html(tplPopup(mep)).popup( "open" );
+     $( "#infobox" ).html(tplPopup(mep)).modal( "show" );
    } else if (hash.length == 3){ //country
       var iso=hash.substring(1);
 //      bar_country.filter (); 
