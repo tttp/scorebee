@@ -160,11 +160,11 @@ var card=scoreCard (votes);
 <div data-role="page" class="jqm-demos" data-quicklinks="false" id="meps">
 
 	<div data-role="header" class="jqm-header"  onclick="document.location.href='landing.html'" style="cursor:pointer">
-		<h2>Scoring the European Parliament, focus on <b>Climate Change</b></h2>
+		<h3>Scoring the European Parliament: Climate Change</h3>
 		<a href="#" data-icon="gear" class="ui-btn-right">Help</a>
 	</div>
 
-	<div role="main" class="ui-content jqm-content">
+	<div role="main" class="ui-content">
 	<div id="block1">
 		<!--h1 class="starthead">Your title goes here</h1-->
 	</div>
@@ -223,12 +223,12 @@ var card=scoreCard (votes);
 <script type="text/tpl" id="score_tpl">
 <div class="ui-grid-a my-breakpoint">
 <% _.each (d, function (v) { %>
-  <div class="ui-block-a ui-content">
+  <div class="ui-content">
 		  <span class="thumbs">
 	  	  <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
   	  </span>
 <span class="<%= v.type %>">mep voted: <%= v.mep %>  we wanted <%= v.recommendation %> </span>
-<h3><%= v.id %></h3>
+<h3><%= v.title %></h3>
 <%= v.description %>
 	</div>
 <% }); %>
