@@ -171,6 +171,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                
                 <a class="navbar-brand" href="#">Scoring the European Parliament: <strong>Climate Change</strong></a>
             </div>
 
@@ -181,7 +182,7 @@
                     <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">About the project</a></li>
+                        <li><a href="/votecheck/about.html">About the project</a></li>
                         <li><a href="#">Scoring methodology</a></li>
                         <li class="divider"></li>
                         <li><a href="#">Other scorecards</a></li>
@@ -196,7 +197,7 @@
 
     <div class="row" style="background-image: url('http://i.imgur.com/ZQySNsW.jpg'); background-size: cover;">
         <div class="container">
-            <div class="jumbotron" style="background-color: rgba(0,0,0,0.4); color: white; margin-bottom: 0px;">
+            <div class="jumbotron" style="background-color: rgba(0,0,0,0.6); color: white; margin-bottom: 0px;">
                 <div class="row">
                     <div class="page-header">
                         <h1>Climate</h1>
@@ -276,8 +277,14 @@
 
           <!-- Modal  -->
           <div id="infobox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="infobox_content"></div>
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="infobox_content">
+              <!-- Populated information appears here -->
+            </div>
           </div>
+          <!-- End of modal -->
 
         </div>
 
@@ -285,8 +292,11 @@
 </div>
 
 <script type="text/tpl" id="infobox_tpl">
+
     <span>
-        <img dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' src='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:50px"/> </span>
+        <img dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' src='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
+    </span>
+
     <ul id="infobox_info">
         <li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
         <li>Age: <strong><%= age %></strong></li>
@@ -295,22 +305,27 @@
         <li>National party: <strong><%= party %></strong></li>
         <li>European Party:<strong> <%= eugroup %> </strong></li>
         <span id="score"><%= score %></span>
-    </ul>
-    <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button></div>	
+    </ul>	
+
+    <div style="clear:both;margin-bottom:20px"></div>
+
 </script>
 
 <script type="text/tpl" id="score_tpl">
-    <div class="ui-grid-a my-breakpoint votes_div">
+    <div class="row">
         <% _.each (d, function (v) { %>
-            <div class="ui-content vote_box">
-                <span class="thumbs">
+            <div class="col-md-6 each_vote_containe panel panel-default">
+              <div class="panel-heading">
+                  <span class="thumbs">
                     <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
-                </span>
-                <span class="<%= v.type %>">mep voted: <%= v.mep %>  we recommended <%= v.recommendation %> </span>
-                <h5><%= v.title %></h5>
+                  </span>
+                  <span class="<%= v.type %>">mep voted: <%= v.mep %>  we recommended <%= v.recommendation %> </span>
+                  <h3 class="panel-title"><%= v.title %></h3>
+              </div>
+              <div class="panel-body">      
                 <p><%= v.description %></p>
-            </div>
+              </div>
+            </div>  
             <% }); %>
     </div><!-- /votes grid -->
     <div style="clear:both;margin-bottom: 20px;"></div>
