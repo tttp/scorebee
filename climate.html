@@ -166,7 +166,6 @@ var card=scoreCard (votes);
 
 	<div role="main" class="ui-content">
 	<div id="block1">
-		<!--h1 class="starthead">Your title goes here</h1-->
 	</div>
 	<div id="block2">
 		<div id="ep2014list">
@@ -217,15 +216,11 @@ var card=scoreCard (votes);
 			<li>National party: <strong><%= party %></strong></li>
 			<li>European Party:<strong> <%= eugroup %> </strong></li>
 			<span id="score"><%= score %></span>
-        <div data-role="collapsible">
-          <h4>Heading</h4>
-          <p>I'm the collapsible content. By default I'm closed, but you can click the header to open me.</p>
-        </div>
 	  </ul>	
 </script>
 
 <script type="text/tpl" id="score_tpl">
-<div class="ui-grid-a my-breakpoint">
+<div class="ui-grid-a my-breakpoint votes_div">
 <% _.each (d, function (v) { %>
   <div class="ui-content vote_box">
 		  <span class="thumbs">
@@ -233,7 +228,7 @@ var card=scoreCard (votes);
   	  </span>
 <span class="<%= v.type %>">mep voted: <%= v.mep %>  we wanted <%= v.recommendation %> </span>
 <h3><%= v.title %></h3>
-<%= v.description %>
+<p><%= v.description %></p>
 	</div>
 <% }); %>
 </div><!-- /votes grid -->
