@@ -207,7 +207,7 @@ var card=scoreCard (votes);
 
 <script type="text/tpl" id="infobox_tpl">
 	<span><a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-  	<img dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' src='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:50px"/> </span>
+  	<img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:50px"/> </span>
 		<ul id="infobox_info">
 			<li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
 			<li>Age: <strong><%= age %></strong></li>
@@ -223,11 +223,16 @@ var card=scoreCard (votes);
 <div class="ui-grid-a my-breakpoint votes_div">
 <% _.each (d, function (v) { %>
   <div class="ui-content vote_box">
-		  <span class="thumbs">
-	  	  <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
+
+voted		  <span class="thumbs">
+	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>"><%= vote.type[v.mep]  %></i>
   	  </span>
-<span class="<%= v.type %>">mep voted: <%= v.mep %>  we recommended <%= v.recommendation %> </span>
-<h5><%= v.title %></h5>
+, we wanted
+		  <span class="thumbs">
+	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.recommendation] %>" title="We recommended <%= vote.type[v.recommendation] %>"></i>
+  	  </span>
+
+<h5 class="<%= v.type %>"><%= v.title %></h5>
 <p><%= v.description %></p>
 	</div>
 <% }); %>

@@ -143,7 +143,7 @@ var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
-var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><div class='score' style='font-size:<%= size %>px;'><%= score %></div><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><img class='lazy-load' dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='party'><%= party %></div></div>");
+var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><div class='score' style='font-size:<%= size %>px;'><%= score %></div><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='party'><%= party %></div></div>");
 
 var getMEP = function (id) {
     for (var i in meps) {
@@ -366,7 +366,6 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
   x.direction = vote.direction [x.mep];
   x.type = vote.type [x.mep*x.recommendation];
 });
-console.log(v);
             $( "#infobox" ).html(tplPopup(d) + tplScore(v) ).popup( "open" );
 
         });

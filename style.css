@@ -355,6 +355,7 @@ right: 60px;
 #search-box ui-input-search {width:auto;float:none;}
 
 .abstention {background:lightgrey}
+.absent {background:white;text-decoration:line-through}
 .pro {background:green}
 .against {background:red}
 
