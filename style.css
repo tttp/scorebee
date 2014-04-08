@@ -333,3 +333,9 @@ list-style-type: none;
 .abstention {background:lightgrey}
 .pro {background:green}
 .against {background:red}
+
+.dc-chart g.axis.x text{
+  cursor:pointer;
+  pointer-events: auto;
+}
+
