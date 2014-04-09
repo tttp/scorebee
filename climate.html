@@ -172,7 +172,17 @@
                     <span class="icon-bar"></span>
                 </button>
                 
-                <a class="navbar-brand" href="#">Scoring the European Parliament: <strong>Climate Change</strong></a>
+                <a class="navbar-brand" href="#">Scoring the European Parliament:</a>
+                <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Climate Change<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="/votecheck/climate.html">Climate Change</a></li>
+                      <li><a href="/votecheck/fracking.html">Fracking</a></li>
+                      <li><a href="/votecheck/gmo.html">GMO</a></li>
+                    </ul>  
+                  </li>
+                </ul>    
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -319,7 +329,7 @@
                   <span class="thumbs">
                     <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
                   </span>
-                  <span class="<%= v.type %>">mep voted: <%= v.mep %>  we recommended <%= v.recommendation %> </span>
+                  <span class="<%= v.type %>">They voted: <%= v.mep %>. We recommended <%= v.recommendation %> </span>
                   <h3 class="panel-title"><%= v.title %></h3>
               </div>
               <div class="panel-body">      
