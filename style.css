@@ -292,13 +292,13 @@ text-decoration: none;
   font-size: 130;
   color: #111;
   opacity: 0.5;
-  margin-bottom:-170px;
+  position:absolute;
+  top:20px;
+  left:50px;
+  text-align:center;
   margin-left:auto;
   margin-right:auto;
-  width:inherit;
-  opacity: 0.5;
-  min-height: 185px;
-  min-width: 238px;
+  width:245px;
 }
 
 
@@ -449,7 +449,7 @@ div.dc-chart {
   -moz-border-radius: 15px;
   border-radius: 15px;
   min-width:283px;
-  min-height:228px;
+  min-height:212px;
   opacity:0.7;
 }
 
@@ -459,6 +459,15 @@ div.dc-chart {
 
 #climate-scorecard .modal-backdrop.in {
 	background: url(/votecheck/climate/images/storm.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+#fracking-scorecard .modal-backdrop.in {
+	background: url(img/fracking.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

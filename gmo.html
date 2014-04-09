@@ -1,38 +1,63 @@
-<html lang="en" dir="ltr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Scorecard demo</title>
-<link rel="stylesheet" type="text/css" href="dc.css"/>
+<html lang="en" dir="ltr" id="gmo-scorecard">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Scorecard demo</title>
 
-<!-- Jquery mobile css and js -->
-<link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="dc.css"/>
 
-<!-- Font Awesome CSS Sprites -->
-<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <!-- Jquery mobile js -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
-<!-- Our styles -->
-<link rel="stylesheet" type="text/css" href="style.css"/>
+        <script type="text/javascript" src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 
-</head>
-<body>
+        <!-- Bootstrap -->
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="js/d3.v3.js"></script>
-<script type="text/javascript" src="js/crossfilter.js"></script>
-<script type="text/javascript" src="js/dc.js"></script>
-<script src="js/d3-tip.min.js"></script>
-<script src="scorecard.js"></script>
-<!--script type="text/javascript" src="../../src/data-grid.js"></script-->
-<script type="text/javascript" src="js/underscore-min.js"></script>
-<!--script type="text/javascript" src="queue.v1.min.js"></script-->
+        <!--Bootstrap tour-->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.8.1/css/bootstrap-tour.min.css" rel="stylesheet">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.8.1/js/bootstrap-tour.min.js"></script>
 
-<script src="jquery.min.js"></script>
-<script src="jquery.lazyload.js"></script>
+        <!-- Font Awesome CSS Sprites -->
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-<script>
+        <!-- Our styles -->
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+
+    </head>
+    <body>
+
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.min.js"></script>
+        <script type="text/javascript" src="js/dc.js"></script>
+        <script src="js/d3-tip.min.js"></script>
+        <script src="scorecard.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js
+
+"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+        <script>
+
+            var topic = {
+                "title": "Does your MEP care about the climate?",
+                "description": "We collected the main topics...",
+                "link": "",
+                "logo": "",
+                "limits": [
+                {"upper": 20,  "text": " is a climate killer.", "color": "red"},
+                {"upper": 40,  "text": " has voted against climate policies.", "color" : "orange" }, 
+                {"upper": 60,  "text": " is not really decided on the climate.", "color": "yellow"},
+                {"upper": 90,  "text": " is rather climate-friendly.",        "color": "palegreen"},
+                {"upper": 100, "text": " is a climate champion.",               "color": "lightgreen"} 
+                ],
+                "order": 1,
+                "name":"climate",
+                "weight": 1,
+            };
 
 var votes=  [
                 {
@@ -73,152 +98,329 @@ var votes=  [
                 },
     ];
 
+            var card=scoreCard (votes);
+
+        </script>
+
+        <nav style="margin-bottom: 0px; border-width: 0px; border-top-width: 5px; border-color: #3eb249;" class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                <a class="navbar-brand" href="#">Scoring the European Parliament:</a>
+                <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">GMO<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="/votecheck/climate.html" data-ajax="false">Climate Change</a></li>
+                      <li><a href="/votecheck/fracking.html" data-ajax="false">Fracking</a></li>
+                      <li><a href="/votecheck/gmo.html" data-ajax="false">GMO</a></li>
+                    </ul>  
+                  </li>
+                </ul>    
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/votecheck/climate/methodology.html" data-ajax="false">Methodology</a></li>
+                    <li><a href="/votecheck/climate/about.html" data-ajax="false">About</a></li>
+                    <!-- <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/votecheck/about.html" data-ajax="false">About the project</a></li>
+                        <li><a href="#" data-ajax="false">Scoring methodology</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Other scorecards</a></li>
+                    </ul>
+                    </li> -->
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+        </nav>
+    </div>
 
 
-var card=scoreCard (votes);
+    <div class="row" style="background-image: url('ep.jpg'); background-size: cover;">
+        <div class="container">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="form-group col-md-8">
+                      <div>
+                        <h1>GMO</h1>
+                        <p>How have your MEPs voted on GMO issues?</p>
+                      </div>  
 
-</script>
+                        <div class="input-group">
+                            <input type="text" data-mini="true" data-type="broken-i-hate-jqm-search" id="search-input" class="form-control input-lg" placeholder="Search">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                        </div>
+                        <span class="help-block" style="color: #E1E1E1;">Filter MEPs by name and party in real-time
+                            <button style="float: right; color: black;" class="btn resetall" data-icon="delete">Reset All</button>
+                        </span>
+                        <br />
+                    </div>
 
-<div data-role="page" class="jqm-demos" data-quicklinks="false" id="meps">
+                    <div class="col-md-4 frontpage_score">
+                        <div class="dc-data-count">
+                          <div class="bar_score center-block">
+                            <div class="graph_titles text-center"><h2>scores of <span class="filter-count"></span> MEPs</h2></div>
+                            <div class="text-center" id="avg_score"></div>
+                            <!--div class="header-score"><span class="filter-count"></span> selected
+                              <span class="outof">out of <span class="total-count"></span> MEPs</div-->
+                            </div>
+                        </div>    
+                      </div>
+                    </div>
 
-	<div data-role="header" class="jqm-header"  onclick="document.location.href='landing.html'" style="cursor:pointer">
-	<h2>
-		<img alt="" id="logo" />
-		<h3>Scoring the European Parliament: GMO</h3>
-	</h2>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div role="main" class="ui-content jqm-content">
-		<h1 class="starthead">GMO</h1>
-		<p><b>Click on the graphs to filter the Members of the European parliament by country or party</b></p>
+    <div class="container">
 
-			<div id="ep2014list">
-			<div class="group"></div>
-			<div class="country"></div>
-			<div class="bar_score"><div id="avg_score"></div></div>
-			<div class="gender"></div>
-			<div class="age"></div>
-			<div class="party"></div>
-			<div class="list"></div>
-			<div style="clear:both;">
-			<div class="dc-data-count">
-			<span class="filter-count"></span> selected out of <span class="total-count"></span> MEPs | <a
-			href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
-			</div>
-			</div>
-			<div class="nokparty">
-			</div>
-			<div class="dc-data-grid">
-			</div>
-			</div>
+        <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="ep2014list">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="country center-block">
+                              <div class="text-center graph_titles"><h2>Select your country by clicking on the bar chart</h2></div>
+                            </div>
+                          </div>
+                        </div>
+                         <!-- Accordion top level  -->
+                         <div class="panel-group" id="accordion">
+                          <div class="panel panel-default filter-panel-container">
+                            <div class="panel-heading">
+                              <a data-toggle="collapse" data-parent="#accordion" data-target ="#collapseOne" href="#collapseOne" class="collapsed">
+                                <h4 class="panel-title">
+                                  More filters
+                                  <span class ="glyphicon glyphicon-chevron-down"</span>
+                                </h4>
+                              </a>
+                            </div>
+                            <!-- Hidden stuff goes here -->
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                              <div class="panel-body">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="party center-block">
+                                            <div class="graph_titles text-center">
+                                                <h2>National party</h2>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div class="group center-block">
+                                            <div class="graph_titles text-center">
+                                                <h2>European Party</h2>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div class="gender center-block">
+                                            <div class="graph_titles text-center">
+                                                <h2>Gender</h2>
+                                            </div>
+                                        </div>
+                                      </div>
+                        <div class="gender"></div>
+                        <div class="age"></div>
 
-			<div data-role="popup" id="infobox" class="ui-content">
-			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-			<div class="ui-content">Photo goes here!</div>
-			<div class ="ui-content">Flag goes here!</div>
-			<div class = "ui-content">Score goes here!</div>
-			<div class = "returning ui-content">Returning candidate?</div>
-			<div class="ui-grid-a my-breakpoint">
-			  <div class="ui-block-a ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </div>
-			  An EU greenhouse gas reduction target of 50% by 2030
-			  </div>
-			  <div class="ui-block-b ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </div>
-			  Phasing out fossil fuel subsidies
-			  </div>
-			  <div class="ui-block-a ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </div>
-			  'Back-loading' the EU Emissions Trading System
-			  </div>
-			  <div class="ui-block-b ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </div>
-			  Increasing European renewable energy supply
-			  </div>
-			  <div class="ui-block-a ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-down"></i>
-				  </div>
-			  3 Binding Targets on the EU 2050 Roadmap
-			  </div>
-			  <div class="ui-block-b ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </div>
-			  Reporting greenhouse gas emissions across Europe
-			  </div>
-			  <div class="ui-block-a ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-down"></i>
-				  </div>
-			  Measures to reduce energy consumption
-			  </div>
-			  <div class="ui-block-b ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </div>
-			  Increasing 2020 emissions reductions targets to 30%
-			  </div>
-			  <div class="ui-block-a ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-down"></i>
-				  </div>
-			  Climate finance for the world's poorest
-			  </div>
-			  <div class="ui-block-b ui-content">
-				  <div class="thumbsup">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </div>
-			  Developing a common EU position ahead of the United Nations Conference on Sustainable Development
-			  </div>
-			  <div class="ui-block-a ui-content">
-				<div class="thumbsup">
-					  <i class="fa fa-thumbs-o-up"></i>
-				  </div>
-			  'The EU strategy for the Copenhagen Conference on Climate Change (COP 15)</div>
-			</div><!-- /votes grid -->
-			</div>
-	</div>
+                                  </div>
+                                  <!-- End of hidden stuff -->
+                                 </div>
+                                </div>
+                              </div>
+                            </div>    
+                            <!-- End of accordion -->
+
+                        <div style="clear:both;"></div>
+                    </div>
+                </div>	
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">		
+                    
+                    <div class="list"></div>
+
+                    <div class="row">
+
+                    </div>
+                </div>		
+
+            </div>
+        </div>
+
+        </div>
+
+        <div class="row" style="background-color: whitesmoke;">
+
+        <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="nokparty"></div>
+
+            <div class="dc-data-grid"></div>
+
+          </div>
+
+          <!-- Modal  -->
+          <div id="infobox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="infobox_content">
+              <!-- Populated information appears here -->
+            </div>
+          </div>
+          <!-- End of modal -->
+
+        </div>
+        </div>
+        </div>
+
+    </div>
 </div>
 
-<script>
-var meps = [];
-var mepvotes = [];
+<script type="text/tpl" id="infobox_tpl">
 
-$(function() {
-  var _grid = _.after(2, function () {
-    card.grid ("#ep2014list");
-  });
+    <span>
+        <img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
+    </span>
 
-    d3.csv("mep.csv", function(d) {return d;}
-      ,function(error, rows) {
-        meps = rows;
-        _grid ();
-      });      
+    <ul id="infobox_info">
+        <li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
+        <li>Participation: <strong><%= Math.round(effort) %></strong></li>
+        <li>Country: <strong><%= country %></strong></li>
+        <li>National party: <strong><%= party %></strong></li>
+        <li>European Party:<strong> <%= eugroup %> </strong></li>
+        <span id="score"><%= score %></span>
+    </ul>	
 
-    d3.csv("data/foe_gmo.csv", function(d) {return d;}
-      ,function(error, rows) {
-        card.vote.setRollCall (rows);
-        _grid ();
-      });      
+    <div style="clear:both;margin-bottom:20px"></div>
 
-//$( "#infobox" ).popup();
+</script>
 
+<script type="text/tpl" id="score_tpl">
+    <div class="row">
+      <% var count = 0; %>
+        <% _.each (d, function (v) { %>
+          <%
+            count++;
+            if ((count % 2) == 0) {
+          %>
+                <div class="row" style="margin:0px">
+          <% } %>
+            <div class="col-md-6 each_vote_containe">
+              <div class="panel panel-default <%= v.type %>">
+              <div class="panel-heading">
+voted&nbsp;<span class="thumbs">
+	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>">&nbsp;<%= vote.type[v.mep]  %></i></span>, we wanted&nbsp;
+		  <span class="thumbs">
+	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.recommendation] %>" title="We recommended <%= vote.type[v.recommendation] %>"></i>
+  	  </span>
 
-});      
+                  <h3 class="panel-title"><%= v.title %></h3>
+              </div>
+              <div class="panel-body">
+                <p><%= v.description %></p>
+              </div>
+            </div>
+            </div>
+            <% if ((count % 2) == 0) { %>
+                </div>
+            <% } %>
+         <% }); %>
+    </div><!-- /votes grid -->
+    <div style="clear:both;margin-bottom: 20px;"></div>
 </script>
 
 <script>
-//$onclick()
+    var meps = [];
+    var mepvotes = [];
+
+    $(function() {
+        var _grid = _.after(2, function () {
+            card.grid ("#ep2014list");
+        });
+
+        d3.csv("mep.csv", function(d) {return d;}
+        ,function(error, rows) {
+            meps = rows;
+            _grid ();
+        }
+        );      
+
+        d3.csv("data/foe_gmo.csv", function(d) {return d;}
+        ,function(error, rows) {
+            card.vote.setRollCall (rows);
+            _grid ();
+        }
+        );      
+    });      
 </script>
 
+<script>
+// Instance the tour
+var tour = new Tour({
+  name: "tour",
+  steps: [
+  {
+    element: "#search-input",
+    title: "Other scorecards",
+    content: "You can select other scorecards curated by different NGOs"
+  },
+  {
+    element: "#my-other-element",
+    title: "Title of my step",
+    content: "Content of my step"
+  }
+],
+container: "body",
+  keyboard: true,
+  storage: window.localStorage,
+  debug: false,
+  backdrop: false,
+  redirect: true,
+  orphan: false,
+  duration: false,
+});
+
+// Initialize the tour
+tour.init();
+
+// Start the tour
+tour.start();
+
+</script>
+
+<!-- Make extra filters box collapse on page load -->
+<script>
+$(document).ready(function(){
+  $('#collapseOne').removeClass('in');});
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49884709-1', 'ep-scorecard.org');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>
