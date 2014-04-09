@@ -226,7 +226,7 @@ text-decoration: none;
   line-height: 1;
   font-weight: bold;
   padding: 12px;
-  background: rgba(200, 200, 200, 0.8);
+  background: rgba(200, 200, 200, 0.9);
   color: #222;
   border-radius: 2px;
   pointer-events: none;
@@ -476,4 +476,10 @@ div.dc-chart {
 
 .fa {
 	font-size:14px;
+}
+
+.party {
+	font-size: 14px;
+font-family: sans-serif;
+font-weight: bold;
 }

@@ -170,11 +170,11 @@ function grid (selector) {
     return vote.getScore (mep.epid);
   }
 
-  // color based on the score.
+  // color based on the score.F0A92E
   var color = d3.scale.linear()
     .clamp(true)
-    .domain([0, 49, 50, 51, 100])
-    .range(["#CF1919","#FA9B9B","#ccc","#d0e5cc","#2C851C"])
+    .domain([20, 50, 65, 75, 100])
+    .range(["#ED0E0E","#FC9144","#FF8E2B","#BBE06C","#2C851C"])
     .interpolate(d3.interpolateHcl);
 
   function adjust (data) {
@@ -218,7 +218,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .brushOn(true)
     .renderArea(true)
     .elasticY(true)
-    .yAxisLabel("#MEPs")
+    .yAxisLabel("Number of MEPs") 
     .dimension(age)
     .group(ageGroup);
 
@@ -260,6 +260,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .margins({top: 10, right: 10, bottom: 20, left: 30})
     .x(d3.scale.linear().domain([0, 101]))
     .elasticY(true)
+    .yAxisLabel("Number of MEPs")
     .round(dc.round.floor)
     .colorCalculator(function(d, i) {
         return color(d.key);
@@ -317,7 +318,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .xUnits(dc.units.ordinal)
     .brushOn(false)
     .elasticY(true)
-    .yAxisLabel("#MEPs")
+    .yAxisLabel("Number of MEPs")
     .dimension(country)
     .group(countryGroup)
     .on("postRender", function(c) {
