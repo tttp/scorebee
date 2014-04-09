@@ -293,6 +293,7 @@ text-decoration: none;
   margin-left:auto;
   margin-right:auto;
   width:inherit;
+  opacity: 0.5;
 }
 
 
@@ -432,6 +433,7 @@ div.dc-chart {
   border-radius: 15px;
   min-width:283px;
   min-height:228px;
+  opacity: 0.5;
 }
 
 .header-score {
