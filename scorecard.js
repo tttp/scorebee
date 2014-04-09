@@ -1,8 +1,6 @@
 $.mobile.hashListeningEnabled = false;
 $.mobile.pushStateEnabled = false;
 
-
-
 var tplPopup = null;
 var tplScore = null;
 var ndx = null; //workaround for now...
