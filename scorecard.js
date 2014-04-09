@@ -308,8 +308,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       function(d) {
       return d.value.count;
       })
-  .width(600)
-    .height(200)
+  .width(700)
+    .height(300)
     .outerPadding(0)
     .gap(1)
     .margins({top: 10, right: 0, bottom: 95, left: 30})
@@ -508,8 +508,7 @@ function chartParty (selector, ndx, color) {
   .width(444)
     .height(240)
     .margins({top: 20, right: 20, bottom: 95, left: 30})
-    .yAxisLabel("Participation rate")
-    .xAxisLabel("Score")
+    .yAxisLabel("Votes attended")
     .dimension(party)
     .group(partyGroup)
     .keyAccessor(function (p) {
