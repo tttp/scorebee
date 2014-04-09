@@ -441,8 +441,8 @@ function chartGroup (selector,ndx,color) {
  var tip = d3.tip()
     .attr('class', 'd3-tip')
     .html(function(p) { return '<span><h2>' +  p.data.key + "</h2><ul>" + 
-                "<li>MEPs: " +p.data.value.count + "</li>" +
-                "<li>effort: " +Math.floor (p.data.value.effort/p.data.value.count) + "</li>" +
+                "<li>Number of MEPs: " +p.data.value.count + "</li>" +
+                "<li>Average participation: " +Math.floor (p.data.value.effort/p.data.value.count) + "</li>" +
                 "<li>score: "+Math.floor (p.data.value.score/p.data.value.count); 
        '</li></ul></span>' })
     .offset([-12, 0])
@@ -483,9 +483,9 @@ function chartParty (selector, ndx, color) {
     .attr('class', 'd3-tip')
     .html(function(p) { return '<span><h2>' +
         p.key + "</h2><ul>" + 
-                "<li>MEPs: " +p.value.count + "</li>" +
-                "<li>effort: " +Math.floor (p.value.effort/p.value.count) + "</li>" +
-                "<li>score: "+Math.floor (p.value.score/p.value.count); 
+                "<li>Number of MEPs: " +p.value.count + "</li>" +
+                "<li>Average participation: " +Math.floor (p.value.effort/p.value.count) + "</li>" +
+                "<li>Average score: "+Math.floor (p.value.score/p.value.count); 
        '</li></ul></span>' })
     .offset([-12, 0])
 
@@ -508,7 +508,7 @@ function chartParty (selector, ndx, color) {
   .width(444)
     .height(240)
     .margins({top: 20, right: 20, bottom: 95, left: 30})
-    .yAxisLabel("Effort")
+    .yAxisLabel("Participation rate")
     .xAxisLabel("Score")
     .dimension(party)
     .group(partyGroup)
