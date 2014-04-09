@@ -285,7 +285,13 @@ text-decoration: none;
   }
 
 .bar_score svg {position:relative;}
-.bar_score div#avg_score {font-size:130; color:#000;opacity:0.8}
+.bar_score div#avg_score {
+  font-size: 130;
+  color: #111;
+  opacity: 0.5;
+  position: absolute;
+  margin: -10px 0 0 56px;
+}
 
 
 .dc-data-count .filter-count {
@@ -419,4 +425,11 @@ div.dc-chart {
 .frontpage_score {
   background-color:#fff;
   margin-top:20px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+}
+
+.header-score {
+  color:#333;
 }
