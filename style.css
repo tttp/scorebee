@@ -373,6 +373,7 @@ background-color: #FFF;
 max-height: 70%;
 top: 10%;
 bottom: 10%;
+overflow-x: hidden;
 }
 
 .modal-header {
