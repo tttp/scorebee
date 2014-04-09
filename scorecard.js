@@ -143,7 +143,7 @@ var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
-var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://ep.ngo.im/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
+var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
 
 var getMEP = function (id) {
     for (var i in meps) {
@@ -362,20 +362,13 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
           d.votes=vote.getVotes(d.epid);
 
           var v = {d:vote.all};
-         _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
-  x.direction = vote.direction [x.mep];
-  x.type = vote.type [x.mep*x.recommendation];
-  // tried to convert the mep and recommendation 1 and -1 into up and down for thumbs
-  x.mep = {1:"up","-1":"down"};
-  x.recommendation = {1:"up","-1":"down"};
-});
-console.log(v);
+          _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
+             x.direction = vote.direction [x.mep];
+             x.type = vote.type [x.mep*x.recommendation];
+          });
 
-            $( "#infobox").modal('show');
-            $( ".infobox_content" ).html(tplPopup(d) + tplScore(v) );
-
-            
-
+          $( "#infobox").modal('show');
+          $( ".infobox_content" ).html(tplPopup(d) + tplScore(v) );
         });
         $("img.lazy-load").lazyload ({effect : "fadeIn"})
         .removeClass("lazy-load");
