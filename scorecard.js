@@ -234,8 +234,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 
 
   pie_gender
-    .width(200)
-    .height(200)
+    .width(140)
+    .height(140)
     .dimension(gender)
     .label(function (d){
         return SymbolGender[d.key];
@@ -407,6 +407,7 @@ function getCountryKey (name) {
 }
 
 function scrollTo (id) {
+  $("#collapseOne").collapse("show");
   jQuery('html, body').animate({
     scrollTop: jQuery(".country_"+getCountryKey(id)).offset().top
   }, 2000);

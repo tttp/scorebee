@@ -218,7 +218,7 @@ text-decoration: none;
 }
 
 .age {display:none}
-.gender {display:none}
+.dc-chart.gender .pie-slice {font-size:40px;}
 
 .d3-tip {
   line-height: 1;
