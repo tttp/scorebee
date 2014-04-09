@@ -301,7 +301,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       function(d) {
       return d.value.count;
       })
-  .width(444)
+  .width(600)
     .height(200)
     .outerPadding(0)
     .gap(1)

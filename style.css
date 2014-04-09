@@ -305,12 +305,12 @@ margin-top:10px;
 
 
 .dc-data-count .filter-count {
-color: #FFF;
+color: #111;
 font-weight: bold;
 }
 
 .dc-data-count .total-count {
-color: #FFF;
+color: #111;
 }
 
 .landing-button {
@@ -324,7 +324,6 @@ font-size: 0.5em;
 color: #232323;
 margin-left: auto;
 margin-right: auto;
-width:300px;
 }
 
 .graph_titles h1 {
@@ -350,7 +349,7 @@ right: 60px;
 .group .deselected path {opacity:1}
 .group  path {stroke:lightgrey}
 
-.country {width:450px;}
+.country {width:600px;}
 
 .ui-header h2.ui-title b {color:#2c851c}
 
@@ -408,4 +407,8 @@ bottom: 10%;
 
 .panel-body{
   padding:10px;
+}
+
+div.dc-chart {
+  float:none;
 }
