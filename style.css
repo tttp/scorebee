@@ -343,6 +343,8 @@ right: 60px;
 .pro {border-color:green;}
 .against {border-color:red;}
 .panel-body {background-color:white;}
+.pro .panel-heading {background-color:green;color:white}
+.against .panel-heading {background-color:red;color:white}
 
 .dc-chart g.axis.x text{
   cursor:pointer;
