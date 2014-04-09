@@ -133,6 +133,7 @@ height: 320px;
 
 .dc-grid-item>div:hover { 
 opacity: 0.8;
+cursor:pointer;
 }
 
 .dc-grid-item {
