@@ -327,6 +327,10 @@ margin-right: auto;
 width:300px;
 }
 
+.graph_titles h1 {
+  font-size:18px;
+}
+
 .parties-box {
 	width:230px;
 }
@@ -396,4 +400,12 @@ bottom: 10%;
 
 .panel-title {
   font-weight: bold;
+}
+
+.panel {
+  min-height: 190px;
+}
+
+.panel-body{
+  padding:10px;
 }
