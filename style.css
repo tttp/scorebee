@@ -23,6 +23,8 @@ text-align: center;
 margin: 1 auto;
 }
 
+h2 {font-size:22px;}
+
 .jqm-demos .jqm-content > h1.starthead {
 font-size: 3.5em;
 width: 50%;
@@ -230,8 +232,9 @@ text-decoration: none;
   pointer-events: none;
 }
 
-.d3-tip h2{ font-size:14px;color:#222;}
-.d3-tip ul{ padding:10px 0 0 10px; margin:0}
+
+.d3-tip h2{ font-size:14px;color:#222;margin:5px;}
+.d3-tip ul{ padding:0 0 0 10px; margin:0 0 0 10px}
 
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
