@@ -146,7 +146,7 @@ var topics = ["climate","gmo","topic 3","topic 4"];
 var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
 
 var tplGroup = function (d) {
-    return "<div class='dc-grid-group nodc-grid-item country_"+d.key.toLowerCase()+"'><h1 class='dc-grid-label'>"+d.key+"</h1></div>";
+    return "<div class='dc-grid-group nodc-grid-item country_"+getCountryKey(d.key)+"'><h1 class='dc-grid-label'>"+d.key+"</h1></div>";
 };
 
 var getMEP = function (id) {
@@ -329,9 +329,9 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     chart.svg().selectAll('.axis.x text')
       .on("click",function(d) { 
         chart.filter(d);
-        dc.redrawAll();}
+        dc.redrawAll();
         scrollTo(d);
-      )
+      })
       .style("text-anchor", "end" )      
       .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
   }
@@ -402,9 +402,13 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 }
 
 
+function getCountryKey (name) {
+   return name.replace(/ /g,"_").toLowerCase();
+}
+
 function scrollTo (id) {
   jQuery('html, body').animate({
-    scrollTop: jQuery(".country_"+id.toLowerCase()).offset().top
+    scrollTop: jQuery(".country_"+getCountryKey(id)).offset().top
   }, 2000);
 };
 
