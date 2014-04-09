@@ -350,6 +350,7 @@ right: 60px;
 #search-box ui-input-search {width:auto;float:none;}
 
 .abstention {border-color:lightgrey}
+.abstent {opacity:0.5;}
 .pro {border-color:green;}
 .against {border-color:red;}
 .panel-body {background-color:white;}
