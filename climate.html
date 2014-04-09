@@ -281,10 +281,14 @@
 
         <div class="row">
 
-          <div class="nokparty"></div>
+          <div class="col-md-12">
 
-          <div class="dc-data-grid"></div>
+            <div class="nokparty"></div>
 
+            <div class="dc-data-grid"></div>
+
+          </div>
+              
           <!-- Modal  -->
           <div id="infobox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -323,30 +327,39 @@
 
 <script type="text/tpl" id="score_tpl">
     <div class="row">
+      <% var count = 0; %>
         <% _.each (d, function (v) { %>
-            <div class="col-md-6 each_vote_container">
+          <%
+            count++;
+            if ((count % 2) == 0) {
+          %>
+                <div class="row">
+          <% } %>
+            <div class="col-md-6 each_vote_containe">
               <div class="panel panel-default">
-                <div class="panel-heading">
+              <div class="panel-heading">
+                  <span class="thumbs">
+                    <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
+                  </span>
+                  <span class="<%= v.type %>">They voted:
                     <span class="thumbs">
-                      <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
+                      <i class="fa fa-thumbs-o-<%= v.mep %>"></i>
                     </span>
-                    <span class="<%= v.type %>">They voted: 
-                      <span class="thumbs">
-                        <i class="fa fa-thumbs-o-<%= v.mep %>"></i>
-                      </span> 
-                      We recommended 
-                      <span class="thumbs">
-                        <i class="fa fa-thumbs-o-<%= v.recommendation %>"></i>
-                      </span> 
+                  We recommended
+                    <span class="thumbs"><i class="fa fa-thumbs-o-<%= v.recommendation %>"></i>
                     </span>
-                    <h3 class="panel-title"><%= v.title %></h3>
+                  </span>
+                  <h3 class="panel-title"><%= v.title %></h3>
+              </div>
+              <div class="panel-body">
+                <p><%= v.description %></p>
+              </div>
+            </div>
+            </div>
+            <% if ((count % 2) == 0) { %>
                 </div>
-                <div class="panel-body">      
-                  <p><%= v.description %></p>
-                </div>
-                </div>
-              </div>  
-            <% }); %>
+            <% } %>
+         <% }); %>
     </div><!-- /votes grid -->
     <div style="clear:both;margin-bottom: 20px;"></div>
 </script>
