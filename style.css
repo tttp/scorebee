@@ -335,9 +335,10 @@ right: 60px;
 #search-box label {float:none;width:100%}
 #search-box ui-input-search {width:auto;float:none;}
 
-.abstention {background:lightgrey}
-.pro {background:green}
-.against {background:red}
+.abstention {border-color:lightgrey}
+.pro {border-color:green;}
+.against {border-color:red;}
+.panel-body {background-color:white;}
 
 .dc-chart g.axis.x text{
   cursor:pointer;
