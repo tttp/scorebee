@@ -173,7 +173,7 @@ function grid (selector) {
   // color based on the score.F0A92E
   var color = d3.scale.linear()
     .clamp(true)
-    .domain([20, 50, 65, 75, 100])
+    .domain([0, 49, 50, 51, 100])
     .range(["#CF1919","#FA9B9B","#ccc","#d0e5cc","#2C851C"])
     // .range(["#ED0E0E","#FC9144","#FF8E2B","#CCF279","#2C851C"])
     .interpolate(d3.interpolateHcl);
