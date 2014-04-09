@@ -47,7 +47,7 @@ var votes = function (all) {
   this.all = all;// votes to be taken into account. [dbid] is the voteid key
   this.index = {}; // column number in the cvs of a voteid
   this.mepindex = {}; //row number in the csv of a mepid
-  this.type = {1:"pro","-1":"against",0:"abstention","X":"absent","":"not mep"};
+  this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not mep"};
   this.direction = {1:"up","-1":"down"}; 
   _.each (all, function(v,i) {
     v.pro = v.against = v.abstention = v.absent = v["not mep"] = 0;
@@ -66,7 +66,7 @@ votes.prototype.get = function (id) { //return the detail of a vote based on its
 }
 
 votes.prototype.setRollCall = function (rolls) {
-  //var type = {1:"pro","-1":"against",0:"abstention","X":"absent","":"not mep"};
+  //var type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not mep"};
 
   this.rollcalls = rolls;
   _.each (rolls, function(v,i) {

@@ -356,10 +356,10 @@ right: 60px;
 
 .abstention {border-color:lightgrey}
 .absent {opacity:0.5;}
-.pro {border-color:green;}
+.for {border-color:green;}
 .against {border-color:red;}
 .panel-body {background-color:white;}
-.pro .panel-heading {background-color:green;color:white}
+.for .panel-heading {background-color:green;color:white}
 .against .panel-heading {background-color:red;color:white}
 .not.mep .panel-heading {text-decoration:line-through}
 
