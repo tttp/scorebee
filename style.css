@@ -280,7 +280,7 @@ text-decoration: none;
   }
 
 .bar_score svg {position:relative;}
-.bar_score div#avg_score {position:absolute;margin:-26px 0 0 45px;font-size:130; color:#fff;opacity:0.5}
+.bar_score div#avg_score {position:absolute;margin:-26px 0 0 45px;font-size:130; color:#000;opacity:0.8}
 
 
 .dc-data-count .filter-count {
@@ -393,4 +393,13 @@ div.dc-chart {
 .dc-chart svg {
     display: block;
     margin: auto;
+}
+
+.jumbotron {
+ background-color: rgba(0,0,0,0.6); 
+ color: white; 
+ margin-bottom: 10px; 
+ margin-top:10px;
+ padding-top: 0px;
+ padding-bottom: 0px;
 }
