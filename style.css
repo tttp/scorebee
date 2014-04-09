@@ -403,3 +403,7 @@ div.dc-chart {
  padding-top: 0px;
  padding-bottom: 0px;
 }
+
+.filter-panel-container {
+  min-height:0px;
+}
