@@ -294,6 +294,8 @@ text-decoration: none;
   margin-right:auto;
   width:inherit;
   opacity: 0.5;
+  min-height: 185px;
+  min-width: 238px;
 }
 
 
