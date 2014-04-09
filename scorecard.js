@@ -365,13 +365,15 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
          _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
   x.direction = vote.direction [x.mep];
   x.type = vote.type [x.mep*x.recommendation];
+  // tried to convert the mep and recommendation 1 and -1 into up and down for thumbs
+  x.mep = {1:"up","-1":"down"};
+  x.recommendation = {1:"up","-1":"down"};
 });
 console.log(v);
 
             $( "#infobox").modal('show');
-            // $( "#infobox").on('show', function(){
-              $( ".infobox_content" ).html(tplPopup(d) + tplScore(v) );
-            // });
+            $( ".infobox_content" ).html(tplPopup(d) + tplScore(v) );
+
             
 
         });
