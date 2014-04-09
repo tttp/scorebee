@@ -47,7 +47,7 @@ var votes = function (all) {
   this.all = all;// votes to be taken into account. [dbid] is the voteid key
   this.index = {}; // column number in the cvs of a voteid
   this.mepindex = {}; //row number in the csv of a mepid
-  this.type = {1:"pro","-1":"against",0:"abstention","X":"absent","":"not mep"};
+  this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not mep"};
   this.direction = {1:"up","-1":"down"}; 
   _.each (all, function(v,i) {
     v.pro = v.against = v.abstention = v.absent = v["not mep"] = 0;
@@ -66,7 +66,7 @@ votes.prototype.get = function (id) { //return the detail of a vote based on its
 }
 
 votes.prototype.setRollCall = function (rolls) {
-  //var type = {1:"pro","-1":"against",0:"abstention","X":"absent","":"not mep"};
+  //var type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not mep"};
 
   this.rollcalls = rolls;
   _.each (rolls, function(v,i) {
@@ -308,8 +308,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       function(d) {
       return d.value.count;
       })
-  .width(600)
-    .height(200)
+  .width(700)
+    .height(300)
     .outerPadding(0)
     .gap(1)
     .margins({top: 10, right: 0, bottom: 95, left: 30})
@@ -441,8 +441,8 @@ function chartGroup (selector,ndx,color) {
  var tip = d3.tip()
     .attr('class', 'd3-tip')
     .html(function(p) { return '<span><h2>' +  p.data.key + "</h2><ul>" + 
-                "<li>MEPs: " +p.data.value.count + "</li>" +
-                "<li>effort: " +Math.floor (p.data.value.effort/p.data.value.count) + "</li>" +
+                "<li>Number of MEPs: " +p.data.value.count + "</li>" +
+                "<li>Average participation: " +Math.floor (p.data.value.effort/p.data.value.count) + "</li>" +
                 "<li>score: "+Math.floor (p.data.value.score/p.data.value.count); 
        '</li></ul></span>' })
     .offset([-12, 0])
@@ -483,9 +483,9 @@ function chartParty (selector, ndx, color) {
     .attr('class', 'd3-tip')
     .html(function(p) { return '<span><h2>' +
         p.key + "</h2><ul>" + 
-                "<li>MEPs: " +p.value.count + "</li>" +
-                "<li>effort: " +Math.floor (p.value.effort/p.value.count) + "</li>" +
-                "<li>score: "+Math.floor (p.value.score/p.value.count); 
+                "<li>Number of MEPs: " +p.value.count + "</li>" +
+                "<li>Average participation: " +Math.floor (p.value.effort/p.value.count) + "</li>" +
+                "<li>Average score: "+Math.floor (p.value.score/p.value.count); 
        '</li></ul></span>' })
     .offset([-12, 0])
 
@@ -508,7 +508,7 @@ function chartParty (selector, ndx, color) {
   .width(444)
     .height(240)
     .margins({top: 20, right: 20, bottom: 95, left: 30})
-    .yAxisLabel("Effort")
+    .yAxisLabel("Votes attended")
     .dimension(party)
     .group(partyGroup)
     .keyAccessor(function (p) {
