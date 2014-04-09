@@ -289,8 +289,10 @@ text-decoration: none;
   font-size: 130;
   color: #111;
   opacity: 0.5;
-  position: absolute;
-  margin: -10px 0 0 56px;
+  margin-bottom:-170px;
+  margin-left:auto;
+  margin-right:auto;
+  width:inherit;
 }
 
 
@@ -428,6 +430,8 @@ div.dc-chart {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
+  min-height:213px;
+  min-width:283px;
 }
 
 .header-score {
