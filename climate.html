@@ -262,7 +262,7 @@
                               </a>
                             </div>
                             <!-- Hidden stuff goes here -->
-                            <div id="collapseOne" class="panel-collapse collapse">
+                            <div id="collapseOne" class="panel-collapse collapse in">
                               <div class="panel-body">
                                     <div class="row">
                                       <div class="col-md-3">
@@ -466,6 +466,13 @@ tour.init();
 tour.start();
 
 </script>
+
+<!-- Make extra filters box collapse on page load -->
+<script>
+$(document).ready(function(){
+  $('#collapseOne').removeClass('in');});
+</script>
+
 
 </body>
 </html>
