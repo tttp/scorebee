@@ -509,6 +509,7 @@ function chartParty (selector, ndx, color) {
     .height(240)
     .margins({top: 20, right: 20, bottom: 95, left: 30})
     .yAxisLabel("Effort")
+    .xAxisLabel("Score")
     .dimension(party)
     .group(partyGroup)
     .keyAccessor(function (p) {
