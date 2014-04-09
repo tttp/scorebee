@@ -430,8 +430,6 @@ div.dc-chart {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  min-height:213px;
-  min-width:283px;
 }
 
 .header-score {
