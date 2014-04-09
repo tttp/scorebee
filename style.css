@@ -447,3 +447,11 @@ div.dc-chart {
 .header-score {
   color:#333;
 }
+
+.modal-backdrop.in {
+	background: url(/votecheck/climate/images/storm.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
