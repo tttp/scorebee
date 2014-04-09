@@ -382,19 +382,16 @@
                 <div class="row">
           <% } %>
             <div class="col-md-6 each_vote_containe">
-              <div class="panel panel-default">
+              <div class="panel panel-default <%= v.type %>">
               <div class="panel-heading">
-                  <span class="thumbs">
-                    <i class="fa fa-thumbs-o-<%= v.direction %>"></i>
-                  </span>
-                  <span class="<%= v.type %>">They voted:
-                    <span class="thumbs">
-                      <i class="fa fa-thumbs-o-<%= v.mep %>"></i>
-                    </span>
-                  We recommended
-                    <span class="thumbs"><i class="fa fa-thumbs-o-<%= v.recommendation %>"></i>
-                    </span>
-                  </span>
+voted		  <span class="thumbs">
+	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>"><%= vote.type[v.mep]  %></i>
+  	  </span>
+, we wanted
+		  <span class="thumbs">
+	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.recommendation] %>" title="We recommended <%= vote.type[v.recommendation] %>"></i>
+  	  </span>
+
                   <h3 class="panel-title"><%= v.title %></h3>
               </div>
               <div class="panel-body">
