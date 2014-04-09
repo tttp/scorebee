@@ -415,3 +415,8 @@ div.dc-chart {
 .filter-panel-container {
   min-height:0px;
 }
+
+.frontpage_score {
+  background-color:#fff;
+  margin-top:20px;
+}
