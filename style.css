@@ -355,6 +355,7 @@ right: 60px;
 .panel-body {background-color:white;}
 .pro .panel-heading {background-color:green;color:white}
 .against .panel-heading {background-color:red;color:white}
+.not.mep .panel-heading {text-decoration:line-through}
 
 .dc-chart g.axis.x text{
   cursor:pointer;

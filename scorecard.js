@@ -47,10 +47,10 @@ var votes = function (all) {
   this.all = all;// votes to be taken into account. [dbid] is the voteid key
   this.index = {}; // column number in the cvs of a voteid
   this.mepindex = {}; //row number in the csv of a mepid
-  this.type = {1:"pro","-1":"against",0:"abstention","":"absent"};
+  this.type = {1:"pro","-1":"against",0:"abstention","X":"absent","":"not mep"};
   this.direction = {1:"up","-1":"down"}; 
   _.each (all, function(v,i) {
-    v.pro = v.against = v.abstention = v.absent = 0;
+    v.pro = v.against = v.abstention = v.absent = v["not mep"] = 0;
     v.date = new Date (v.date);
     if (typeof v.dbid !== "undefined") {
       this.index[v.dbid] = i;
@@ -66,7 +66,7 @@ votes.prototype.get = function (id) { //return the detail of a vote based on its
 }
 
 votes.prototype.setRollCall = function (rolls) {
-  //var type = {1:"pro","-1":"against",0:"abstention","":"absent"};
+  //var type = {1:"pro","-1":"against",0:"abstention","X":"absent","":"not mep"};
 
   this.rollcalls = rolls;
   _.each (rolls, function(v,i) {
@@ -103,7 +103,7 @@ votes.prototype.getEffort = function (mepid) {
       ++nbvote;
       if (Math.abs(mep[vote.dbid]) == 1) // yes or no
         ++effort;
-//      if (mep[vote.dbid] == 0) ++effort; //count abstention as effort
+      if (mep[vote.dbid] == 0) ++effort; //count abstention as effort
     }
   },this);
   return effort/nbvote * 100; 
@@ -131,6 +131,9 @@ votes.prototype.getScore = function (mepid) {
   _.each(this.all, function (vote) {
     if (mep[vote.dbid]) {
       nbvote = nbvote + vote.weight; //no weight used
+      if ( mep[vote.dbid] == "X") { //abstention, we skip
+        return;
+      }
       score = score + vote.recommendation * mep[vote.dbid]*vote.weight;
     }
   },this);
@@ -375,7 +378,16 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
           var v = {d:vote.all};
           _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
              x.direction = vote.direction [x.mep];
-             x.type = vote.type [x.mep*x.recommendation];
+             if (x.mep == "") {
+               x.type ="not mep";
+               return;
+             } 
+             if (x.mep == "X") {
+               x.type ="absent";
+               return;
+             } else {
+               x.type = vote.type [x.mep*x.recommendation];
+             }
           });
 
           $( "#infobox").modal('show');
