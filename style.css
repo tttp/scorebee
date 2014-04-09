@@ -433,7 +433,7 @@ div.dc-chart {
   border-radius: 15px;
   min-width:283px;
   min-height:228px;
-  opacity: 0.5;
+  opacity:0.7;
 }
 
 .header-score {
