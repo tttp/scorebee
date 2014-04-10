@@ -25,7 +25,6 @@ jQuery(function($){
 
 });
 
-$(window).load(function() {
   $.ajax({
     url: "https://freegeoip.net/json/?callback=?",
     crossDomain: true,
@@ -39,12 +38,14 @@ $(window).load(function() {
           location.hash = "#bar_country";
           bar_country.filter (data.country_name); 
 //          scrollTo("main");
+          scrolled = true; // no need to smooth scroll, the visitor knows now
           dc.redrawAll(); 
           $("#collapseOne").collapse("show");
         }
       });
     }
   });
+$(window).load(function() {
 });
 
 
