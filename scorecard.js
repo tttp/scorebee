@@ -44,10 +44,10 @@ var votes = function (all) {
   this.all = all;// votes to be taken into account. [dbid] is the voteid key
   this.index = {}; // column number in the cvs of a voteid
   this.mepindex = {}; //row number in the csv of a mepid
-  this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP"};
+  this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
   this.direction = {1:"up","-1":"down"}; 
   _.each (all, function(v,i) {
-    v.pro = v.against = v.abstention = v.absent = v["not an MEP"] = 0;
+    v.pro = v.against = v.abstention = v.absent = v["not an MEP at the time of this vote"] = 0;
     v.date = new Date (v.date);
     if (typeof v.dbid !== "undefined") {
       this.index[v.dbid] = i;
@@ -63,7 +63,7 @@ votes.prototype.get = function (id) { //return the detail of a vote based on its
 }
 
 votes.prototype.setRollCall = function (rolls) {
-  //var type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP"};
+  //var type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
 
   this.rollcalls = rolls;
   _.each (rolls, function(v,i) {
@@ -378,7 +378,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
           _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
              x.direction = vote.direction [x.mep];
              if (x.mep == "") {
-               x.type ="not an MEP";
+               x.type ="not an MEP at the time of this vote";
                return;
              } 
              if (x.mep == "X") {
