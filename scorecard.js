@@ -143,7 +143,7 @@ var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
-var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
+var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
 
 var tplGroup = function (d) {
     return "<div class='dc-grid-group nodc-grid-item country_"+getCountryKey(d.key)+"'><h1 class='dc-grid-label'>"+d.key+"</h1></div>";
@@ -551,3 +551,8 @@ function chartParty (selector, ndx, color) {
   this.grid = grid;
   return this;
 };
+
+String.prototype.formatName = function() {
+
+    return this.toLowerCase().replace(/(?:^|\s|-)\S/g, function(word) { return word.toUpperCase(); });
+}

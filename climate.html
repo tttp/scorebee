@@ -360,7 +360,7 @@
     </span>
 
     <ul id="infobox_info">
-        <li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
+        <li><h1><strong><%= first_name %> <%= last_name.formatName() %></strong></h1></li>
         <li>Participation: <strong><%= Math.round(effort) %></strong></li>
         <li>Country: <strong><%= country %></strong></li>
         <li>National party: <strong><%= party %></strong></li>
@@ -392,15 +392,20 @@
                 <div class="row" style="margin:0px">
           <% } %>
             <div class="col-md-6 each_vote_containe">
-              <div class="panel panel-default <%= v.type %>">
+            <% if (v.type == "for") { %>
+              <div class="panel panel-success">
+            <% } else { %>
+              <div class="panel panel-danger">
+            <% } %>
               <div class="panel-heading">
+                  <h3 class="panel-title"><%= v.title %></h3>
 voted&nbsp;<span class="thumbs">
 	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>"></i>&nbsp;<%= vote.type[v.mep]  %></span>, we recommend&nbsp;
 		  <span class="thumbs">
 	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.recommendation] %>" title="We recommended <%= vote.type[v.recommendation] %>"></i>
   	  </span>
 
-                  <h3 class="panel-title"><%= v.title %></h3>
+
               </div>
               <div class="panel-body">
                 <p><%= v.description %></p>
