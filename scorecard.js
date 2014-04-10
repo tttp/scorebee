@@ -506,10 +506,10 @@ function chartParty (selector, ndx, color) {
       function(d) {
       return d.value.count;
       })
-  .width(444)
-    .height(240)
-    .margins({top: 20, right: 20, bottom: 95, left: 30})
-    .yAxisLabel("Votes attended")
+  .width(580)
+    .height(200)
+    .margins({top: 20, right: 20, bottom: 20, left: 30})
+    .yAxisLabel("%Votes attended")
     .dimension(party)
     .group(partyGroup)
     .keyAccessor(function (p) {
@@ -527,6 +527,8 @@ function chartParty (selector, ndx, color) {
     .elasticY(false)
     .yAxisPadding(0)
     .elasticX(false)
+    .elasticRadius(false)
+
     .xAxisPadding(0)
     .maxBubbleRelativeSize(0.15)
     .renderHorizontalGridLines(false)
