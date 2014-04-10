@@ -390,7 +390,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
           });
 
           $( "#infobox").modal('show');
-          $( ".infobox_content" ).html(tplPopup(d) + tplScore(v) );
+          $( "#infobox_header" ).html(tplPopup(d));
+          $( ".infobox_content" ).html(tplScore(v));
           $( "#twitter").html(tplTwitter(d));
         });
         $("img.lazy-load").lazyload ({effect : "fadeIn"})
