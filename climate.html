@@ -334,11 +334,12 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
+        
+          <div id="twitter">
 
+          </div>
             <!-- Twitter button -->
-            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.score-ep.org/climate" data-lang="en">Tweet this score!</a>
-              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-              </script>
+            <!-- <a href="https://twitter.com/share" class="twitter-share-button" id="twitter-button" data-url="http://www.score-ep.org/climate" data-lang="en" data-text="Text goes here">Tweet this score!</a> -->
             <!-- End of Twitter button -->
 
             <div class="infobox_content">
@@ -354,7 +355,7 @@
     </div>
 </div>
 
-<!-- Modal top content-->
+
 <script type="text/tpl" id="infobox_tpl">
 
     <span>
@@ -374,7 +375,13 @@
 
 </script>
 
+<script type="text/tpl" id="twitter_tpl">
+    <a href="https://twitter.com/share" class="twitter-share-button" id="twitter-button" data-url="http://www.score-ep.org/climate" data-lang="en" data-text="<%= score %>">Tweet this score!<%=score%></a>
+</script>
+
 <!-- Twitter button script -->
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+              </script>              
 
 <!-- Modal votes content -->
 <script type="text/tpl" id="score_tpl">

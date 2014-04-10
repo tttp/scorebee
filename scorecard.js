@@ -1,5 +1,6 @@
 var tplPopup = null;
 var tplScore = null;
+var tplTwitter = null;
 var ndx = null; //workaround for now...
 
 jQuery(function($){
@@ -13,6 +14,7 @@ $("#search-input").keyup (function () {
 
   tplPopup = _.template ($("#infobox_tpl").text());
   tplScore = _.template ($("#score_tpl").text());
+  tplTwitter = _.template ($("#twitter_tpl").text());
 
   $(".resetall").click(function() {
     $("#search-input").val("");
@@ -389,6 +391,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 
           $( "#infobox").modal('show');
           $( ".infobox_content" ).html(tplPopup(d) + tplScore(v) );
+          $( "#twitter").html(tplTwitter(d));
         });
         $("img.lazy-load").lazyload ({effect : "fadeIn"})
         .removeClass("lazy-load");
