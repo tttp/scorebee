@@ -44,10 +44,10 @@ var votes = function (all) {
   this.all = all;// votes to be taken into account. [dbid] is the voteid key
   this.index = {}; // column number in the cvs of a voteid
   this.mepindex = {}; //row number in the csv of a mepid
-  this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP"};
+  this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
   this.direction = {1:"up","-1":"down"}; 
   _.each (all, function(v,i) {
-    v.pro = v.against = v.abstention = v.absent = v["not an MEP"] = 0;
+    v.pro = v.against = v.abstention = v.absent = v["not an MEP at the time of this vote"] = 0;
     v.date = new Date (v.date);
     if (typeof v.dbid !== "undefined") {
       this.index[v.dbid] = i;
@@ -63,7 +63,7 @@ votes.prototype.get = function (id) { //return the detail of a vote based on its
 }
 
 votes.prototype.setRollCall = function (rolls) {
-  //var type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP"};
+  //var type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
 
   this.rollcalls = rolls;
   _.each (rolls, function(v,i) {
@@ -143,7 +143,7 @@ var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
-var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
+var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
 
 var tplGroup = function (d) {
     return "<div class='dc-grid-group nodc-grid-item country_"+getCountryKey(d.key)+"'><h1 class='dc-grid-label'>"+d.key+"</h1></div>";
@@ -378,7 +378,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
           _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
              x.direction = vote.direction [x.mep];
              if (x.mep == "") {
-               x.type ="not an MEP";
+               x.type ="not an MEP at the time of this vote";
                return;
              } 
              if (x.mep == "X") {
@@ -390,7 +390,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
           });
 
           $( "#infobox").modal('show');
-          $( ".infobox_content" ).html(tplPopup(d) + tplScore(v) );
+          $( "#infobox_header" ).html(tplPopup(d));
+          $( ".infobox_content" ).html(tplScore(v));
           $( "#twitter").html(tplTwitter(d));
         });
         $("img.lazy-load").lazyload ({effect : "fadeIn"})
@@ -550,3 +551,7 @@ function chartParty (selector, ndx, color) {
   this.grid = grid;
   return this;
 };
+
+String.prototype.formatName = function() {
+return this.toLowerCase().replace(/(?:^|\s|-)\S/g, function(word) { return word.toUpperCase(); });
+}

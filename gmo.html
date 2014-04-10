@@ -32,9 +32,7 @@
         <script type="text/javascript" src="js/dc.js"></script>
         <script src="js/d3-tip.min.js"></script>
         <script src="scorecard.js"></script>
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js
-
-"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
         <script>
@@ -99,213 +97,219 @@ var votes=  [
 
         </script>
 
-        <nav style="margin-bottom: 0px; border-width: 0px; border-top-width: 5px; border-color: #3eb249;" class="navbar navbar-inverse" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                
-                <a class="navbar-brand" style="color:#FFF" href="/votecheck/landing.html" data-ajax="false">Scoring the European Parliament:</a>
-                <ul class="nav navbar-nav">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">GMO<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="climate.html" data-ajax="false">Climate Change</a></li>
-                      <li><a href="fracking.html" data-ajax="false">Fracking</a></li>
-                      <li><a href="gmo.html" data-ajax="false">GMO</a></li>
-                    </ul>  
-                  </li>
-                </ul>    
-            </div>
+            <nav style="margin-bottom: 0px; border-width: 0px; border-top-width: 5px; border-color: #3eb249;" class="navbar navbar-inverse" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    
+                    <a class="navbar-brand" style="color:#FFF" href="/votecheck/landing.html" data-ajax="false">Scoring the European Parliament:</a>
+                    <ul class="nav navbar-nav">
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">GMO<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="climate.html" data-ajax="false">Climate Change</a></li>
+                          <li><a href="fracking.html" data-ajax="false">Fracking</a></li>
+                          <li><a href="gmo.html" data-ajax="false">GMO</a></li>
+                        </ul>  
+                      </li>
+                    </ul>    
+                </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/votecheck/climate/methodology.html" data-ajax="false">Methodology</a></li>
-                    <li><a href="/votecheck/climate/about.html" data-ajax="false">About</a></li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-        </nav>
-    </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/votecheck/climate/methodology.html" data-ajax="false">Methodology</a></li>
+                        <li><a href="/votecheck/climate/about.html" data-ajax="false">About</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+            </nav>
 
 
-    <div class="row" style="background-image: url('ep.jpg'); background-size: cover;">
-        <div class="container">
-            <div class="jumbotron">
-                <div class="row">
-                    <div class="form-group col-md-8">
-                      <div>
-                        <h1>GMO</h1>
-                        <p>How have your MEPs voted on GMO issues?</p>
-                      </div>  
 
-                        <div class="input-group">
-                            <input type="text" id="search-input" class="form-control input-lg" placeholder="Search">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-                        </div>
-                        <span class="help-block" style="color: #E1E1E1;">Filter MEPs by name and party. Click on the bar chart for countries.
-                            <button style="float: right; color: black;" class="btn resetall" data-icon="delete">Reset All</button>
-                        </span>
-                        <br />
-                    </div>
+        <div class="row" style="background-image: url('ep.jpg'); background-size: cover;">
+            <div class="container">
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="form-group col-md-8">
+                          <div>
+                            <h1>GMO</h1>
+                            <p>How have your MEPs voted on GMO issues?</p>
+                          </div>  
 
-                    <div class="col-md-4 frontpage_score">
-                        <div class="dc-data-count">
-                          <div class="bar_score center-block">
-                            <div class="graph_titles text-center"><h2>Scores of <span class="filter-count"></span> MEPs</h2></div>
-                            <div class="text-center" id="avg_score"></div>
-                            <!--div class="header-score"><span class="filter-count"></span> selected
-                              <span class="outof">out of <span class="total-count"></span> MEPs</div-->
+                            <div class="input-group">
+                                <input type="text" id="search-input" class="form-control input-lg" placeholder="Search">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
                             </div>
-                        </div>    
-                      </div>
+                            <span class="help-block" style="color: #E1E1E1;">Filter MEPs by name and party. Click on the bar chart for countries.
+                                <button style="float: right; color: black;" class="btn resetall" data-icon="delete">Reset All</button>
+                            </span>
+                            <br />
+                        </div>
+
+                        <div class="col-md-4 frontpage_score">
+                            <div class="dc-data-count">
+                              <div class="bar_score center-block">
+                                <div class="graph_titles text-center"><h2>Scores of <span class="filter-count"></span> MEPs</h2></div>
+                                <div class="text-center" id="avg_score"></div>
+                                <!--div class="header-score"><span class="filter-count"></span> selected
+                                  <span class="outof">out of <span class="total-count"></span> MEPs</div-->
+                                </div>
+                            </div>    
+                          </div>
+                        </div>
+
                     </div>
+                </div>
+            </div>
+        
+
+        <div class="container">
+
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="ep2014list">
+                            <div class="row">
+                              <div class="col-md-12">
+                                <div class="country center-block">
+                                  <div class="text-center graph_titles"><h2>Select your country by clicking on the bar chart</h2></div>
+                                </div>
+                              </div>
+                            </div>
+                             <!-- Accordion top level  -->
+                             <div class="panel-group" id="accordion">
+                              <div class="panel panel-default filter-panel-container">
+                                <div class="panel-heading">
+                                  <a data-toggle="collapse" data-parent="#accordion" data-target ="#collapseOne" href="#collapseOne" class="collapsed">
+                                    <h4 class="panel-title">
+                                      More filters
+                                      <span class ="glyphicon glyphicon-chevron-down"</span>
+                                    </h4>
+                                  </a>
+                                </div>
+                                <!-- Hidden stuff goes here -->
+                                <div id="collapseOne" class="panel-collapse collapse">
+                                  <div class="panel-body">
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                            <div class="party center-block">
+                                                <div class="graph_titles text-center">
+                                                    <h2>National party</h2>
+                                                    <h5>Select a national party to see just their MEPs. Higher bubbles mean more votes attended, further right means better votes for the climate.</h5>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-3">
+                                            <div class="group center-block">
+                                                <div class="graph_titles text-center">
+                                                    <h2>European Party</h2>
+                                                    <h5>Select which European party the MEPs belong to and see their scores</h5>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-3">
+                                            <div class="gender center-block">
+                                                <div class="graph_titles text-center">
+                                                    <h2>Gender</h2>
+                                                    <h5>Select MEPs by their gender</h5>
+                                                </div>
+                                            </div>
+                                          </div>
+                            <div class="gender"></div>
+                            <div class="age"></div>
+
+                                      </div>
+                                      <!-- End of hidden stuff -->
+                                     </div>
+                                    </div>
+                                  </div>
+                                </div>    
+                                <!-- End of accordion -->
+
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>	
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4">		
+                        
+                        <div class="list"></div>
+
+                        <div class="row">
+
+                        </div>
+                    </div>		
 
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="container">
+            </div>
 
-        <div class="row">
+            <div class="row" style="background-color: whitesmoke;">
+
+            <div class="container">
             <div class="row">
-                <div class="col-md-12">
-                    <div id="ep2014list">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <div class="country center-block">
-                              <div class="text-center graph_titles"><h2>Select your country by clicking on the bar chart</h2></div>
-                            </div>
-                          </div>
-                        </div>
-                         <!-- Accordion top level  -->
-                         <div class="panel-group" id="accordion">
-                          <div class="panel panel-default filter-panel-container">
-                            <div class="panel-heading">
-                              <a data-toggle="collapse" data-parent="#accordion" data-target ="#collapseOne" href="#collapseOne" class="collapsed">
-                                <h4 class="panel-title">
-                                  More filters
-                                  <span class ="glyphicon glyphicon-chevron-down"</span>
-                                </h4>
-                              </a>
-                            </div>
-                            <!-- Hidden stuff goes here -->
-                            <div id="collapseOne" class="panel-collapse collapse in">
-                              <div class="panel-body">
-                                    <div class="row">
-                                      <div class="col-md-6">
-                                        <div class="party center-block">
-                                            <div class="graph_titles text-center">
-                                                <h2>National party</h2>
-                                                <h5>Select a national party to see just their MEPs. Higher bubbles mean more votes attended, further right means better votes for the climate.</h5>
-                                            </div>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                        <div class="group center-block">
-                                            <div class="graph_titles text-center">
-                                                <h2>European Party</h2>
-                                                <h5>Select which European party the MEPs belong to and see their scores<h5>
-                                            </div>
-                                        </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                        <div class="gender center-block">
-                                            <div class="graph_titles text-center">
-                                                <h2>Gender</h2>
-                                                <h5>Select MEPs by their gender<h5>
-                                            </div>
-                                        </div>
-                                      </div>
-                        <div class="gender"></div>
-                        <div class="age"></div>
+              <div class="col-md-12">
 
-                                  </div>
-                                  <!-- End of hidden stuff -->
-                                 </div>
-                                </div>
-                              </div>
-                            </div>    
-                            <!-- End of accordion -->
+                <div class="nokparty"></div>
 
-                        <div style="clear:both;"></div>
+                <div class="dc-data-grid">
+                	<h4><i>Click on the MEP for their GMO voting record</i></h4>
+                </div>
+
+              </div>
+
+               <!-- Modal  -->
+              <div id="infobox" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div id="infobox_header" class="modal-header">
                     </div>
-                </div>	
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-4">		
-                    
-                    <div class="list"></div>
-
-                    <div class="row">
-
+                    <div class="infobox_content modal-body">
+                      <!-- Populated information appears here -->
                     </div>
-                </div>		
+                  </div>
+                </div>
+              </div>
+              <!-- End of modal -->
 
             </div>
-        </div>
-
-        </div>
-
-        <div class="row" style="background-color: whitesmoke;">
-
-        <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-
-            <div class="nokparty"></div>
-
-            <div class="dc-data-grid">
-            	<h4><i>Click on the MEP for their GMO voting record</i></h4>
+            </div>
             </div>
 
-          </div>
-
-          <!-- Modal  -->
-          <div id="infobox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="infobox_content">
-              <!-- Populated information appears here -->
-            </div>
-          </div>
-          <!-- End of modal -->
-
-        </div>
-        </div>
-        </div>
-
-    </div>
-</div>
 
 <script type="text/tpl" id="infobox_tpl">
 
-    <span>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+   <span>
         <img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
     </span>
-
-    <ul id="infobox_info">
-        <li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
-        <li>Participation: <strong><%= Math.round(effort) %></strong></li>
-        <li>Country: <strong><%= country %></strong></li>
-        <li>National party: <strong><%= party %></strong></li>
-        <li>European Party:<strong> <%= eugroup %> </strong></li>
-        <span id="score"><%= score %></span>
-    </ul>	
-
-    <div style="clear:both;margin-bottom:20px"></div>
+    <div class="row">
+      <div class="col-md-8">
+        <ul id="infobox_info">
+            <li><h1><strong><%= first_name %> <%= last_name.formatName() %></strong></h1></li>
+            <li>Participation: <strong><%= Math.round(effort) %></strong></li>
+            <li>Country: <strong><%= country %></strong></li>
+            <li>National party: <strong><%= party %></strong></li>
+            <li>European Party:<strong> <%= eugroup %> </strong></li>
+            <li style="font-size:2em"><strong>Voting score: <%= score %></strong></li>
+        </ul> 
+      </div>   
+    </div>  
+    <div style="clear:both;"></div>
 
 </script>
 
+<!-- Modal votes content -->
 <script type="text/tpl" id="score_tpl">
     <div class="row">
       <% var count = 0; %>
@@ -316,16 +320,27 @@ var votes=  [
           %>
                 <div class="row" style="margin:0px">
           <% } %>
-            <div class="col-md-6 each_vote_containe">
-              <div class="panel panel-default <%= v.type %>">
+            <div class="col-md-6 each_vote_container">
+            <% if (v.type == "for") { %>
+              <div class="panel panel-success">
+              <% } else if (v.type == "abstention") { %>
+              <div class="panel panel-warning">
+            <% } else if (v.type == "absent") { %>
+              <div class="panel panel-info">
+            <% } else if (v.type == "against") { %>
+              <div class="panel panel-danger">
+            <% }else { %>
+              <div class="panel panel-default">
+            <% } %> 
               <div class="panel-heading">
-voted&nbsp;<span class="thumbs">
-	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>"></i>&nbsp;<%= vote.type[v.mep]  %></span>, we recommend&nbsp;
-		  <span class="thumbs">
-	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.recommendation] %>" title="We recommended <%= vote.type[v.recommendation] %>"></i>
-  	  </span>
-
                   <h3 class="panel-title"><%= v.title %></h3>
+voted&nbsp;<span class="thumbs">
+          <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>"></i>&nbsp;<%= vote.type[v.mep]  %></span>, we recommend&nbsp;
+          <span class="thumbs">
+          <i class="fa fa-thumbs-o-<%= vote.direction[v.recommendation] %>" title="We recommended <%= vote.type[v.recommendation] %>"></i>
+      </span>
+
+
               </div>
               <div class="panel-body">
                 <p><%= v.description %></p>
