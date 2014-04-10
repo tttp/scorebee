@@ -51,7 +51,7 @@ font-weight: 300;
 	color:#000;
 }
 
-a#ep2014list table, .dc-data-grid {clear:both;}
+a#ep2014list table, .dc-data-grid {clear:both;padding-left:3.5em;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
 .x line {stroke:none;}
 
