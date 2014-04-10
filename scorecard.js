@@ -506,7 +506,7 @@ function chartParty (selector, ndx, color) {
       function(d) {
       return d.value.count;
       })
-  .width(580)
+  .width(460)
     .height(200)
     .margins({top: 20, right: 20, bottom: 20, left: 30})
     .yAxisLabel("%Votes attended")
