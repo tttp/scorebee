@@ -553,6 +553,5 @@ function chartParty (selector, ndx, color) {
 };
 
 String.prototype.formatName = function() {
-
-    return this.toLowerCase().replace(/(?:^|\s|-)\S/g, function(word) { return word.toUpperCase(); });
+return this.toLowerCase().replace(/(?:^|\s|-)\S/g, function(word) { return word.toUpperCase(); });
 }

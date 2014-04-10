@@ -391,12 +391,18 @@
           %>
                 <div class="row" style="margin:0px">
           <% } %>
-            <div class="col-md-6 each_vote_containe">
+            <div class="col-md-6 each_vote_container">
             <% if (v.type == "for") { %>
               <div class="panel panel-success">
-            <% } else { %>
+              <% } else if (v.type == "abstention") { %>
+              <div class="panel panel-warning">
+            <% } else if (v.type == "absent") { %>
+              <div class="panel panel-info">
+            <% } else if (v.type == "against") { %>
               <div class="panel panel-danger">
-            <% } %>
+            <% }else { %>
+              <div class="panel panel-default">
+            <% } %> 
               <div class="panel-heading">
                   <h3 class="panel-title"><%= v.title %></h3>
 voted&nbsp;<span class="thumbs">
