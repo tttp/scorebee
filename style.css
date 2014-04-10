@@ -357,11 +357,11 @@ right: 60px;
 .abstention {border-color:lightgrey}
 .absent {opacity:0.5;}
 .for {border-color:green;}
-.against {border-color:red;}
+.against {border-color:#bd232a;}
 .panel-body {background-color:white;}
 .for .panel-heading {background-color:green;color:white}
-.against .panel-heading {background-color:red;color:white}
-.not.mep .panel-heading {text-decoration:line-through}
+.against .panel-heading {background-color:#bd232a;color:white}
+.not.mep .panel-heading {text-decoration:none}
 
 .dc-chart g.axis.x text{
   cursor:pointer;
