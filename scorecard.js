@@ -4,13 +4,13 @@ var tplTwitter = null;
 var ndx = null; //workaround for now...
 
 jQuery(function($){
-$("#search-input").keyup (function () {
-  var s = $(this ).val().toLowerCase();
-  wall.dimension().filter(function (d) { return d.indexOf (s) !== -1;} ); 
-  $(".resetall").attr("disabled",true);
-  dc.redrawAll();
-  console.log ($(this ).val());
-});
+  $("#search-input").keyup (function () {
+    var s = $(this ).val().toLowerCase();
+    wall.dimension().filter(function (d) { return d.indexOf (s) !== -1;} ); 
+    $(".resetall").attr("disabled",true);
+    dc.redrawAll();
+    console.log ($(this ).val());
+  });
 
   tplPopup = _.template ($("#infobox_tpl").text());
   tplScore = _.template ($("#score_tpl").text());
@@ -21,6 +21,29 @@ $("#search-input").keyup (function () {
     $(".resetall").attr("disabled",false);
     dc.filterAll(); 
     dc.renderAll();
+  });
+
+});
+
+$(window).load(function() {
+  $.ajax({
+    url: "https://freegeoip.net/json/?callback=?",
+    crossDomain: true,
+    type: "GET",
+    contentType: "application/json; charset=utf-8;",
+    async: false,
+    dataType: 'jsonp',
+    success: function(data){
+      _.each(bar_country.group().top(28), function (d) { 
+        if (data.country_name == d.key) {
+          location.hash = "#bar_country";
+          bar_country.filter (data.country_name); 
+//          scrollTo("main");
+          dc.redrawAll(); 
+          $("#collapseOne").collapse("show");
+        }
+      });
+    }
   });
 });
 
@@ -416,10 +439,15 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 
 
 function getCountryKey (name) {
-   return name.replace(/ /g,"_").toLowerCase();
+  return name.replace(/ /g,"_").toLowerCase();
 }
 
+scrolled = false;
 function scrollTo (id) {
+  console.log(getCountryKey(id));
+  if (scrolled)
+    return;
+  scrolled = true;
   $("#collapseOne").collapse("show");
   jQuery('html, body').animate({
     scrollTop: jQuery(".country_"+getCountryKey(id)).offset().top
@@ -555,5 +583,5 @@ function chartParty (selector, ndx, color) {
 };
 
 String.prototype.formatName = function() {
-return this.toLowerCase().replace(/(?:^|\s|-)\S/g, function(word) { return word.toUpperCase(); });
+  return this.toLowerCase().replace(/(?:^|\s|-)\S/g, function(word) { return word.toUpperCase(); });
 }
