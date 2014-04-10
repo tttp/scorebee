@@ -287,7 +287,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       }
     });
 
-  var bar_country = dc.barChart(selector + " .country");
+  bar_country = dc.barChart(selector + " .country"); //global
   var country = ndx.dimension(function(d) {
       if (typeof d.country == "undefined") return "";
       return d.country;
