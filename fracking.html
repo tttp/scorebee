@@ -330,16 +330,18 @@ var votes= [
     <span>
         <img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
     </span>
-
-    <ul id="infobox_info">
-        <li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
-        <li>Participation: <strong><%= Math.round(effort) %></strong></li>
-        <li>Country: <strong><%= country %></strong></li>
-        <li>National party: <strong><%= party %></strong></li>
-        <li>European Party:<strong> <%= eugroup %> </strong></li>
-        <span id="score"><%= score %></span>
-    </ul>	
-
+    <div class="row">
+      <div class="col-md-8">
+        <ul id="infobox_info">
+            <li><h1><strong><%= first_name %> <%= last_name.formatName() %></strong></h1></li>
+            <li>Participation: <strong><%= Math.round(effort) %></strong></li>
+            <li>Country: <strong><%= country %></strong></li>
+            <li>National party: <strong><%= party %></strong></li>
+            <li>European Party:<strong> <%= eugroup %> </strong></li>
+            <li style="font-size:2em"><strong>Voting score: <%= score %></strong></li>
+        </ul> 
+      </div>   
+    </div>  
     <div style="clear:both;"></div>
 
 </script>
