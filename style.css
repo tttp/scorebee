@@ -86,20 +86,6 @@ border-radius: 6px;
 	float:left;
 }
 
-/*Popup modal styles*/
-
-#infobox {
-margin-left:auto;
-margin-right:auto;
-text-shadow:none;
-width:60%;
-border: 5px #4E4E4E solid;
-}
-
-#infobox p {
-font-size:0.75em;
-  }
-
 .ui-block-a {
 width:15%;
 margin-top:5px;
@@ -372,18 +358,6 @@ right: 60px;
   width: 99px;
 float: right;
 top: 10px;
-}
-
-.modal {
-background-color: #FFF;
-max-height: 70%;
-top: 10%;
-bottom: 10%;
-overflow-x: hidden;
-}
-
-.modal-header {
-  border-bottom:none;
 }
 
 .close {
