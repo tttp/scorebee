@@ -229,7 +229,7 @@ var votes= [
                               </a>
                             </div>
                             <!-- Hidden stuff goes here -->
-                            <div id="collapseOne" class="panel-collapse collapse in">
+                            <div id="collapseOne" class="panel-collapse collapse">
                               <div class="panel-body">
                                     <div class="row">
                                       <div class="col-md-6">
@@ -244,7 +244,7 @@ var votes= [
                                         <div class="group center-block">
                                             <div class="graph_titles text-center">
                                                 <h2>European Party</h2>
-                                                <h5>Select which European party the MEPs belong to and see their scores<h5>
+                                                <h5>Select which European party the MEPs belong to and see their scores</h5>
                                             </div>
                                         </div>
                                       </div>
@@ -252,7 +252,7 @@ var votes= [
                                         <div class="gender center-block">
                                             <div class="graph_titles text-center">
                                                 <h2>Gender</h2>
-                                                <h5>Select MEPs by their gender<h5>
+                                                <h5>Select MEPs by their gender</h5>
                                             </div>
                                         </div>
                                       </div>
@@ -302,13 +302,16 @@ var votes= [
 
           </div>
 
-          <!-- Modal  -->
-          <div id="infobox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="infobox_content">
-              <!-- Populated information appears here -->
+           <!-- Modal  -->
+          <div id="infobox" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div id="infobox_header" class="modal-header">
+                </div>
+                <div class="infobox_content modal-body">
+                  <!-- Populated information appears here -->
+                </div>
+              </div>
             </div>
           </div>
           <!-- End of modal -->
@@ -321,6 +324,8 @@ var votes= [
 </div>
 
 <script type="text/tpl" id="infobox_tpl">
+
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
     <span>
         <img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
@@ -335,7 +340,7 @@ var votes= [
         <span id="score"><%= score %></span>
     </ul>	
 
-    <div style="clear:both;margin-bottom:20px"></div>
+    <div style="clear:both;"></div>
 
 </script>
 
