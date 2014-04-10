@@ -273,8 +273,7 @@ var votes=  [
           <div id="infobox" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
               <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div id="infobox_header" class="modal-header">
                 </div>
                 <div class="infobox_content modal-body">
                   <!-- Populated information appears here -->
@@ -293,6 +292,8 @@ var votes=  [
 
 <script type="text/tpl" id="infobox_tpl">
 
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
     <span>
         <img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
     </span>
@@ -306,7 +307,7 @@ var votes=  [
         <span id="score"><%= score %></span>
     </ul>	
 
-    <div style="clear:both;margin-bottom:20px"></div>
+    <div style="clear:both;"></div>
 
 </script>
 
