@@ -381,18 +381,19 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
         return d.country;
         })
   .size(1000)
-    .html (function(d) { 
-        d.score = d.scores [0];
-        d.color = color(d.score);
-        d.size = 20+ 20*d.effort/100;
+  .html (function(d) { 
+    d.score = d.scores [0];
+    d.color = color(d.score);
+    d.size = 20+ 20*d.effort/100;
 
-        return tpl(d);
-        })
+    return tpl(d);
+  })
   .htmlGroup(function (d) {return tplGroup(d);})
   .sortBy(function (d) {
-      return d.last_name;
-      })
-  .order(d3.ascending)
+    //return d.last_name;
+    return d.score;
+  })
+  .order(d3.descending)
     .renderlet(function (grid) {
       grid.selectAll (".dc-grid-item")
         .on('click', function(d) {
