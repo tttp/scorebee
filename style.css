@@ -453,3 +453,11 @@ div.dc-chart {
 font-family: sans-serif;
 font-weight: bold;
 }
+
+#share {
+position: absolute;
+text-align: center;
+right: 15px;
+top: 215px;
+z-index: 10;
+}
