@@ -282,7 +282,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .margins({top: 10, right: 10, bottom: 20, left: 30})
     .x(d3.scale.linear().domain([0, 101]))
     .elasticY(true)
-//    .yAxisLabel("Number of MEPs")
+    .yAxisLabel("Number of MEPs")
     .round(dc.round.floor)
     .colorCalculator(function(d, i) {
         return color(d.key);
@@ -311,7 +311,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       }
     });
 
-  bar_score.yAxis().tickFormat(d3.format(",.0f"));
+  bar_score.yAxis().ticks(4).tickFormat(d3.format(",.0f"));
 
   bar_country = dc.barChart(selector + " .country"); //global
   var country = ndx.dimension(function(d) {
