@@ -282,7 +282,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .margins({top: 10, right: 10, bottom: 20, left: 30})
     .x(d3.scale.linear().domain([0, 101]))
     .elasticY(true)
-    .yAxisLabel("Number of MEPs")
+//    .yAxisLabel("Number of MEPs")
     .round(dc.round.floor)
     .colorCalculator(function(d, i) {
         return color(d.key);
@@ -392,10 +392,10 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
   })
   .htmlGroup(function (d) {return tplGroup(d);})
   .sortBy(function (d) {
-    //return d.last_name;
-    return d.score;
+    return d.last_name;
+//    return d.score;
   })
-  .order(d3.descending)
+//  .order(d3.descending)
     .renderlet(function (grid) {
       grid.selectAll (".dc-grid-item")
         .on('click', function(d) {
