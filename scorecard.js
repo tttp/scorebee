@@ -594,7 +594,7 @@ function chartParty (selector, ndx, color) {
 function twitterize () {
   jQuery ( "body" ).on( "click", ".twitter", function(event) {
     event.preventDefault();
-    var twitterMsg = "How does @ score #score compare to the other MEPs?";
+    var twitterMsg = "How does @ score of #score compare to the other MEPs?";
     var t= $(this).data("twitter");
     var mep=$(this).closest("div.mep");
     var msg = twitterMsg.replace("@ ",t+" "); 
