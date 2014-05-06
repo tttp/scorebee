@@ -338,7 +338,7 @@ var votes= [
         <img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
     </span>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-8 mep" data-id='<%= epid %>' data-score='<%= score %>'>
         <ul id="infobox_info">
             <li><h1><strong><%= first_name %> <%= last_name.formatName() %></strong></h1></li>
             <li>Participation: <strong><%= Math.round(effort) %></strong></li>
@@ -346,6 +346,7 @@ var votes= [
             <li>National party: <strong><%= party %></strong></li>
             <li>European Party:<strong> <%= eugroup %> </strong></li>
             <li style="font-size:2em"><strong>Voting score: <%= score %></strong></li>
+<% if (twitter) { %><li><div class='twitter' data-twitter='<%= twitter %>'>Tweet to this mep</div></li><% } %>
         </ul> 
       </div>   
     </div>  
