@@ -167,7 +167,8 @@ var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
-var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
+
+var tpl = _.template("<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
 
 var tplGroup = function (d) {
     return "<div class='dc-grid-group nodc-grid-item country_"+getCountryKey(d.key)+"'><h1 class='dc-grid-label'>"+d.key+"</h1></div>";
@@ -399,6 +400,29 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .renderlet(function (grid) {
       grid.selectAll (".dc-grid-item")
         .on('click', function(d) {
+          MEPpopup(d);
+        });
+        $("img.lazy-load").lazyload ({effect : "fadeIn"})
+        .removeClass("lazy-load");
+        });
+
+
+
+  dc.renderAll();
+  twitterize();
+  var hash = window.location.hash;
+   if(hash.indexOf('#mep') === 0) { 
+     var mep = getMEP (hash.substring(4));
+     MEPpopup(mep);
+   } else if (hash.length == 3){ //country
+      var iso=hash.substring(1);
+
+//      bar_country.filter (); 
+   }
+   
+}
+
+function MEPpopup (d) {
           d.votes=vote.getVotes(d.epid);
 
           var v = {d:vote.all};
@@ -419,29 +443,10 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
           $( "#infobox").modal('show');
           $( "#infobox_header" ).html(tplPopup(d));
           $( ".infobox_content" ).html(tplScore(v));
+          window.location.hash = "mep"+d.epid;
           $( "#twitter").html(tplTwitter(d));
-        });
-        $("img.lazy-load").lazyload ({effect : "fadeIn"})
-        .removeClass("lazy-load");
-        });
 
-
-
-  dc.renderAll();
-  var hash = window.location.hash;
-   if(hash.indexOf('#mep') === 0) { 
-     var mep = getMEP (hash.substring(4));
-     mep.votes=vote.getVotes(mep.epid);
-     $( "#infobox" ).html(tplPopup(mep)).modal( "show" );
-   } else if (hash.length == 3){ //country
-      var iso=hash.substring(1);
-
-//      bar_country.filter (); 
-   }
-   
 }
-
-
 function getCountryKey (name) {
   return name.replace(/ /g,"_").toLowerCase();
 }
@@ -585,6 +590,22 @@ function chartParty (selector, ndx, color) {
   this.grid = grid;
   return this;
 };
+
+function twitterize () {
+  jQuery ( "body" ).on( "click", ".twitter", function(event) {
+    event.preventDefault();
+    var twitterMsg = "How does @ score #score compare to the other MEPs?";
+    var t= $(this).data("twitter");
+    var mep=$(this).closest("div.mep");
+    var msg = twitterMsg.replace("@ ",t+" "); 
+    msg = msg.replace("#score",mep.data("score")+" ") + " "+document.URL.replace(/#.*/,'')+"#mep"+mep.data("id");
+     
+    var url = "http://twitter.com/home/?status=";
+    window.open(url+encodeURIComponent(msg), "twitter");
+    return false;
+});
+}
+
 
 String.prototype.formatName = function() {
   return this.toLowerCase().replace(/(?:^|\s|-)\S/g, function(word) { return word.toUpperCase(); });
