@@ -594,10 +594,13 @@ function chartParty (selector, ndx, color) {
 function twitterize () {
   jQuery ( "body" ).on( "click", ".twitter", function(event) {
     event.preventDefault();
-    var twitterMsg = "How does @ score of #score compare to the other MEPs?";
+    if (typeof twitterMsg == "undefined")
+      var _twitterMsg = "How does @ score of #score compare to the other MEPs? #ep2014";
+    else 
+      var _twitterMsg = twitterMsg;
     var t= $(this).data("twitter");
     var mep=$(this).closest("div.mep");
-    var msg = twitterMsg.replace("@ ",t+" "); 
+    var msg = _twitterMsg.replace("@ ",t+" "); 
     msg = msg.replace("#score",mep.data("score")+" ") + " "+document.URL.replace(/#.*/,'')+"#mep"+mep.data("id");
      
     var url = "http://twitter.com/home/?status=";
