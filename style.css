@@ -78,6 +78,9 @@ background-repeat:no-repeat;
 background-position:0 0;
 cursor:pointer;
 }
+li div.twitter:hover {
+  text-decoration:underline;
+}
 
 .twitter {
 position: absolute;

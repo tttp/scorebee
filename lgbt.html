@@ -36,7 +36,7 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
         <script>
-            var twitterMsg = "How does @ score of #score on #LGBT compare to the other MEPs? #comeoutEP2014";
+            var twitterMsg = "How is @ voting record of #score% on #LGBT issues compared to the other MEPs? #EP2014 #comeoutEP2014";
 
             var topic = {
             };
@@ -126,7 +126,7 @@ var votes=  [
                     <a class="navbar-brand" style="color:#FFF" href="/" data-ajax="false">Scoring the European Parliament:</a>
                     <ul class="nav navbar-nav">
                       <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">LBGT<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">LGBT<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                           <li><a href="climate.html" data-ajax="false">Climate Change</a></li>
                           <li><a href="fracking.html" data-ajax="false">Fracking</a></li>
@@ -324,8 +324,8 @@ var votes=  [
             <li>Country: <strong><%= country %></strong></li>
             <li>National party: <strong><%= party %></strong></li>
             <li>European Party:<strong> <%= eugroup %> </strong></li>
-<% if (twitter) { %><li><div class='twitter' data-twitter='<%= twitter %>'>Tweet to this mep</div></li><% } %>
-            <li style="font-size:2em"><strong>Voting score: <%= score %></strong></li>
+<% if (twitter) { %><li><div class='twitter' data-twitter='<%= twitter %>'>This MEP is a candidate in the 2014 elections - share the score!</div></li><% } %>
+            <li style="font-size:2em"><strong>Voting score: <%= score %>/100</strong></li>
         </ul> 
       </div>   
     </div>  

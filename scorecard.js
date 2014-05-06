@@ -601,7 +601,7 @@ function twitterize () {
     var t= $(this).data("twitter");
     var mep=$(this).closest("div.mep");
     var msg = _twitterMsg.replace("@ ",t+" "); 
-    msg = msg.replace("#score",mep.data("score")+" ") + " "+document.URL.replace(/#.*/,'')+"#mep"+mep.data("id");
+    msg = msg.replace("#score",mep.data("score")) + " "+document.URL.replace(/#.*/,'')+"#mep"+mep.data("id");
      
     var url = "http://twitter.com/home/?status=";
     window.open(url+encodeURIComponent(msg), "twitter");
