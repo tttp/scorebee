@@ -37,6 +37,8 @@ jQuery(function($){
     dataType: 'jsonp',
     success: function(data){
       ga && ga('send', 'event', 'country', 'lookup', data.country_name);
+      if (!bar_country) return;
+
       _.each(bar_country.group().top(28), function (d) { 
         if (data.country_name == d.key) {
           location.hash = "#bar_country";
