@@ -23,6 +23,9 @@ jQuery(function($){
     dc.renderAll();
   });
 
+  $ ( "body" ).on( "click", ".btn", function(event) {
+    ga && ga('send', 'event', 'button', 'click', $(this).text());
+  });
 });
 
   $.ajax({
@@ -33,6 +36,7 @@ jQuery(function($){
     async: false,
     dataType: 'jsonp',
     success: function(data){
+      ga && ga('send', 'event', 'country', 'lookup', data.country_name);
       _.each(bar_country.group().top(28), function (d) { 
         if (data.country_name == d.key) {
           location.hash = "#bar_country";
@@ -306,9 +310,11 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       }
       //why doesn't it work? if (chart.dimension().size() !== chart.group().value()) {
       if (ndx.size() !== nb) {
-         $(".resetall").attr("disabled",false);
+        $(".resetall").attr("disabled",false);
+        ga && ga('send', 'event', 'filter', 'subset', nb);
       } else {  
         $(".resetall").attr("disabled",true);
+        ga && ga('send', 'event', 'filter', 'reset');
       }
     });
 
@@ -453,7 +459,7 @@ function getCountryKey (name) {
 
 scrolled = false;
 function scrollTo (id) {
-  console.log(getCountryKey(id));
+  ga && ga('send', 'event', 'page', 'scroll', id);
   if (scrolled)
     return;
   scrolled = true;
