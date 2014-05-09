@@ -6,7 +6,7 @@ var partyChart=null;
 
 jQuery(function($){
   var message ="";
-  $("#bar_country").prepend("<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>");
+  $(".country").prepend("<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>");
   $("#alert_placeholder").hide();
   $("#search-input").keyup (function () {
     var s = $(this ).val().toLowerCase();
@@ -626,6 +626,7 @@ function hasHashFilter() {
 }
 
 function notice (message,callback) {
+  $("#alert_placeholder").show();
   $("#alert_placeholder span").html(message);
   setTimeout(function() { 
     $("#alert_placeholder").fadeOut("slow");
