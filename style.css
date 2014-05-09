@@ -382,7 +382,7 @@ float: right;
 top: 10px;
 }
 
-.close {
+.modal-content .close {
   font-size:3em;
   opacity:0.6;
 }

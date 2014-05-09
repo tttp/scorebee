@@ -2,8 +2,12 @@ var tplPopup = null;
 var tplScore = null;
 var tplTwitter = null;
 var ndx = null; //workaround for now...
+var partyChart=null;
 
 jQuery(function($){
+  var message ="";
+  $("#bar_country").prepend("<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>");
+  $("alert_placeholder").hide();
   $("#search-input").keyup (function () {
     var s = $(this ).val().toLowerCase();
     wall.dimension().filter(function (d) { return d.indexOf (s) !== -1;} ); 
@@ -28,6 +32,7 @@ jQuery(function($){
   });
 });
 
+if (!hasHashFilter()) {
   $.ajax({
     url: "https://freegeoip.net/json/?callback=?",
     crossDomain: true,
@@ -42,8 +47,9 @@ jQuery(function($){
       _.each(bar_country.group().top(28), function (d) { 
         if (data.country_name == d.key) {
           location.hash = "#bar_country";
+          notice("Show only MEPs from "+d.key);
           bar_country.filter (data.country_name); 
-//          scrollTo("main");
+  //          scrollTo("main");
           scrolled = true; // no need to smooth scroll, the visitor knows now
           dc.redrawAll(); 
           $("#collapseOne").collapse("show");
@@ -51,9 +57,7 @@ jQuery(function($){
       });
     }
   });
-$(window).load(function() {
-});
-
+}
 
 var eu_groups = {
 "GUE/NGL":"#df73be",
@@ -170,8 +174,6 @@ votes.prototype.getScore = function (mepid) {
   return Math.floor (50 + 100*(score / nbvote)/2); // from 0 to 100
 }
 var vote = new votes (list_votes);
-
-var topics = ["climate","gmo","topic 3","topic 4"];
 
 
 var tpl = _.template("<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
@@ -374,7 +376,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
   }
 
 
-  chartParty (selector, ndx, color);
+  partyChart = chartParty (selector, ndx, color);
   chartGroup  (selector, ndx, color);
 
 
@@ -418,18 +420,29 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 
   dc.renderAll();
   twitterize();
+  hashFilter();
+}
+
+function hashFilter () {
   var hash = window.location.hash;
+  if (hash.indexOf('#party') === 0) {
+    var filter = decodeURIComponent(hash.substring(6));
+    notice("Show only MEPs from "+filter);
+    dc.events.trigger(function () {
+      partyChart.filter(filter);
+      dc.redrawAll(); 
+      $("#collapseOne").collapse("show");
+  },2000);
+  }
+
    if(hash.indexOf('#mep') === 0) { 
      var mep = getMEP (hash.substring(4));
      MEPpopup(mep);
    } else if (hash.length == 3){ //country
       var iso=hash.substring(1);
-
-//      bar_country.filter (); 
    }
-   
 }
-
+   
 function MEPpopup (d) {
           d.votes=vote.getVotes(d.epid);
 
@@ -458,6 +471,7 @@ function MEPpopup (d) {
 function getCountryKey (name) {
   return name.replace(/ /g,"_").toLowerCase();
 }
+
 
 scrolled = false;
 function scrollTo (id) {
@@ -583,6 +597,9 @@ function chartParty (selector, ndx, color) {
     .on("postRender", function(c) {
       c.svg().selectAll ("circle")
         .call(tip)
+        .on('click.setHash', function(d) {
+           window.location.hash = encodeURIComponent("party"+d.key);
+        })
         .on('mouseover', function(d) {
           tip.attr('class', 'd3-tip animate').show(d)
         })
@@ -591,12 +608,29 @@ function chartParty (selector, ndx, color) {
           tip.hide()
         })
     } );
-
+    return bubble_party;
   }
 
   this.vote = vote;
   this.grid = grid;
   return this;
+};
+
+function hasHashFilter() {
+  var hash = window.location.hash;
+  if (hash.indexOf('#mep') === 0) 
+    return true;
+  if (hash.indexOf('#party') === 0) 
+    return true;
+  return false;
+}
+
+function notice (message,callback) {
+  $("#alert_placeholder span").html(message);
+  setTimeout(function() { 
+    $("#alert_placeholder").fadeOut("slow");
+    callback && callback();
+  }, 3000);    
 };
 
 function twitterize () {
