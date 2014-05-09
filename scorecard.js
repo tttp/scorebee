@@ -1,23 +1,20 @@
-$.mobile.hashListeningEnabled = false;
-$.mobile.pushStateEnabled = false;
-
-
-
 var tplPopup = null;
 var tplScore = null;
+var tplTwitter = null;
 var ndx = null; //workaround for now...
 
 jQuery(function($){
-$("#search-input").keyup (function () {
-  var s = $(this ).val().toLowerCase();
-  wall.dimension().filter(function (d) { return d.indexOf (s) !== -1;} ); 
-  $(".resetall").attr("disabled",true);
-  dc.redrawAll();
-  console.log ($(this ).val());
-});
+  $("#search-input").keyup (function () {
+    var s = $(this ).val().toLowerCase();
+    wall.dimension().filter(function (d) { return d.indexOf (s) !== -1;} ); 
+    $(".resetall").attr("disabled",true);
+    dc.redrawAll();
+    console.log ($(this ).val());
+  });
 
   tplPopup = _.template ($("#infobox_tpl").text());
   tplScore = _.template ($("#score_tpl").text());
+  tplTwitter = _.template ($("#twitter_tpl").text());
 
   $(".resetall").click(function() {
     $("#search-input").val("");
@@ -25,6 +22,36 @@ $("#search-input").keyup (function () {
     dc.filterAll(); 
     dc.renderAll();
   });
+
+  $ ( "body" ).on( "click", ".btn", function(event) {
+    ga && ga('send', 'event', 'button', 'click', $(this).text());
+  });
+});
+
+  $.ajax({
+    url: "https://freegeoip.net/json/?callback=?",
+    crossDomain: true,
+    type: "GET",
+    contentType: "application/json; charset=utf-8;",
+    async: false,
+    dataType: 'jsonp',
+    success: function(data){
+      ga && ga('send', 'event', 'country', 'lookup', data.country_name);
+      if (!bar_country) return;
+
+      _.each(bar_country.group().top(28), function (d) { 
+        if (data.country_name == d.key) {
+          location.hash = "#bar_country";
+          bar_country.filter (data.country_name); 
+//          scrollTo("main");
+          scrolled = true; // no need to smooth scroll, the visitor knows now
+          dc.redrawAll(); 
+          $("#collapseOne").collapse("show");
+        }
+      });
+    }
+  });
+$(window).load(function() {
 });
 
 
@@ -47,10 +74,10 @@ var votes = function (all) {
   this.all = all;// votes to be taken into account. [dbid] is the voteid key
   this.index = {}; // column number in the cvs of a voteid
   this.mepindex = {}; //row number in the csv of a mepid
-  this.type = {1:"pro","-1":"against",0:"abstention","":"absent"};
+  this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
   this.direction = {1:"up","-1":"down"}; 
   _.each (all, function(v,i) {
-    v.pro = v.against = v.abstention = v.absent = 0;
+    v.pro = v.against = v.abstention = v.absent = v["not an MEP at the time of this vote"] = 0;
     v.date = new Date (v.date);
     if (typeof v.dbid !== "undefined") {
       this.index[v.dbid] = i;
@@ -66,7 +93,7 @@ votes.prototype.get = function (id) { //return the detail of a vote based on its
 }
 
 votes.prototype.setRollCall = function (rolls) {
-  //var type = {1:"pro","-1":"against",0:"abstention","":"absent"};
+  //var type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
 
   this.rollcalls = rolls;
   _.each (rolls, function(v,i) {
@@ -103,7 +130,7 @@ votes.prototype.getEffort = function (mepid) {
       ++nbvote;
       if (Math.abs(mep[vote.dbid]) == 1) // yes or no
         ++effort;
-//      if (mep[vote.dbid] == 0) ++effort; //count abstention as effort
+      if (mep[vote.dbid] == 0) ++effort; //count abstention as effort
     }
   },this);
   return effort/nbvote * 100; 
@@ -131,6 +158,9 @@ votes.prototype.getScore = function (mepid) {
   _.each(this.all, function (vote) {
     if (mep[vote.dbid]) {
       nbvote = nbvote + vote.weight; //no weight used
+      if ( mep[vote.dbid] == "X") { //abstention, we skip
+        return;
+      }
       score = score + vote.recommendation * mep[vote.dbid]*vote.weight;
     }
   },this);
@@ -143,7 +173,12 @@ var vote = new votes (list_votes);
 
 var topics = ["climate","gmo","topic 3","topic 4"];
 
-var tpl = _.template("<div style='background-color:<%= color %>;' data-id='<% epid %>'><div class='score' style='font-size:<%= size %>px;'><%= score %></div><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name %></h2><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><div class='party'><%= party %></div></div>");
+
+var tpl = _.template("<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
+
+var tplGroup = function (d) {
+    return "<div class='dc-grid-group nodc-grid-item country_"+getCountryKey(d.key)+"'><h1 class='dc-grid-label'>"+d.key+"</h1></div>";
+};
 
 var getMEP = function (id) {
     for (var i in meps) {
@@ -163,11 +198,12 @@ function grid (selector) {
     return vote.getScore (mep.epid);
   }
 
-  // color based on the score.
+  // color based on the score.F0A92E
   var color = d3.scale.linear()
     .clamp(true)
     .domain([0, 49, 50, 51, 100])
     .range(["#CF1919","#FA9B9B","#ccc","#d0e5cc","#2C851C"])
+    // .range(["#ED0E0E","#FC9144","#FF8E2B","#CCF279","#2C851C"])
     .interpolate(d3.interpolateHcl);
 
   function adjust (data) {
@@ -211,7 +247,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .brushOn(true)
     .renderArea(true)
     .elasticY(true)
-    .yAxisLabel("#MEPs")
+    .yAxisLabel("Number of MEPs") 
     .dimension(age)
     .group(ageGroup);
 
@@ -230,8 +266,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 
 
   pie_gender
-    .width(200)
-    .height(200)
+    .width(140)
+    .height(140)
     .dimension(gender)
     .label(function (d){
         return SymbolGender[d.key];
@@ -253,6 +289,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .margins({top: 10, right: 10, bottom: 20, left: 30})
     .x(d3.scale.linear().domain([0, 101]))
     .elasticY(true)
+    .yAxisLabel("Number of MEPs")
     .round(dc.round.floor)
     .colorCalculator(function(d, i) {
         return color(d.key);
@@ -275,13 +312,17 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       }
       //why doesn't it work? if (chart.dimension().size() !== chart.group().value()) {
       if (ndx.size() !== nb) {
-         $(".resetall").attr("disabled",false);
+        $(".resetall").attr("disabled",false);
+        ga && ga('send', 'event', 'filter', 'subset', nb);
       } else {  
         $(".resetall").attr("disabled",true);
+        ga && ga('send', 'event', 'filter', 'reset');
       }
     });
 
-  var bar_country = dc.barChart(selector + " .country");
+  bar_score.yAxis().ticks(4).tickFormat(d3.format(",.0f"));
+
+  bar_country = dc.barChart(selector + " .country"); //global
   var country = ndx.dimension(function(d) {
       if (typeof d.country == "undefined") return "";
       return d.country;
@@ -301,8 +342,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       function(d) {
       return d.value.count;
       })
-  .width(500)
-    .height(200)
+  .width(700)
+    .height(300)
     .outerPadding(0)
     .gap(1)
     .margins({top: 10, right: 0, bottom: 95, left: 30})
@@ -310,18 +351,24 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .xUnits(dc.units.ordinal)
     .brushOn(false)
     .elasticY(true)
-    .yAxisLabel("#MEPs")
+    .yAxisLabel("Number of MEPs")
     .dimension(country)
     .group(countryGroup)
-
-  bar_country.on("postRender", function(c) {adjustBarChartLabels(c);} );
+    .on("postRender", function(c) {
+      adjustBarChartLabels(c);
+      c.svg().selectAll("rect.bar")
+        .on("click.scroll", function( d ){
+           scrollTo(d.data.key);
+        });
+    });
 
   function adjustBarChartLabels(chart) {
     chart.svg().selectAll('.axis.x text')
       .on("click",function(d) { 
         chart.filter(d);
-        dc.redrawAll();}
-      )
+        dc.redrawAll();
+        scrollTo(d);
+      })
       .style("text-anchor", "end" )      
       .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
   }
@@ -345,29 +392,23 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
         return d.country;
         })
   .size(1000)
-    .html (function(d) { 
-        d.score = d.scores [0];
-        d.color = color(d.score);
-        d.size = 20+ 20*d.effort/100;
+  .html (function(d) { 
+    d.score = d.scores [0];
+    d.color = color(d.score);
+    d.size = 20+ 20*d.effort/100;
 
-        return tpl(d);
-        })
+    return tpl(d);
+  })
+  .htmlGroup(function (d) {return tplGroup(d);})
   .sortBy(function (d) {
-      return d.last_name;
-      })
-  .order(d3.ascending)
+    return d.last_name;
+//    return d.score;
+  })
+//  .order(d3.descending)
     .renderlet(function (grid) {
       grid.selectAll (".dc-grid-item")
         .on('click', function(d) {
-          d.votes=vote.getVotes(d.epid);
-
-          var v = {d:vote.all};
-         _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
-  x.direction = vote.direction [x.mep];
-  x.type = vote.type [x.mep*x.recommendation];
-});
-            $( "#infobox" ).html(tplPopup(d) + tplScore(v) ).popup( "open" );
-
+          MEPpopup(d);
         });
         $("img.lazy-load").lazyload ({effect : "fadeIn"})
         .removeClass("lazy-load");
@@ -376,19 +417,59 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
 
 
   dc.renderAll();
+  twitterize();
   var hash = window.location.hash;
    if(hash.indexOf('#mep') === 0) { 
      var mep = getMEP (hash.substring(4));
-     mep.votes=vote.getVotes(mep.epid);
-     $( "#infobox" ).html(tplPopup(mep)).popup( "open" );
+     MEPpopup(mep);
    } else if (hash.length == 3){ //country
       var iso=hash.substring(1);
+
 //      bar_country.filter (); 
    }
    
+}
 
+function MEPpopup (d) {
+          d.votes=vote.getVotes(d.epid);
+
+          var v = {d:vote.all};
+          _.each (v.d, function(x) { x.mep = d.votes[x.dbid];
+             x.direction = vote.direction [x.mep];
+             if (x.mep == "") {
+               x.type ="not an MEP at the time of this vote";
+               return;
+             } 
+             if (x.mep == "X") {
+               x.type ="absent";
+               return;
+             } else {
+               x.type = vote.type [x.mep*x.recommendation];
+             }
+          });
+
+          $( "#infobox").modal('show');
+          $( "#infobox_header" ).html(tplPopup(d));
+          $( ".infobox_content" ).html(tplScore(v));
+          window.location.hash = "mep"+d.epid;
+          $( "#twitter").html(tplTwitter(d));
 
 }
+function getCountryKey (name) {
+  return name.replace(/ /g,"_").toLowerCase();
+}
+
+scrolled = false;
+function scrollTo (id) {
+  ga && ga('send', 'event', 'page', 'scroll', id);
+  if (scrolled)
+    return;
+  scrolled = true;
+  $("#collapseOne").collapse("show");
+  jQuery('html, body').animate({
+    scrollTop: jQuery(".country_"+getCountryKey(id)).offset().top
+  }, 2000);
+};
 
 
 function chartGroup (selector,ndx,color) {
@@ -406,8 +487,8 @@ function chartGroup (selector,ndx,color) {
  var tip = d3.tip()
     .attr('class', 'd3-tip')
     .html(function(p) { return '<span><h2>' +  p.data.key + "</h2><ul>" + 
-                "<li>MEPs: " +p.data.value.count + "</li>" +
-                "<li>effort: " +Math.floor (p.data.value.effort/p.data.value.count) + "</li>" +
+                "<li>Number of MEPs: " +p.data.value.count + "</li>" +
+                "<li>Average participation: " +Math.floor (p.data.value.effort/p.data.value.count) + "</li>" +
                 "<li>score: "+Math.floor (p.data.value.score/p.data.value.count); 
        '</li></ul></span>' })
     .offset([-12, 0])
@@ -448,9 +529,9 @@ function chartParty (selector, ndx, color) {
     .attr('class', 'd3-tip')
     .html(function(p) { return '<span><h2>' +
         p.key + "</h2><ul>" + 
-                "<li>MEPs: " +p.value.count + "</li>" +
-                "<li>effort: " +Math.floor (p.value.effort/p.value.count) + "</li>" +
-                "<li>score: "+Math.floor (p.value.score/p.value.count); 
+                "<li>Number of MEPs: " +p.value.count + "</li>" +
+                "<li>Average participation: " +Math.floor (p.value.effort/p.value.count) + "</li>" +
+                "<li>Average score: "+Math.floor (p.value.score/p.value.count); 
        '</li></ul></span>' })
     .offset([-12, 0])
 
@@ -470,10 +551,10 @@ function chartParty (selector, ndx, color) {
       function(d) {
       return d.value.count;
       })
-  .width(444)
-    .height(240)
-    .margins({top: 20, right: 20, bottom: 95, left: 30})
-    .yAxisLabel("Effort")
+  .width(460)
+    .height(200)
+    .margins({top: 20, right: 20, bottom: 20, left: 30})
+    .yAxisLabel("%Votes attended")
     .dimension(party)
     .group(partyGroup)
     .keyAccessor(function (p) {
@@ -491,6 +572,8 @@ function chartParty (selector, ndx, color) {
     .elasticY(false)
     .yAxisPadding(0)
     .elasticX(false)
+    .elasticRadius(false)
+
     .xAxisPadding(0)
     .maxBubbleRelativeSize(0.15)
     .renderHorizontalGridLines(false)
@@ -515,3 +598,26 @@ function chartParty (selector, ndx, color) {
   this.grid = grid;
   return this;
 };
+
+function twitterize () {
+  jQuery ( "body" ).on( "click", ".twitter", function(event) {
+    event.preventDefault();
+    if (typeof twitterMsg == "undefined")
+      var _twitterMsg = "How does @ score of #score compare to the other MEPs? #ep2014";
+    else 
+      var _twitterMsg = twitterMsg;
+    var t= $(this).data("twitter");
+    var mep=$(this).closest("div.mep");
+    var msg = _twitterMsg.replace("@ ",t+" "); 
+    msg = msg.replace("#score",mep.data("score")) + " "+document.URL.replace(/#.*/,'')+"#mep"+mep.data("id");
+     
+    var url = "http://twitter.com/home/?status=";
+    window.open(url+encodeURIComponent(msg), "twitter");
+    return false;
+});
+}
+
+
+String.prototype.formatName = function() {
+  return this.toLowerCase().replace(/(?:^|\s|-)\S/g, function(word) { return word.toUpperCase(); });
+}

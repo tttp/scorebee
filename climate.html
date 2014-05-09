@@ -1,269 +1,503 @@
-<html lang="en" dir="ltr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Scorecard demo</title>
-<link rel="stylesheet" type="text/css" href="dc.css"/>
+<html lang="en" dir="ltr" id="climate-scorecard">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Climate Scores</title>
 
-<!-- Jquery mobile css and js -->
-<link rel="stylesheet" type="text/css" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="dc.css"/>
 
-<!-- Font Awesome CSS Sprites -->
-<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
-<!-- Our styles -->
-<link rel="stylesheet" type="text/css" href="style.css"/>
+        <!-- Bootstrap -->
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-</head>
-<body>
+        <!--Bootstrap tour-->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.8.1/css/bootstrap-tour.min.css" rel="stylesheet">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.8.1/js/bootstrap-tour.min.js"></script>
 
-<script type="text/javascript" src="js/d3.v3.js"></script>
-<script type="text/javascript" src="js/crossfilter.js"></script>
-<script type="text/javascript" src="js/dc.js"></script>
-<script src="js/d3-tip.min.js"></script>
-<script src="scorecard.js"></script>
-<!--script type="text/javascript" src="../../src/data-grid.js"></script-->
-<script type="text/javascript" src="js/underscore-min.js"></script>
-<!--script type="text/javascript" src="queue.v1.min.js"></script-->
+        <!-- Font Awesome CSS Sprites -->
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-<!--script src="jquery.min.js"></script-->
-<script src="jquery.lazyload.js"></script>
+        <!-- Our styles -->
+        <link rel="stylesheet" type="text/css" href="style.css"/>
 
-<script>
+    </head>
+    <body>
 
-var topic = {
-  "title": "Does your MEP care about the climate?",
-  "description": "We collected the main topics...",
-  "link": "",
-  "logo": "",
-  "limits": [
-  {"upper": 20,  "text": " is a climate killer.", "color": "red"},
-  {"upper": 40,  "text": " has voted against climate policies.", "color" : "orange" }, 
-  {"upper": 60,  "text": " is not really decided on the climate.", "color": "yellow"},
-  {"upper": 90,  "text": " is rather climate-friendly.",        "color": "palegreen"},
-  {"upper": 100, "text": " is a climate champion.",               "color": "lightgreen"} 
-  ],
-    "order": 1,
-    "name":"climate",
-    "weight": 1,
-};
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 
-var votes = [
-{
-  "id": "B7-0482/2013|§ 8 - AM 6D",
-    "dbid": 4995,
-    "weight": 1,
-    "date":"2013-04-05",
-    "title": "An EU greenhouse gas reduction target of 50% by 2030",
-    "description": "To keep the world from warming more than 2C, climate science and effort-sharing models recommend the EU should have greenhouse gas reduction targets of at least -55% by 2030.",
-    "recommendation": -1,
-},
-{
-  "id": "B7-0482/2013 - Am 12/1",
-  "dbid": 5004,
-  "weight": 0.5,
-    "date":"2013-04-06",
-  "title": "Phasing out fossil fuel subsidies",
-  "description": "Subsidies still support fossil fuels. Money used to support these polluting fuels could be used to support climate  action.",
-  "recommendation": 1,
-},
-{
-  "id": "A7-0046/2013 - Matthias Groote - Amended proposal",
-  "dbid": 5276,
-  "weight": 0.8,
-  "date":"2013-04-06",
-  "title": "Back-loading' the Emissions Trading System",
-  "description": "The EU carbon market has been sorely in need of reform for many years now - an agreement to temporarily withhold allowances was a small step in the right direction.",
-  "recommendation": 1,
-},
-{
-  "id": "A7-0135/2013 - Herbert Reul - Am 1/1",
-  "dbid": 4096,
-  "weight": 0.5,
-  "date":"2013-04-09",
-   "title": "Increasing European renewable energy supply",
-  "description": "Increasing the share of renewables is crucial in the transition to a low-carbon future. Ambitious targets are needed to secure this as a policy.",
-  "recommendation": 1,
-},
-{
-  "id": "A7-0035/2013 - Niki Tzavela - Am 1",
-  "dbid": 3939,
-  "weight": 0.8,
-  "date":"2013-04-10",
-  "title": "3 Binding Targets on the EU 2050 Roadmap",
-  "description": "NGO's have called for <a href='http://www.foeeurope.org/2030-climate-plan'>3 binding targets</a> on renewable energy, emissions reductions and energy saving measures. It is essential that the agreements are legally binding so that member states cannot escape from their responsibilities.",
-  "recommendation": 1,
-},
-{
-  "id": "A7-0191/2012 - Bas Eickhout - Legislative resolution",
-  "dbid": 3708,
-  "weight": 1,
-  "date":"2012-09-01",
-  "title": "Reporting greenhouse gas emissions across Europe",
-  "description": "In order to reduce greenhoues gas emissions across Europe, there must be firm standards for carbon accounting.",
-  "recommendation": 1,
-},
-{
-  "id": "A7-0265/2012 - Claude Turmes - Single vote",
-  "dbid": 3082,
-  "weight": 0.4,
-  "date":"2012-09-02",
-  "title": "Measures to reduce energy consumption",
-  "description": "Reducing energy consumption is a very effective and cheap way to reduce greenhouse gas emissions along with other benefits.",
-  "recommendation": 1,
-},
-{
-  "id": "A7-0033/2012 - Chris Davies - Am 1/2",
-  "dbid": 2636,
-  "weight": 0.8,
-  "date":"2012-09-03",
-  "title": "Increasing 2020 emissions reductions targets to 30%",
-  "description": "The EU's 2020 climate targets <a href='http://www.sandbag.org.uk/blog/2013/dec/9/eus-2020-targets-allow-massive-growth-emissions-em'>allows emissions to grow!</a> The targets need to be accordingly more ambitious to take into account current progress.",
-  "recommendation": 1,
-},
-{
-  "id": "B7-0571/2011 - § 38",
-  "dbid": 2340,
-  "weight": 0.4,
-  "date":"2011-05-02",
-  "title": "Climate finance for the world's poorest",
-  "description": "Developed countries have promised to provide $100bn /yr by 2020 to support developing countries fighting climate change impacts. ",
-  "recommendation": 1,
-},
-{
-  "id": "B7-0522/2011 - Resolution",
-  "dbid": 2189,
-  "weight": 0.6,
-  "date":"2011-05-03",
-  "title": "Developing a common EU position ahead of the United Nations Conference on Sustainable Development (Rio+20)",
-  "description": "Climate change will disproportionately impact the world's poorest, so it is essential that climate change considerations are integrated in development policy.",
-  "recommendation": 1,
-},
-{
-  "id": "B7-0141/2009/rev1 - Copenhagen Summit - resolution",
-  "dbid": 220,
-  "weight": 0.9,
-  "date":"2009-05-02",
-  "title": "The EU strategy for the Copenhagen Conference on Climate Change (COP 15)",
-  "description": "A global agreement at Copenhagen in 2009 would have been a big step in the right direction. These hopes ultimately floundered with a weak agreement. The EU position ahead of the conference was important groundwork.",
-  "recommendation": 1,
-}
-];
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.7/crossfilter.min.js"></script>
+        <script type="text/javascript" src="js/dc.min.js"></script>
+        <script src="js/d3-tip.min.js"></script>
+        <script src="scorecard.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
-var card=scoreCard (votes);
+        <script>
+    
+            var twitterMsg = "How does @ score of #score on climate change compare to the other MEPs? #ep2014";
 
-</script>
+            var topic = {
+                "title": "Does your MEP care about the climate?",
+                "description": "We collected the main topics...",
+                "link": "",
+                "logo": "",
+                "limits": [
+                {"upper": 20,  "text": " is a climate killer.", "color": "red"},
+                {"upper": 40,  "text": " has voted against climate policies.", "color" : "orange" }, 
+                {"upper": 60,  "text": " is not really decided on the climate.", "color": "yellow"},
+                {"upper": 90,  "text": " is rather climate-friendly.",        "color": "palegreen"},
+                {"upper": 100, "text": " is a climate champion.",               "color": "lightgreen"} 
+                ],
+                "order": 1,
+                "name":"climate",
+                "weight": 1,
+            };
 
-<div data-role="page" class="jqm-demos" data-quicklinks="false" id="meps">
+            var votes = [
+            {
+                "id": "B7-0482/2013|§ 8 - AM 6D",
+                "dbid": 4995,
+                "weight": 1,
+                "date":"2013-04-05",
+                "title": "Against an EU greenhouse gas target of 50% by 2030",
+                "description": "The EU Commission proposed a 40% cut in greenhouse gases by 2030. The EU’s own roadmap suggests this is the bare minimum that the EU should be cutting, and climate science and <a href='http://www.sandbag.org.uk/blog/2013/oct/1/ipcc-carbon-budgets-set-new-bottom-line-internatio/'>effort-sharing models</a> suggest the EU should have a higher greenhouse gas reduction target, to move to a low carbon economy at least cost.",
+                "recommendation": -1,
+            },
+            {
+                "id": "B7-0482/2013 - Am 12/1",
+                "dbid": 5004,
+                "weight": 0.5,
+                "date":"2013-04-06",
+                "title": "Phasing out fossil fuel subsidies",
+                "description": "The International Monetary Fund says that fossil fuels are still boosted by <a href='https://www.imf.org/external/np/sec/pr/2013/pr1393.htm'>$1.9 trillion a year in subsidies</a>. Money used to support these polluting fuels could be used to support climate action.",
+                "recommendation": 1,
+            },
+            {
+                "id": "A7-0046/2013 - Matthias Groote - Amended proposal",
+                "dbid": 5276,
+                "weight": 0.8,
+                "date":"2013-04-06",
+                "title": "Back-loading' the Emissions Trading System",
+                "description": "The EU carbon market has been sorely in need of reform for many years now - an agreement in 2013 to <a href='http://www.sandbag.org.uk/blog/2013/nov/8/back-loading-agreed-next-stop-structural-reform/'>temporarily withhold ‘carbon permits’</a> was a small step in the right direction.",
+                "recommendation": 1,
+            },
+            {
+                "id": "A7-0135/2013 - Herbert Reul - Am 1/1",
+                "dbid": 4096,
+                "weight": 0.5,
+                "date":"2013-04-09",
+                "title": "Increasing European renewable energy supply",
+                "description": "Increasing the share of renewables is crucial in the transition to a low-carbon future. Ambitious targets are needed to secure this as a policy.",
+                "recommendation": 1,
+            },
+            {
+                "id": "A7-0035/2013 - Niki Tzavela - Am 1",
+                "dbid": 3939,
+                "weight": 0.8,
+                "date":"2013-04-10",
+                "title": "3 Binding Targets on the EU 2050 Roadmap",
+                "description": "The EU Commission has proposed a 2030 Climate package with only a greenhouse gas cut binding at national level. NGO's have called for <a href='http://www.foeeurope.org/2030-climate-plan'>three binding targets</a> on renewable energy, emissions reductions and energy saving measures, as with the 2020 targets.",
+                "recommendation": 1,
+            },
+            {
+                "id": "A7-0191/2012 - Bas Eickhout - Legislative resolution",
+                "dbid": 3708,
+                "weight": 1,
+                "date":"2012-09-01",
+                "title": "Reporting greenhouse gas emissions across Europe",
+                "description": "In order to reduce greenhouse gas emissions across Europe, there must be firm standards for measuring and calculating carbon emissions.",
+                "recommendation": 1,
+            },
+            {
+                "id": "A7-0265/2012 - Claude Turmes - Single vote",
+                "dbid": 3082,
+                "weight": 0.4,
+                "date":"2012-09-02",
+                "title": "Measures to reduce energy consumption",
+                "description": "Reducing energy consumption is a very effective and cheap way to reduce greenhouse gas emissions along with many other benefits. However, so far Member States have <a href='http://www.eea.europa.eu/media/newsreleases/climate-and-energy-targets-2013'>struggled to reach their targets.</a>",
+                "recommendation": 1,
+            },
+            {
+                "id": "A7-0033/2012 - Chris Davies - Am 1/2",
+                "dbid": 2636,
+                "weight": 0.8,
+                "date":"2012-09-03",
+                "title": "Increasing 2020 emissions reductions targets to 30%",
+                "description": "The EU's current 2020 climate target <a href='http://www.sandbag.org.uk/blog/2013/dec/9/eus-2020-targets-allow-massive-growth-emissions-em/'>allows emissions to grow!</a> The target needs to be accordingly more ambitious to take into account current progress,and the enormous pool of carbon offsets.",
+                "recommendation": 1,
+            },
+            {
+                "id": "B7-0571/2011 - § 38",
+                "dbid": 2340,
+                "weight": 0.4,
+                "date":"2011-05-02",
+                "title": "Climate finance for the world's poorest",
+                "description": "Developed countries have promised to provide <a href='http://ec.europa.eu/clima/policies/finance/international/index_en.htm'>$100bn a year</a> by 2020 to support developing countries fighting climate change impacts, and the EU is the world’s biggest contributor to this fund.",
+                "recommendation": 1,
+            },
+            {
+                "id": "B7-0522/2011 - Resolution",
+                "dbid": 2189,
+                "weight": 0.6,
+                "date":"2011-05-03",
+                "title": "Developing a common EU position ahead of the United Nations Conference on Sustainable Development (Rio+20)",
+                "description": "Climate change will disproportionately impact the world's poorest, so it is essential that climate change and development are pursued together.",
+                "recommendation": 1,
+            },
+            {
+                "id": "B7-0141/2009/rev1 - Copenhagen Summit - resolution",
+                "dbid": 220,
+                "weight": 0.9,
+                "date":"2009-05-02",
+                "title": "The EU strategy for the Copenhagen Conference on Climate Change (COP 15)",
+                "description": "A global agreement at Copenhagen in 2009 would have been a big step in the right direction. Unfortunately these hopes <a href='http://www.sandbag.org.uk/blog/2009/dec/21/jan-31st-2010-new-deadline-saving-billions-tonnes-/'>ultimately floundered with a weak agreement</a>, but the EU position ahead of the conference was important groundwork.",
+                "recommendation": 1,
+            }
+            ];
 
-	<div data-role="header" class="jqm-header"  onclick="document.location.href='landing.html'" style="cursor:pointer">
-		<h3>Scoring the European Parliament: Climate Change</h3>
-  </div>
+            var card=scoreCard (votes);
+
+        </script>
+
+        <nav style="margin-bottom: 0px; border-width: 0px; border-top-width: 5px; border-color: #3eb249;" class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                <a class="navbar-brand" style="color:#FFF" href="/" data-ajax="false">Scoring the European Parliament:</a>
+                <ul class="nav navbar-nav">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Climate Change<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                       <li><a href="climate.html" data-ajax="false">Climate Change</a></li>
+                      <li><a href="fracking.html" data-ajax="false">Fracking</a></li>
+                      <li><a href="gmo.html" data-ajax="false">GMO</a></li>
+                      <li><a href="/arms.html" data-ajax="false">Arms trade</a></li>
+                    </ul>  
+                  </li>
+                </ul>    
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/methodology.html" data-ajax="false">Methodology</a></li>
+                    <li><a href="/about.html" data-ajax="false">About</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+        </nav>
 
 
-	<div role="main" class="ui-content">
-	<div id="block1">
-	</div>
-	<div id="block2">
-		<div id="ep2014list">
-			<div class="country"><div class="graph_titles"><h1>Choose your country:</h1></div></div>
-			<div class="gender"></div>
-			<div class="age"></div>
-		    <div class="group"><div class="graph_titles"><h1>European Party:</h1></div></div>
-			<div class="party"><div class="graph_titles"><h1>Select national party:</h1></div></div>
-			<div class="list"></div>
-			<div style="clear:both;">
-			</div>
-		</div>
-	</div>	
-	<div id="block3">		
-<div id="search-box" class="ui-field-contain">
-<label>Click on the graphs or type a name</label>
-        <input type="search" data-mini="true" data-type="broken-i-hate-jqm-search" id="search-input" data-clear-btn="true">
-</div>
-  <div class="dc-data-count">
-  Combined score of <span class="filter-count"></span> selected
-<div class="outof">out of <span class="total-count"></span> MEPs</div>
-<div class="bar_score">
-<div class="graph_titles"><h1>Drag to highlight a select of MEPs:</h1></div>
-<div id="avg_score"></div>
-</div>	
-<button  class="ui-btn ui-mini ui-corner-all ui-shadow resetall ui-disable" data-icon="delete">Reset All</button>
+    <div style="background-image: url('ep.jpg'); background-size: cover;">
+        <div class="container">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="form-group col-md-8">
+                      <div>
+                        <h1>Climate change</h1>
+                        <p>Has your MEP voted for action on climate change?</p>
+                      </div>  
 
-	</div>		
-	</div>		
-			
-			<div class="nokparty">
-			</div>
-			<div class="dc-data-grid">
-			</div>
+                        <div class="input-group">
+                            <input type="text" id="search-input" class="form-control input-lg" placeholder="Search">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+                        </div>
+                        <span class="help-block" style="color: #E1E1E1;">Filter MEPs by name and party. Click on the bar chart for countr ies.
+                            <button style="float: right; color: black;" class="btn resetall" data-icon="delete">Reset All</button>
+                        </span>
+                        <br />
+                    </div>
 
-			<div data-role="popup" id="infobox" class="ui-content">
+                    <div class="col-md-4 frontpage_score">
+                        <div class="dc-data-count">
+                          <div class="bar_score center-block">
+                            <div class="graph_titles text-center"><h2>Scores of <span class="filter-count"></span> MEPs</h2></div>
+                            <div class="text-center" id="avg_score"></div>
+                            </div>
+                        </div>    
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="ep2014list">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div id="bar_country" class="country country_main center-block">
+                              <div class="text-center graph_titles"><h2>Select your country by clicking on the bar chart</h2></div>
+                            </div>
+                          </div>
+                        </div>
+                         <!-- Accordion top level  -->
+                         <div class="panel-group" id="accordion">
+                          <div class="panel panel-default filter-panel-container">
+                            <div class="panel-heading">
+                              <a data-toggle="collapse" data-parent="#accordion" data-target ="#collapseOne" href="#collapseOne" class="collapsed">
+                                <h4 class="panel-title">
+                                  Click here for more filters
+                                  <span class ="glyphicon glyphicon-chevron-down"</span>
+                                </h4>
+                              </a>
+                            </div>
+                            <!-- Hidden stuff goes here -->
+                            <div id="collapseOne" class="panel-collapse collapse">
+                              <div class="panel-body">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="party center-block">
+                                            <div class="graph_titles text-center">
+                                                <h2>National party</h2>
+                                                <h5>Select a national party to see just their MEPs. Higher bubbles mean more votes attended, further right means better votes for the climate.</h5>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div class="group center-block">
+                                            <div class="graph_titles text-center">
+                                                <h2>European Party</h2>
+                                                <h5>Select which European party the MEPs belong to and see their scores</h5>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-3">
+                                        <div class="gender center-block">
+                                            <div class="graph_titles text-center">
+                                                <h2>Gender</h2>
+                                                <h5>Select MEPs by their gender</h5>
+                                            </div>
+                                        </div>
+                                      </div>
+                        <div class="gender"></div>
+                        <div class="age"></div>
+
+                                  </div>
+                                  <!-- End of hidden stuff -->
+                                 </div>
+                                </div>
+                              </div>
+                            </div>    
+                            <!-- End of accordion -->
+
+                        <div style="clear:both;"></div>
+                    </div>
+                </div>	
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4">		
+                    
+                    <div class="list"></div>
+
+                    <div class="row">
+
+                    </div>
+                </div>		
+
+            </div>
+        </div>
+
+        </div>
+
+        <div class="row" style="background-color: whitesmoke;">
+
+        <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+
+            <div class="nokparty"></div>
+
+            <div class="dc-data-grid">
+            <h4><i>Click on the MEP for their climate voting record</i></h4>	
+            </div>
+
+          </div>
+
+          <!-- Modal  -->
+          <div id="infobox" class="modal fade" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div id="infobox_header" class="modal-header">
+                </div>
+                <div class="infobox_content modal-body">
+                  <!-- Populated information appears here -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End of modal -->
+
+        </div>
+        </div>
+        </div>
+
+    </div>
 </div>
 
 
 <script type="text/tpl" id="infobox_tpl">
-	<span><a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-  	<img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:50px"/> </span>
-		<ul id="infobox_info">
-			<li>Name: <strong> <%= first_name %> <%= last_name %></strong></li>
-			<li>Age: <strong><%= age %></strong></li>
-			<li>Effort: <strong><%= Math.round(effort) %></strong></li>
-			<li>Country: <strong><%= country %></strong></li>
-			<li>National party: <strong><%= party %></strong></li>
-			<li>European Party:<strong> <%= eugroup %> </strong></li>
-			<span id="score"><%= score %></span>
-	  </ul>	
+    
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+    <span>
+        <img src='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
+    </span>
+    <div class="row">
+      <div class="col-md-8 mep" data-id='<%= epid %>' data-score='<%= score %>'>
+        <ul id="infobox_info">
+            <li><h1><strong><%= first_name %> <%= last_name.formatName() %></strong></h1></li>
+            <li>Participation: <strong><%= Math.round(effort) %></strong></li>
+            <li>Country: <strong><%= country %></strong></li>
+            <li>National party: <strong><%= party %></strong></li>
+            <li>European Party:<strong> <%= eugroup %> </strong></li>
+<% if (twitter) { %><li><div class='twitter' data-twitter='<%= twitter %>'>This MEP is a candidate in the 2014 elections - share the score!</div></li><% } %>
+            <li style="font-size:2em"><strong>Voting score: <%= score %>/100</strong></li>
+        </ul> 
+      </div>   
+    </div>  
+    <div style="clear:both;"></div>
+
 </script>
 
-<script type="text/tpl" id="score_tpl">
-<div class="ui-grid-a my-breakpoint votes_div">
-<% _.each (d, function (v) { %>
-  <div class="ui-content vote_box">
+<script type="text/tpl" id="twitter_tpl">
+    <a href="https://twitter.com/share" class="twitter-share-button" id="twitter-button" data-url="http://www.score-ep.org/climate" data-lang="en" data-text="<%= score %>">Tweet this score!<%=score%></a>
+</script>
 
-voted		  <span class="thumbs">
-	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>"><%= vote.type[v.mep]  %></i>
-  	  </span>
-, we wanted
+<!-- Twitter button script -->
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+              </script>              
+
+<!-- Modal votes content -->
+<script type="text/tpl" id="score_tpl">
+    <div class="row">
+      <% var count = 0; %>
+        <% _.each (d, function (v) { %>
+          <%
+            count++;
+            if ((count % 2) == 0) {
+          %>
+                <div class="row" style="margin:0px">
+          <% } %>
+            <div class="col-md-6 each_vote_container">
+            <% if (v.type == "for") { %>
+              <div class="panel panel-success">
+              <% } else if (v.type == "abstention") { %>
+              <div class="panel panel-warning">
+            <% } else if (v.type == "absent") { %>
+              <div class="panel panel-info">
+            <% } else if (v.type == "against") { %>
+              <div class="panel panel-danger">
+            <% }else { %>
+              <div class="panel panel-default">
+            <% } %> 
+              <div class="panel-heading">
+                  <h3 class="panel-title"><%= v.title %></h3>
+voted&nbsp;<span class="thumbs">
+	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>"></i>&nbsp;<%= vote.type[v.mep]  %></span>, we recommend&nbsp;
 		  <span class="thumbs">
 	  	  <i class="fa fa-thumbs-o-<%= vote.direction[v.recommendation] %>" title="We recommended <%= vote.type[v.recommendation] %>"></i>
   	  </span>
 
-<h5 class="<%= v.type %>"><%= v.title %></h5>
-<p><%= v.description %></p>
-	</div>
-<% }); %>
-</div><!-- /votes grid -->
-<div style="clear:both;margin-bottom: 20px;"></div>
+
+              </div>
+              <div class="panel-body">
+                <p><%= v.description %></p>
+              </div>
+            </div>
+            </div>
+            <% if ((count % 2) == 0) { %>
+                </div>
+            <% } %>
+         <% }); %>
+    </div><!-- /votes grid -->
+    <div style="clear:both;margin-bottom: 20px;"></div>
 </script>
 
 <script>
-var meps = [];
-var mepvotes = [];
+    var meps = [];
+    var mepvotes = [];
 
-$(function() {
-  var _grid = _.after(2, function () {
-    card.grid ("#ep2014list");
-  });
+    $(function() {
+        var _grid = _.after(2, function () {
+            card.grid ("#ep2014list");
+        });
 
-    d3.csv("mep.csv", function(d) {return d;}
-      ,function(error, rows) {
-        meps = rows;
-        _grid ();
-      });      
+        d3.csv("mep.csv", function(d) {return d;}
+        ,function(error, rows) {
+            meps = rows;
+            _grid ();
+        }
+        );      
 
-    d3.csv("data/votes_climate.csv", function(d) {return d;}
-      ,function(error, rows) {
-        card.vote.setRollCall (rows);
-        _grid ();
-      });      
-  
-  
-});      
+        d3.csv("data/votes_climate.csv", function(d) {return d;}
+        ,function(error, rows) {
+            card.vote.setRollCall (rows);
+            _grid ();
+        }
+        );      
+    });      
 </script>
 
+<script>
+// Instance the tour
+var tour = new Tour({
+  name: "tour",
+  steps: [
+  {
+    element: "#search-input",
+    title: "Other scorecards",
+    content: "You can select other scorecards curated by different NGOs"
+  },
+  {
+    element: "#my-other-element",
+    title: "Title of my step",
+    content: "Content of my step"
+  }
+],
+container: "body",
+  keyboard: true,
+  storage: window.localStorage,
+  debug: false,
+  backdrop: false,
+  redirect: true,
+  orphan: false,
+  duration: false,
+});
+
+// Initialize the tour
+tour.init();
+
+// Start the tour
+tour.start();
+
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-49884709-1', 'score-ep.org');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>

@@ -23,6 +23,8 @@ text-align: center;
 margin: 1 auto;
 }
 
+h2 {font-size:22px;}
+
 .jqm-demos .jqm-content > h1.starthead {
 font-size: 3.5em;
 width: 50%;
@@ -36,7 +38,6 @@ font-weight: 300;
 
 .ui-page-theme-a {
 	text-shadow:none;
-	background:url(mochaGrunge.png);
 	color: #131313;
 	text-shadow:none;
 }
@@ -50,7 +51,7 @@ font-weight: 300;
 	color:#000;
 }
 
-a#ep2014list table, .dc-data-grid {clear:both;}
+a#ep2014list table, .dc-data-grid {clear:both;padding-left:3.5em;}
 .dc-table-label {background: #F5F5F5; font-weight:bold; }
 .x line {stroke:none;}
 
@@ -67,14 +68,40 @@ min-height: 20px;
 padding: 5px 5px 5px 20px;
 }
 
+li div.twitter {
+position:relative;
+width:auto;
+left:0;
+bottom:0;
+padding-left:20px;
+background-repeat:no-repeat;
+background-position:0 0;
+cursor:pointer;
+}
+li div.twitter:hover {
+  text-decoration:underline;
+}
+
+.twitter {
+position: absolute;
+left: 21px;
+background: url("http://twitter.com/favicon.ico") #fff center;
+width:20px;
+height:20px;
+padding:2px;
+-webkit-border-radius: 6x;
+-moz-border-radius: 6px;
+border-radius: 6px;
+bottom: 70px;
+}
 .score {
 position: absolute;
-right: 15px;
+right: 21px;
 color: #111;
 background: rgba(255, 255, 255, 0.65);
 font-size: 40px;
 padding: 1px 1px;
-top: 208px;
+bottom: 70px;
 font-weight: bold;
 -webkit-border-radius: 6x;
 -moz-border-radius: 6px;
@@ -84,20 +111,6 @@ border-radius: 6px;
 #thumbsup {
 	float:left;
 }
-
-/*Popup modal styles*/
-
-#infobox {
-margin-left:auto;
-margin-right:auto;
-text-shadow:none;
-width:60%;
-border: 5px #4E4E4E solid;
-}
-
-#infobox p {
-font-size:0.75em;
-  }
 
 .ui-block-a {
 width:15%;
@@ -110,38 +123,31 @@ margin-top:5px;
 }
 
 /* stack all grids below 40em (640px) */
-@media all and (max-width: 35em) {
+/*@media all and (max-width: 35em) {
 	.my-breakpoint .ui-block-a,
 	.my-breakpoint .ui-block-b,{
 		width: 100%;
 		float: none;
 	}
+
 	#infobox {
 		width:100%;
 	}	
 }
+*/
 
 .dc-grid-item>div {
-padding:5px;
-    border-color: #E7E7E7;
-    border-radius: 4px;
-    text-align:center;
-    box-shadow: 3 -3px -4px rgba(72, 73, 73, 1) inset;
-height:320px;
+padding: 5px;
+border-color: #E7E7E7;
+border-radius: 4px;
+text-align: center;
+box-shadow: 3 -2px -2px rgba(82, 81, 81, 1) inset;
+height: 320px;
 }
 
-.party {
-	font-size:0.9em;
-	padding-top:5px;
-	color:#121212;
-	text-decoration:none;
-	height: 241px;
-}
-
-.group {
-	width: 150px;
-  margin:0 10px;
-	height: 241px;
+.dc-grid-item>div:hover { 
+opacity: 0.8;
+cursor:pointer;
 }
 
 .dc-grid-item {
@@ -160,7 +166,7 @@ margin-bottom: 8px;
 
 .dc-grid-item img {width:170px;height:215px}
 .dc-grid-top h1 {font-size:22px;}
-.dc-grid-top h2 {font-size:14px;color: #121212;text-decoration:none;}
+.dc-grid-top h2 {font-size:15px;color: #121212;text-decoration:none;font-weight: bold; margin-top:8px;}
 
 
 
@@ -226,20 +232,21 @@ text-decoration: none;
 }
 
 .age {display:none}
-.gender {display:none}
+.dc-chart.gender .pie-slice {font-size:40px;}
 
 .d3-tip {
   line-height: 1;
   font-weight: bold;
   padding: 12px;
-  background: rgba(200, 200, 200, 0.8);
+  background: rgba(200, 200, 200, 0.9);
   color: #222;
   border-radius: 2px;
   pointer-events: none;
 }
 
-.d3-tip h2{ font-size:14px;color:#222;}
-.d3-tip ul{ padding:10px 0 0 10px; margin:0}
+
+.d3-tip h2{ font-size:14px;color:#222;margin:5px;}
+.d3-tip ul{ padding:0 0 0 10px; margin:0 0 0 10px}
 
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
@@ -292,24 +299,28 @@ text-decoration: none;
     -webkit-animation: bounceIn 0.2s ease-out;
   }
 
-
-.bar_score {
-position:relative;
-width: 245px;
-margin-top:10px;
-}
-
 .bar_score svg {position:relative;}
-.bar_score div#avg_score {position:absolute;margin:-26px 0 0 45px;font-size:130; color:#fff;opacity:0.5}
+.bar_score div#avg_score {
+  font-size: 130;
+color: #111;
+opacity: 0.5;
+position: relative;
+margin-bottom: -150px;
+margin-top: -30px;
+text-align: center;
+margin-left: auto;
+margin-right: auto;
+min-height:185px;
+}
 
 
 .dc-data-count .filter-count {
-color: #FFF;
+color: #111;
 font-weight: bold;
 }
 
 .dc-data-count .total-count {
-color: #FFF;
+color: #111;
 }
 
 .landing-button {
@@ -323,7 +334,10 @@ font-size: 0.5em;
 color: #232323;
 margin-left: auto;
 margin-right: auto;
-width:300px;
+}
+
+.graph_titles h1 {
+  font-size:18px;
 }
 
 .parties-box {
@@ -335,17 +349,11 @@ list-style-type: none;
 }
 
 #score {
-	font-size: 6em;
-  display: block;
-position: absolute;
-top: 10px ;
-right: 60px;
+	font-size: 8em;
 }
 
 .group .deselected path {opacity:1}
 .group  path {stroke:lightgrey}
-
-.country {width:450px;}
 
 .ui-header h2.ui-title b {color:#2c851c}
 
@@ -354,25 +362,19 @@ right: 60px;
 #search-box label {float:none;width:100%}
 #search-box ui-input-search {width:auto;float:none;}
 
-.abstention {background:lightgrey}
-.absent {background:white;text-decoration:line-through}
-.pro {background:green; color:#eee}
-.against {background:red; color:#eee}
+.abstention {border-color:lightgrey}
+.absent {opacity:0.5;}
+.for {border-color:green;}
+.against {border-color:#bd232a;}
+.panel-body {background-color:white;}
+.for .panel-heading {background-color:green;color:white}
+.against .panel-heading {background-color:#bd232a;color:white}
+.not.mep .panel-heading {text-decoration:none}
 
 .dc-chart g.axis.x text{
   cursor:pointer;
   pointer-events: auto;
 }
-
-.vote_box {
--moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
-width: 50%;
-min-width:200px;
-display: block;
-float: left;
-height:130px;
-}
-
 
 .menu-holder {
   width: 99px;
@@ -380,6 +382,109 @@ float: right;
 top: 10px;
 }
 
-.votes_div {
-  margin-top: 75px;
+.close {
+  font-size:3em;
+  opacity:0.6;
 }
+
+.infobox_content {
+  padding: 10px;
+}
+
+.each_vote_container {
+  min-height: 160px;
+}
+
+.panel-title {
+  font-weight: bold;
+}
+
+.panel {
+  min-height: 190px;
+}
+
+.panel-body {
+  padding:10px;
+  font-size: 16px;
+}
+
+.panel-body a {
+	font-weight:bold;
+}
+
+.panel-body a:hover {
+	color: #808080;
+}
+
+div.dc-chart {
+  float:none;
+}
+
+.dc-chart svg {
+    display: block;
+    margin: auto;
+}
+
+.jumbotron {
+ background-color: rgba(0,0,0,0.6); 
+ color: white; 
+ margin-bottom: 20px; 
+ margin-top:20px;
+ padding-top: 0px;
+ padding-bottom: 0px;
+}
+
+.filter-panel-container {
+  min-height:0px;
+}
+
+.frontpage_score {
+  background-color:#fff;
+  margin-top:20px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  min-width:283px;
+  min-height:212px;
+  opacity:0.7;
+}
+
+.header-score {
+  color:#333;
+}
+
+#climate-scorecard .modal-backdrop.in {
+	background: url(img/climate.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+#fracking-scorecard .modal-backdrop.in {
+	background: url(img/fracking.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.fa {
+	font-size:14px;
+}
+
+.party {
+	font-size: 14px;
+font-family: sans-serif;
+font-weight: bold;
+}
+
+#share {
+position: absolute;
+text-align: center;
+right: 15px;
+top: 215px;
+z-index: 10;
+}
+

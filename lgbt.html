@@ -1,9 +1,9 @@
-<html lang="en" dir="ltr" id="gmo-scorecard">
+<html lang="en" dir="ltr" id="scorecard">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>GMO Scores</title>
+        <title>LGBT Scores</title>
 
         <link rel="stylesheet" type="text/css" href="dc.css"/>
 
@@ -36,61 +36,77 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
         <script>
+            var twitterMsg = "How is @ voting record of #score% on #LGBT issues compared to the other MEPs? #EP2014 #comeoutEP2014";
 
             var topic = {
-                "title": "Does your MEP care about the climate?",
-                "description": "We collected the main topics...",
-                "link": "",
-                "logo": "",
-                "limits": [
-                {"upper": 20,  "text": " is a climate killer.", "color": "red"},
-                {"upper": 40,  "text": " has voted against climate policies.", "color" : "orange" }, 
-                {"upper": 60,  "text": " is not really decided on the climate.", "color": "yellow"},
-                {"upper": 90,  "text": " is rather climate-friendly.",        "color": "palegreen"},
-                {"upper": 100, "text": " is a climate champion.",               "color": "lightgreen"} 
-                ],
-                "order": 1,
-                "name":"climate",
-                "weight": 1,
             };
 
 var votes=  [
                 {
-                    "id": "A7-0170/2011|AM 1",
-                    "dbid": 2039,
+                    "id": "A7-0383/2012",
+                    "dbid": 3485,
                     "weight": 1,
-                    "title": "Legal certainty for national GMO regulation",
-                    "description": "The amendment strengthens the ability of national governments to regulate GMOs. Government can assess GMOs according to the environmental or health impacts linked to their cultivation.",
+                    "title": "Report on fundamental rights in the EU, including LGBT rights",
+                    "description": "",
                     "recommendation": 1,
-                    "link": "http://www.votewatch.eu/en/possibility-for-member-states-to-restrict-or-prohibit-the-cultivation-of-gmos-in-their-territory-dra.html"
+                    "link": "http://www.votewatch.eu/en/fundamental-rights-in-the-european-union-2010-2011-motion-for-a-resolution-vote-resolution-as-a-whol.html"
                 },
                 {
-                    "id": "A7-0170/2011|AM 41",
-                    "dbid": 2041,
+                    "id": "RC-B7-0234/2012",
+                    "dbid": 3301,
                     "weight": 1,
-                    "title": "Reasonable grounds for national GMO restrictions",
-                    "description": "Local communities and regional authorities should be given the right to reject GMO cultivation on their territory. The amendment gives communities greater freedom to reject GMOs for social and environmental reasons.",
+                    "title": "Resolution on homophobia in Europe",
+                    "description": "",
                     "recommendation": 1,
-                    "link": "http://www.votewatch.eu/en/possibility-for-member-states-to-restrict-or-prohibit-the-cultivation-of-gmos-in-their-territory-dra-3.html"
+                    "link": "http://www.votewatch.eu/en/fight-against-homophobia-in-europe-joint-motion-for-a-resolution-vote-resolution-as-a-whole.html"
                 },
 				{
-                    "id": "A7-0170/2011|AM 44",
-                    "dbid": 2043,
+                    "id": "A7-0418/2013| 116/1",
+                    "dbid": 5327,
                     "weight": 1,
-                    "title": "Stronger risk assessment for GMOs",
-                    "description": "The European Commission is asked to assess the long-term environmental effects of GMO cultivation and the associated use of herbicides. The Commission is also asked to ensure that all research is carried out independently.",
+                    "title": "Report on Human rights in the world 2013",
+                    "description": "",
                     "recommendation": 1,
-                    "link": "http://www.votewatch.eu/en/possibility-for-member-states-to-restrict-or-prohibit-the-cultivation-of-gmos-in-their-territory-dra-5.html"
+                    "link": "http://www.votewatch.eu/en/human-rights-in-the-world-2012-and-eu-policy-on-the-matter-motion-for-resolution-paragraph-116-1.html"
                 },
 				{
-                    "id": "B7-0007/2014",
-                    "dbid": 5428,
+                    "id": "B7-0523/2011",
+                    "dbid": 2171,
                     "weight": 1,
-                    "title": "Resolution to reject GMO authorisation in Europe",
-                    "description": "The resolution rejects the authorisation of the GM maize 1507 by the European Commission. The toxins used in the cultivation of maize 1507 could lead to reduction on biodiversity.",
+                    "title": "Resolution on joining a UN call for safeguarding the human rights of LGBT people in the world",
+                    "description": "",
                     "recommendation": 1,
-                    "link": "http://www.votewatch.eu/en/motion-for-a-resolution-pursuant-to-rule-88-2-and-3-of-the-rules-of-procedure-on-the-proposal-for-a-.html"
+                    "link": "http://www.votewatch.eu/en/sexual-orientation-and-gender-identity-at-the-un-human-rights-council-motion-for-a-resolution-vote-r.html"
                 },
+				{
+                    "id": "A7-0047/2012|AM 1  - AM 1/1",
+                    "dbid": 2691,
+                    "weight": 1,
+                    "title": "Resolution on the EU Citizenship Report 2010: Dismantling the obstacles to EU citizens' rights",
+                    "description": "",
+                    "recommendation": 1,
+                    "link": "http://www.votewatch.eu/en/eu-citizenship-report-2010-motion-for-a-resolution-am-1-amendment-1-1.html"
+                },
+				{
+                    "id": "A7-0009/2014|AM 2",
+                    "dbid": 5579,
+                    "weight": 1,
+                    "title": "Report on EU Roadmap against homophobia and discrimination on grounds of sexual orientation and gender identity",
+                    "description": "",
+                    "recommendation": 1,
+                    "link": "http://www.votewatch.eu/en/homophobia-and-discrimination-on-grounds-of-sexual-orientation-and-gender-identity-motion-for-resolu-2.html"
+                },
+				{
+                    "id": "A7-0426/2013|AM 2rev",
+                    "dbid": 5297,
+                    "weight": 1,
+                    "title": "Rapport on Sexual and reproductive health and rights",
+                    "description": "",
+                    "recommendation": -1,
+                    "link": "http://www.votewatch.eu/en/sexual-and-reproductive-health-and-rights-motion-for-resolution-alternative-motion-for-a-resolution-.html"
+                },
+
+
     ];
 
             var card=scoreCard (votes);
@@ -110,13 +126,13 @@ var votes=  [
                     <a class="navbar-brand" style="color:#FFF" href="/" data-ajax="false">Scoring the European Parliament:</a>
                     <ul class="nav navbar-nav">
                       <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">GMO<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">LGBT<b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                          <li><a href="/climate.html" data-ajax="false">Climate Change</a></li>
-                          <li><a href="/fracking.html" data-ajax="false">Fracking</a></li>
-                          <li><a href="/gmo.html" data-ajax="false">GMO</a></li>
-                          <li><a href="/arms.html" data-ajax="false">Arms trade</a></li>
-		                  <!--li><a href="/lgbt.html" data-ajax="false">LGBT</a></li-->
+                          <li><a href="climate.html" data-ajax="false">Climate Change</a></li>
+                          <li><a href="fracking.html" data-ajax="false">Fracking</a></li>
+                          <li><a href="gmo.html" data-ajax="false">GMO</a></li>
+                          <li><a href="arms.html" data-ajax="false">Arms</a></li>
+                          <li><a href="lgbt.html" data-ajax="false">LGBT</a></li>
                         </ul>  
                       </li>
                     </ul>    
@@ -140,14 +156,14 @@ var votes=  [
                     <div class="row">
                         <div class="form-group col-md-8">
                           <div>
-                            <h1>GM crops
+                            <h1>LGBT
 	                            <div style="display: inline-block; border: 5px solid white;">
-	                            	<a href="https://www.foeeurope.org/">
-										<img src="img/foee_landscape.jpg" class="center-block" style="border:0"> 
+	                            	<a href="https://www.ilga-europe.org/">
+										<img src="img/ilga-europe.gif" class="center-block" style="border:0"> 
 									</a>	
 								</div>	
                             </h1>
-                            <p>How have your MEPs voted on GMO issues?</p>
+                            <p>How have your MEPs voted on LGBT issues?</p>
                           </div>  
 
                             <div class="input-group">
@@ -268,7 +284,7 @@ var votes=  [
                 <div class="nokparty"></div>
 
                 <div class="dc-data-grid">
-                	<h4><i>Click on the MEP for their GM crop voting record</i></h4>
+                	<h4><i>Click on the MEP for their GMO voting record</i></h4>
                 </div>
 
               </div>
@@ -309,7 +325,7 @@ var votes=  [
             <li>National party: <strong><%= party %></strong></li>
             <li>European Party:<strong> <%= eugroup %> </strong></li>
 <% if (twitter) { %><li><div class='twitter' data-twitter='<%= twitter %>'>This MEP is a candidate in the 2014 elections - share the score!</div></li><% } %>
-            <li style="font-size:2em"><strong>Voting score: <%= score %></strong>/100</li>
+            <li style="font-size:2em"><strong>Voting score: <%= score %>/100</strong></li>
         </ul> 
       </div>   
     </div>  
@@ -351,7 +367,7 @@ voted&nbsp;<span class="thumbs">
 
               </div>
               <div class="panel-body">
-                <p><%= v.description %></p>
+                <p><%= v.description || v.id %></p>
               </div>
             </div>
             </div>
@@ -379,7 +395,7 @@ voted&nbsp;<span class="thumbs">
         }
         );      
 
-        d3.csv("data/foe_gmo.csv", function(d) {return d;}
+        d3.csv("data/ilga.csv", function(d) {return d;}
         ,function(error, rows) {
             card.vote.setRollCall (rows);
             _grid ();
