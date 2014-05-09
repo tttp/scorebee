@@ -7,7 +7,7 @@ var partyChart=null;
 jQuery(function($){
   var message ="";
   $("#bar_country").prepend("<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>");
-  $("alert_placeholder").hide();
+  $("#alert_placeholder").hide();
   $("#search-input").keyup (function () {
     var s = $(this ).val().toLowerCase();
     wall.dimension().filter(function (d) { return d.indexOf (s) !== -1;} ); 
