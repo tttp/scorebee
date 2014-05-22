@@ -372,7 +372,10 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
         scrollTo(d);
       })
       .style("text-anchor", "end" )      
-      .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
+      .attr("dx", function(d) { return "-0.6em"; })
+      .attr("dy", function(d) { return "-5px"; });
+//      .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
+      //.attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
   }
 
 
