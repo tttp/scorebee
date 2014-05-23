@@ -491,5 +491,6 @@ z-index: 10;
 .country .x.axis text {
   text-anchor: end;
   transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
 
 }
