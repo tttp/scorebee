@@ -32,16 +32,10 @@ jQuery(function($){
   });
 });
 
-if (!hasHashFilter()) {
-  $.ajax({
-    url: "https://freegeoip.net/json/?callback=?",
-    crossDomain: true,
-    type: "GET",
-    contentType: "application/json; charset=utf-8;",
-    async: false,
-    dataType: 'jsonp',
-    success: function(data){
+if (!hasHashFilter()){ 
+  $.get("https://api.ipdata.co", function (data) {
       ga && ga('send', 'event', 'country', 'lookup', data.country_name);
+      jQuery(function($){
       if (!bar_country) return;
 
       _.each(bar_country.group().top(28), function (d) { 
@@ -55,8 +49,8 @@ if (!hasHashFilter()) {
           $("#collapseOne").collapse("show");
         }
       });
-    }
-  });
+      });
+    },"jsonp")
 }
 
 var eu_groups = {

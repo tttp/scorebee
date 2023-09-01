@@ -85,7 +85,7 @@ li div.twitter:hover {
 .twitter {
 position: absolute;
 left: 21px;
-background: url("http://twitter.com/favicon.ico") #fff center;
+background: url("/img/twitter.ico") #fff center;
 width:20px;
 height:20px;
 padding:2px;
