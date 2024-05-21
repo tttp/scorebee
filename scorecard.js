@@ -28,13 +28,11 @@ jQuery(function($){
   });
 
   $ ( "body" ).on( "click", ".btn", function(event) {
-    ga && ga('send', 'event', 'button', 'click', $(this).text());
   });
 });
 
 if (!hasHashFilter()){ 
   $.get("https://api.ipdata.co", function (data) {
-      ga && ga('send', 'event', 'country', 'lookup', data.country_name);
       jQuery(function($){
       if (!bar_country) return;
 
@@ -309,10 +307,8 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
       //why doesn't it work? if (chart.dimension().size() !== chart.group().value()) {
       if (ndx.size() !== nb) {
         $(".resetall").attr("disabled",false);
-        ga && ga('send', 'event', 'filter', 'subset', nb);
       } else {  
         $(".resetall").attr("disabled",true);
-        ga && ga('send', 'event', 'filter', 'reset');
       }
     });
 
@@ -472,7 +468,6 @@ function getCountryKey (name) {
 
 scrolled = false;
 function scrollTo (id) {
-  ga && ga('send', 'event', 'page', 'scroll', id);
   if (scrolled)
     return;
   scrolled = true;
