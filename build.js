@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const fs = require("fs");
+const fsp = require("fs/promises");
 const path = require("path");
 
 const { parse } = require("csv-parse");
@@ -86,6 +87,12 @@ const getVote = async (id) => {
   //../mepwatch/9/cards/164132.csv
 };
 
+const writeJson = async (name,data) => {
+console.log(name);
+    const jsonData = JSON.stringify(data, null, 2);
+    await fsp.writeFile(name, jsonData);
+};
+
 const writeCsv = async (name,votes,data) => {
 //  const headers ='mep'.split(",");
  const ids = votes.map (d => d.identifier);
@@ -111,18 +118,27 @@ const processFile = async (filePath) => {
       console.error("too many topics");
       process.exit(1);
     }
+    let updated = false;
     for (const topic of data.topics) {
       console.log(`topic: ${topic.name}`);
       const dates = topic.votings.map(
-        (item) => new Date(_votes[item.v_dbid].date)
+        (item) => new Date(_votes[item.dbid].date)
       );
       date.min = new Date(Math.min(...dates));
       date.max = new Date(Math.max(...dates));
 
       for (const vote of topic.votings) {
-        const t = _votes[vote.v_dbid];
+        const t = _votes[vote.dbid];
         votes.push({ ...vote, ...t });
-        const rcv = await readVote(vote.v_dbid);
+        if (!vote.date) {
+          updated = true;
+          vote.date = t.date.toISOString().substr(0,10);
+        }
+        if (!vote.title) {
+          updated = true;
+          vote.title = t.title;
+        }
+        const rcv = await readVote(vote.dbid);
         for (const mep of meps) {
           let d = encoding[rcv[mep.voteid]];
           if (
@@ -136,7 +152,10 @@ const processFile = async (filePath) => {
         }
       }
     }
-   await  writeCsv (name,votes,rcvs);
+if (updated) {
+  writeJson (filePath,data);
+}
+    await  writeCsv (name,votes,rcvs);
   } catch (err) {
     console.log("Error processing ", filePath, err);
   }
