@@ -55,12 +55,17 @@ var eu_groups = {
 "GUE/NGL":"#df73be",
 "S&D":"#ec2335",
 "Verts/ALE":"#67bd1b",
+"Greens/EFA":"#67bd1b",
 "ALDE":"#f1cb01",
+"Renew":"#f1cb01",
 "EFD":"#60c0e2",
+"ID":"#8a5d19",
 "PPE":"blue",
 "EPP":"blue",
 "ECR":"darkblue",
 "NA/NI":"grey",
+"NA":"grey",
+"NI":"grey",
 "Array":"pink"
 };
 
@@ -83,6 +88,7 @@ var votes = function (all) {
 };
 
 votes.prototype.get = function (id) { //return the detail of a vote based on its id
+console.log(this.index[id]);
   if (this.index[id])
     return this.all[this.index[id]];
   return null;// asking for a vote that doesn't exist
@@ -168,7 +174,7 @@ votes.prototype.getScore = function (mepid) {
 var vote = new votes (list_votes);
 
 
-var tpl = _.template("<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= first_name %> <%= last_name.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= last_name %>, <%= first_name %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
+var tpl = _.template("<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
 
 var tplGroup = function (d) {
     return "<div class='dc-grid-group nodc-grid-item country_"+getCountryKey(d.key)+"'><h1 class='dc-grid-label'>"+d.key+"</h1></div>";
@@ -378,7 +384,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
     .group(all);
 
   var name = ndx.dimension(function(d) {
-      return d.first_name.toLowerCase() + " "+ d.last_name.toLowerCase() + " " + d.party.toLowerCase();
+      return d.firstname.toLowerCase() + " "+ d.lastname.toLowerCase() + " " + d.party.toLowerCase();
       });
 
   wall = dc.dataGrid(".dc-data-grid")
@@ -396,7 +402,7 @@ var ageGroup   = age.group().reduceSum(function(d) {   return 1; });
   })
   .htmlGroup(function (d) {return tplGroup(d);})
   .sortBy(function (d) {
-    return d.last_name;
+    return d.lastname;
 //    return d.score;
   })
 //  .order(d3.descending)

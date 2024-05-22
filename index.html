@@ -13,9 +13,6 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-        <!--Bootstrap tour-->
-        <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.8.1/css/bootstrap-tour.min.css" rel="stylesheet">
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-tour/0.8.1/js/bootstrap-tour.min.js"></script>
 
         <!-- Font Awesome CSS Sprites -->
         <link href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
@@ -252,7 +249,7 @@ let votes=  [];
       <div class="col-md-8 mep" data-id='<%= epid %>' data-score='<%= score %>'>
   
         <ul id="infobox_info">
-            <li><h1><strong><%= first_name %> <%= last_name.formatName() %></strong></h1></li>
+            <li><h1><strong><%= firstname %> <%= lastname.formatName() %></strong></h1></li>
             <li>Participation: <strong><%= Math.round(effort) %></strong></li>
             <li>Country: <strong><%= country %></strong></li>
             <li>National party: <strong><%= party %></strong></li>
@@ -313,37 +310,33 @@ voted&nbsp;<span class="thumbs">
 </script>
 
 <script>
-    var meps = [];
-    var mepvotes = [];
+    let card = null;
+    let meps = [];
+    let mepvotes = [];
 
-    $(function() {
+    const awaitd3 = (type,file) => new Promise( (resolve, reject) => {
+        d3[type](file, (error, request) => {
+            if(error) {
+               reject(error);
+            } else {
+               resolve(request);
+            }
+         });
+     });
 
-        d3.json("data/bee.json"
-        ,function(error,data) {
-console.log(data);
-          const votes = data.topics[0].votings;
-            card=scoreCard (votes);
-        var _grid = _.after(2, function () {
-            card.grid ("#ep2014list");
-            _grid ();
-        });
-        d3.csv("mep.csv", function(d) {return d;}
-        ,function(error, rows) {
-            meps = rows;
-            _grid ();
-        }
-        );      
+    (async () => {
+       const r = await awaitd3 ("json","data/bee.json");
+      card=scoreCard (r.topics[0].votings);
+console.log(card);
+      meps =  await awaitd3("csv","meps.csv");
+console.log(meps[0]);
+      const rcv = await awaitd3("csv","data/bee.csv");
+      card.vote.setRollCall (rcv);
+      card.grid ("#ep2014list");
 
-        d3.csv("data/bee.csv", function(d) {return d;}
-        ,function(error, rows) {
-            card.vote.setRollCall (rows);
-            _grid ();
-        }
-        );      
-        }
-        );      
 
-    });      
+
+    })();      
 </script>
 
 </body>

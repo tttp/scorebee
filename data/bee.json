@@ -12,11 +12,31 @@
     "link": "",
     "logo": "",
     "limits": [
-      { "upper": 20, "text": " ", "color": "red" },
-      { "upper": 40, "text": " ", "color": "orange" },
-      { "upper": 60, "text": " ", "color": "yellow" },
-      { "upper": 90, "text": " ", "color": "palegreen" },
-      { "upper": 100, "text": " ", "color": "lightgreen" }
+      {
+        "upper": 20,
+        "text": " ",
+        "color": "red"
+      },
+      {
+        "upper": 40,
+        "text": " ",
+        "color": "orange"
+      },
+      {
+        "upper": 60,
+        "text": " ",
+        "color": "yellow"
+      },
+      {
+        "upper": 90,
+        "text": " ",
+        "color": "palegreen"
+      },
+      {
+        "upper": 100,
+        "text": " ",
+        "color": "lightgreen"
+      }
     ]
   },
   "topics": [
@@ -31,46 +51,51 @@
           "id": "A9-0385/2023",
           "dbid": 162395,
           "weight": 1,
-          "title": "",
+          "title": "Alexander Bernhuber - Article 1, alinéa 1, après le point 1 Directive 2001/110/CE Article 2, alinéa 2, point 2, après le sous-point b - Am 21/3",
           "description": "",
           "recommendation": -1,
-          "link": "http://www.europarl.europa.eu/doceo/document/A-9-2023-0385_EN.html?redirect"
+          "link": "http://www.europarl.europa.eu/doceo/document/A-9-2023-0385_EN.html?redirect",
+          "date": "2023-12-12"
         },
         {
           "id": "B9-0233/2019",
           "dbid": 110880,
           "weight": 1,
-          "title": "",
+          "title": "Am 10",
           "description": "",
           "recommendation": 1,
-          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2019/2803(RSP)&l=en"
+          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2019/2803(RSP)&l=en",
+          "date": "2019-12-18"
         },
         {
           "id": "A9-0014/2024",
           "dbid": 164180,
           "weight": -1,
-          "title": "",
+          "title": "Jessica Polfjärd - Après le considérant 1 - Am 165",
           "description": "",
           "recommendation": 1,
-          "link": "http://www.europarl.europa.eu/doceo/document/A-9-2024-0014_EN.html?redirect"
+          "link": "http://www.europarl.europa.eu/doceo/document/A-9-2024-0014_EN.html?redirect",
+          "date": "2024-02-07"
         },
         {
           "id": "B9-0463/2023",
           "dbid": 162048,
           "weight": 1,
-          "title": "",
+          "title": "§ 18 - Am 3/1",
           "description": "",
           "recommendation": -1,
-          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/2720(RSP)&l=en"
+          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/2720(RSP)&l=en",
+          "date": "2023-11-23"
         },
         {
           "id": "A9-0014/2024",
           "dbid": 164132,
           "weight": 1,
-          "title": "",
+          "title": "Jessica Polfjärd - Article 5, § 2 - Am 34",
           "description": "",
           "recommendation": -1,
-          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/0226(COD)&l=en"
+          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/0226(COD)&l=en",
+          "date": "2024-02-07"
         }
       ]
     }
