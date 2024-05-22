@@ -219,7 +219,7 @@ var scoreCard = function (list_votes) {
   var vote = new votes(list_votes);
 
   var tpl = _.template(
-    "<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>"
+    "<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>"
   );
 
   var tplGroup = function (d) {
@@ -485,9 +485,6 @@ var scoreCard = function (list_votes) {
         grid.selectAll(".dc-grid-item").on("click", function (d) {
           MEPpopup(d);
         });
-        $("img.lazy-load")
-          .lazyload({ effect: "fadeIn" })
-          .removeClass("lazy-load");
       });
 
     dc.renderAll();
