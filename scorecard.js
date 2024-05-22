@@ -174,7 +174,7 @@ votes.prototype.getScore = function (mepid) {
 var vote = new votes (list_votes);
 
 
-var tpl = _.template("<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='http://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
+var tpl = _.template("<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img class='lazy-load' dsrc='blank.gif' data-original='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>");
 
 var tplGroup = function (d) {
     return "<div class='dc-grid-group nodc-grid-item country_"+getCountryKey(d.key)+"'><h1 class='dc-grid-label'>"+d.key+"</h1></div>";
