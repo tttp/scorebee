@@ -36,6 +36,7 @@ jQuery(function ($) {
 });
 
 if (!hasHashFilter()) {
+return; // we need to find a better way than automatically filtering on the country
   $.get("http://country.proca.foundation", function (data) {
     jQuery(function ($) {
       if (!bar_country) return;
