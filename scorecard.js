@@ -5,6 +5,37 @@ var ndx = null; //workaround for now...
 var partyChart = null;
 let bar_country = null;
 
+var countries = {
+  be: "Belgium",
+  bg: "Bulgaria",
+  cz: "Czech Republic",
+  dk: "Denmark",
+  de: "Germany",
+  ee: "Estonia",
+  ie: "Ireland",
+  gr: "Greece",
+  es: "Spain",
+  fr: "France",
+  hr: "Croatia",
+  it: "Italy",
+  cy: "Cyprus",
+  lv: "Latvia",
+  lt: "Lithuania",
+  lu: "Luxembourg",
+  hu: "Hungary",
+  mt: "Malta",
+  nl: "Netherlands",
+  at: "Austria",
+  pl: "Poland",
+  pt: "Portugal",
+  ro: "Romania",
+  si: "Slovenia",
+  sk: "Slovakia",
+  fi: "Finland",
+  se: "Sweden",
+  gb: "United Kingdom",
+};
+
 jQuery(function ($) {
   var message = "";
   $(".country").prepend(
