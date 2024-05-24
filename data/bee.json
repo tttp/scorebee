@@ -48,54 +48,92 @@
       "image": "",
       "votings": [
         {
-          "id": "A9-0385/2023",
-          "dbid": 162395,
-          "weight": 1,
-          "title": "Alexander Bernhuber - Article 1, alinéa 1, après le point 1 Directive 2001/110/CE Article 2, alinéa 2, point 2, après le sous-point b - Am 21/3",
-          "description": "",
-          "recommendation": -1,
-          "link": "http://www.europarl.europa.eu/doceo/document/A-9-2023-0385_EN.html?redirect",
-          "date": "2023-12-12"
-        },
-        {
-          "id": "B9-0233/2019",
-          "dbid": 110880,
-          "weight": 1,
-          "title": "Am 10",
-          "description": "We are against because these proposal tried to erase any reference to the link of polinator health and pesticides and tried to avoid any reference to pesticide reductions",
-          "recommendation": -1,
-          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2019/2803(RSP)&l=en",
-          "date": "2019-12-18"
-        },
-        {
-          "id": "A9-0014/2024",
-          "dbid": 164180,
-          "weight": -1,
-          "title": "Jessica Polfjärd - Après le considérant 1 - Am 165",
-          "description": "",
+          "dbid": 109166,
           "recommendation": 1,
-          "link": "http://www.europarl.europa.eu/doceo/document/A-9-2024-0014_EN.html?redirect",
-          "date": "2024-02-07"
+          "title": "Full text",
+          "description": "This Resolution requested the Commission and Member States to make decisions of pesticide risk assessment and authorisation on the basis of their acute and chronic toxicity of honey bees and that in adults and larvae, and in acute toxicity of bumble bees",
+          "date": "2019-10-23",
+          "id": "B9-0149/2019"
         },
         {
-          "id": "B9-0463/2023",
-          "dbid": 162048,
-          "weight": 1,
-          "title": "§ 18 - Am 3/1",
-          "description": "",
-          "recommendation": -1,
-          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/2720(RSP)&l=en",
-          "date": "2023-11-23"
+          "dbid": 110894,
+          "recommendation": 1,
+          "title": "Am 6",
+          "description": "We are FOR because this proposal aimed to harmonise European procedures for pesticide risk assessment on bees, whose methodology had been updated by EFSA.",
+          "date": "2019-12-18",
+          "id": "B9-0233/2019"
         },
         {
-          "id": "A9-0014/2024",
-          "dbid": 164132,
-          "weight": 1,
-          "title": "Jessica Polfjärd - Article 5, § 2 - Am 34",
-          "description": "",
+          "dbid": 157271,
           "recommendation": -1,
-          "link": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/0226(COD)&l=en",
-          "date": "2024-02-07"
+          "title": "César Luena - Article 4, § 1 - Am 21",
+          "description": "The Nature Restoration Law (NRL) is meant to be a concretisation of Green Deal ambitions with regards to nature conservation. Following the scientific assessment of the status of natural resources in Europe (very poor and worsening), The NRL aims to integrate legal targets for stopping the situation to worsen. We are AGAINST this amendment because it removes the legal responsiblity of Member States to act, and any reference to the targets (therefore not making them legally binding). It also restricts all actions only to Natura 200 areas, instead of the totally of EU territory.",
+          "date": "2023-07-12",
+          "id": "A9-0220/2023"
+        },
+        {
+          "dbid": 157321,
+          "recommendation": -1,
+          "title": "César Luena - Article 9 - Am 34S &47S",
+          "description": "We are AGAINST because this article deleted",
+          "date": "2023-07-12",
+          "id": "A9-0220/2023"
+        },
+        {
+          "dbid": 157420,
+          "recommendation": 1,
+          "title": "César Luena - Proposition de la Commission",
+          "description": "",
+          "date": "2023-07-12",
+          "id": "A9-0220/2023"
+        },
+        {
+          "dbid": 160818,
+          "recommendation": -1,
+          "title": "Sarah Wiener - Rejet - Am 631",
+          "description": "The Sustainable Use of Pesticide Regulation (SUR) has been a conflicting dossier within the European Parliament (chemically-based agriculture vs low-impact agriculture). The proposal would have transformed the existing Directive (2009/128/EC) into a Regulation which would be directly binding and uniformly applicable to all Member States, which is not the case today. The SUR established the ways to achieve pesticide reduction targets set up by the Green Deal. We are AGAINST here, because during the negociation procedure, the initial ambition of the SUR was watered down, making it even less stringent than the Directive. The final text put to vote was insufficient to answer to the pesticide reduction use and risk that Europe needs",
+          "date": "2023-11-22",
+          "id": "A9-0339/2023"
+        },
+        {
+          "dbid": 160956,
+          "recommendation": 1,
+          "title": "Sarah Wiener - Am 376/2",
+          "description": "We are FOR this amendment because it establishes rules for imported agricultural and agri-food products from third countries, which should follow exaclty the same pesticide use standards and safety as EU farmers. This avoids unloyal competition with EU farmers",
+          "date": "2023-11-22",
+          "id": "A9-0339/2023"
+        },
+        {
+          "dbid": 162046,
+          "recommendation": -1,
+          "title": "§ 16 - Am 2",
+          "description": "We are AGAINST this amendment because it obviates the responsibility of EU and national authorities in taking precautionary actions to protect pollinators",
+          "date": "2023-11-23",
+          "id": "B9-0463/2023"
+        },
+        {
+          "dbid": 162314,
+          "recommendation": 1,
+          "title": "Alexander Bernhuber - Proposition de la Commission",
+          "description": "The revision of the Honey Directive was highly awaited by the beekeeeping sector in Europe. Key elements are included: transparency regarding the origin in blended honey, traceability, fight against the fraud at international level to protect european beekeepers and consumers",
+          "date": "2023-12-12",
+          "id": "A9-0385/2023"
+        },
+        {
+          "dbid": 164096,
+          "recommendation": 1,
+          "title": "Jessica Polfjärd - Rejet - Am 109= 137=",
+          "description": "We are AGAINST the commission proposal because we consider it is unscientific, it is not based on the precautionary principle, neither allows to implement it and contributes to further deregulate the presence of plants produced from NGTs.",
+          "date": "2024-02-07",
+          "id": "A9-0014/2024"
+        },
+        {
+          "dbid": 164186,
+          "recommendation": -1,
+          "title": "Jessica Polfjärd - Considérant 8 - Am 4",
+          "description": "We are AGAINST because this proposal aims to deregulate more than 85% of the NGTs in the pipeline of development. This involves that this synthetic organisms would neither be subject of risk assessment, nor of traceability or labelling, violating the precautionary principle and hampering its applicability.",
+          "date": "2024-02-07",
+          "id": "A9-0014/2024"
         }
       ]
     }
