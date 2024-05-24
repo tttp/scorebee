@@ -157,6 +157,9 @@ const processFile = async (filePath,extraVotes) => {
       Array.prototype.push.apply(topic.votings, extra.map (id => ({dbid:id, recommendation: 0, title: '', id: undefined, description:''})));
       for (const vote of topic.votings) {
         const t = _votes[vote.dbid];
+        if (!t) {
+console.error ("can't find the vote",vote.dbid);
+        }
         votes.push({ ...vote, ...t });
         if (!vote.id) {
           updated = true;
