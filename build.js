@@ -2,12 +2,37 @@
 const fs = require("fs");
 const fsp = require("fs/promises");
 const path = require("path");
+const { parseArgs } = require ("node:util");
 
 const { parse } = require("csv-parse");
 const { stringify } = require('csv-stringify/sync');
 // Note, the `stream/promises` module is only available
 // starting with Node.js version 16
 const { finished } = require("stream/promises");
+
+const options = {
+  verbose: {
+    type: "boolean",
+    short: "v",
+  },
+  pull: {
+    type: "boolean",
+    short: "p",
+  },
+  genderify: {
+    type: "boolean",
+  },
+  help: {
+    type: "boolean",
+    short: "h",
+  },
+};
+const opts = parseArgs({
+  options,
+  allowPositionals: true,
+  strict: false,
+  tokens: true,
+});
 
 let meps = [];
 //            this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
@@ -103,7 +128,7 @@ const writeCsv = async (name,votes,data) => {
 fs.writeFileSync('data/'+name+'.csv', stringify(r));
 }
 
-const processFile = async (filePath) => {
+const processFile = async (filePath,extraVotes) => {
   const name = path.parse(filePath).name;
   const votes = [];
   console.log("processing", name);
@@ -126,10 +151,17 @@ const processFile = async (filePath) => {
       );
       date.min = new Date(Math.min(...dates));
       date.max = new Date(Math.max(...dates));
+      const extra = extraVotes.filter ( d => !topic.votings.some ( existing => existing.dbid === d ));
+//console.log(topic.votings.some ( existing => {return existing.dbid === 99164186 })); process.exit(1);
 
+      Array.prototype.push.apply(topic.votings, extra.map (id => ({dbid:id, recommendation: 0, title: '', id: undefined, description:''})));
       for (const vote of topic.votings) {
         const t = _votes[vote.dbid];
         votes.push({ ...vote, ...t });
+        if (!vote.id) {
+          updated = true;
+          vote.id = t.report;
+        }
         if (!vote.date) {
           updated = true;
           vote.date = t.date.toISOString().substr(0,10);
@@ -161,12 +193,14 @@ if (updated) {
   }
 };
 
-// Check if a file path was provided as an argument
-if (process.argv.length < 3) {
-  console.log("Please provide the file path as an argument.");
-  process.exit(1);
-}
+const files = opts.positionals.filter (d => isNaN(d));
+const votes = opts.positionals.filter (d => !isNaN(d)).map(d => parseInt(d));
 
+if (files.length === 0) {
+    console.error("param: path of the campaign config (in data usually) or votes");
+    process.exit(1);
+  }
+
+console.log(files,votes);
 // Get the file path from the command-line arguments
-const filePath = path.resolve(process.argv[2]);
-processFile(filePath);
+files.forEach (file => processFile(path.resolve(file),votes));
