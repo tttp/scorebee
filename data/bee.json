@@ -48,15 +48,6 @@
       "image": "",
       "votings": [
         {
-          "dbid": 109166,
-          "recommendation": 1,
-          "title": "Standardised parameters accros Member States to evaluate pesticide risk to bees and pollinators (B9-0149/2019)",
-          "description": "This Resolution requested the Commission and Member States to make decisions of pesticide risk assessment and authorisation on the basis of their acute and chronic toxicity of honey bees and that in adults and larvae, and in acute toxicity of bumble bees",
-          "date": "2019-10-23",
-          "id": "B9-0149/2019",
-          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2019/2776(RPS)&amp;l=en"
-        },
-        {
           "dbid": 110894,
           "recommendation": 1,
           "title": "EU Pollinators Initiative (B9-0233/2019 - Am 6)",
@@ -64,6 +55,24 @@
           "date": "2019-12-18",
           "id": "B9-0233/2019",
           "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2019/2803(RSP)&amp;l=en"
+        },
+        {
+          "dbid": 162046,
+          "recommendation": -1,
+          "title": "Revised EU Pollinator Initiative - Understanding the role of agriculutre for bees and pollinators (B9-0463/2023 - Am 2)",
+          "description": "We are AGAINST this amendment because it obviates the responsibility of EU and national authorities in taking precautionary actions to protect pollinators",
+          "date": "2023-11-23",
+          "id": "B9-0463/2023",
+          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/2720(RSP)&amp;l=en"
+        },
+        {
+          "dbid": 157420,
+          "recommendation": 1,
+          "title": "Nature Restoration Law - creating an EU law for protecting nature and us (A9-0220/2023)",
+          "description": "The Nature Restoration Law (NRL) is meant to be a concretisation of Green Deal ambitions with regards to nature conservation, following the scientific assessment of the status of natural resources in Europe (very poor and worsening), The NRL aims to integrate legal targets for stopping the situation to worsen, and reverting the negative trends.\nWe are FOR this vote, because the NRL is one of the most needed laws in Europe",
+          "date": "2023-07-12",
+          "id": "A9-0220/2023",
+          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2022/0195(COD)&amp;l=en"
         },
         {
           "dbid": 157271,
@@ -84,13 +93,22 @@
           "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2022/0195(COD)&amp;l=en"
         },
         {
-          "dbid": 157420,
+          "dbid": 168864,
           "recommendation": 1,
-          "title": "Nature Restoration Law - creating an EU law for protecting nature and us (A9-0220/2023)",
-          "description": "The Nature Restoration Law (NRL) is meant to be a concretisation of Green Deal ambitions with regards to nature conservation, following the scientific assessment of the status of natural resources in Europe (very poor and worsening), The NRL aims to integrate legal targets for stopping the situation to worsen, and reverting the negative trends.\nWe are FOR this vote, because the NRL is one of the most needed laws in Europe",
-          "date": "2023-07-12",
-          "id": "A9-0220/2023",
-          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2022/0195(COD)&amp;l=en"
+          "title": "Common Agricultural Policy - Back steps to maintain industrial agriculture and avoid supporting farmers in ther transition to pollinators-friendly farming practices (C9-0120/2024 - Am 13= 23=)",
+          "id": "C9-0120/2024",
+          "description": "We are FOR the rejection of this Regulation because it aims at water down any good agro-ecological farming practices already included in the CAP. ",
+          "date": "2024-04-24",
+          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2024/0073(COD)&amp;l=en"
+        },
+        {
+          "dbid": 109166,
+          "recommendation": 1,
+          "title": "Standardised parameters accros Member States to evaluate pesticide risk to bees and pollinators (B9-0149/2019)",
+          "description": "This Resolution requested the Commission and Member States to make decisions of pesticide risk assessment and authorisation on the basis of their acute and chronic toxicity of honey bees and that in adults and larvae, and in acute toxicity of bumble bees",
+          "date": "2019-10-23",
+          "id": "B9-0149/2019",
+          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2019/2776(RPS)&amp;l=en"
         },
         {
           "dbid": 160818,
@@ -111,24 +129,6 @@
           "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2022/0196(COD)&amp;l=en"
         },
         {
-          "dbid": 162046,
-          "recommendation": -1,
-          "title": "Revised EU Pollinator Initiative - Understanding the role of agriculutre for bees and pollinators (B9-0463/2023 - Am 2)",
-          "description": "We are AGAINST this amendment because it obviates the responsibility of EU and national authorities in taking precautionary actions to protect pollinators",
-          "date": "2023-11-23",
-          "id": "B9-0463/2023",
-          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/2720(RSP)&amp;l=en"
-        },
-        {
-          "dbid": 162314,
-          "recommendation": 1,
-          "title": "Honey Directive - Protecting the EU honey market from fake imports (A9-0385/2023)",
-          "description": "The revision of the Honey Directive was highly awaited by the beekeeeping sector in Europe. Key elements are included: transparency regarding the origin in blended honey, traceability, fight against the fraud at international level to protect european beekeepers and consumers",
-          "date": "2023-12-12",
-          "id": "A9-0385/2023",
-          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/0105(COD)&amp;l=en"
-        },
-        {
           "dbid": 164096,
           "recommendation": 1,
           "title": "New Genomic Technics (New GMOs) - Deregulating the market at the expense of consumer rights (A9-0014/2024 - Am 109= 137=)",
@@ -137,6 +137,7 @@
           "id": "A9-0014/2024",
           "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/0226(COD)&amp;l=en"
         },
+
         {
           "dbid": 164186,
           "recommendation": -1,
@@ -146,14 +147,17 @@
           "id": "A9-0014/2024",
           "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/0226(COD)&amp;l=en"
         },
+
+
+
         {
-          "dbid": 168864,
+          "dbid": 162314,
           "recommendation": 1,
-          "title": "Common Agricultural Policy - Back steps to maintain industrial agriculture and avoid supporting farmers in ther transition to pollinators-friendly farming practices (C9-0120/2024 - Am 13= 23=)",
-          "id": "C9-0120/2024",
-          "description": "We are FOR the rejection of this Regulation because it aims at water down any good agro-ecological farming practices already included in the CAP. ",
-          "date": "2024-04-24",
-          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2024/0073(COD)&amp;l=en"
+          "title": "Honey Directive - Protecting the EU honey market from fake imports (A9-0385/2023)",
+          "description": "The revision of the Honey Directive was highly awaited by the beekeeeping sector in Europe. Key elements are included: transparency regarding the origin in blended honey, traceability, fight against the fraud at international level to protect european beekeepers and consumers",
+          "date": "2023-12-12",
+          "id": "A9-0385/2023",
+          "url": "https://oeil.secure.europarl.europa.eu/oeil//popups/ficheprocedure.do?reference=2023/0105(COD)&amp;l=en"
         }
       ]
     }

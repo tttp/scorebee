@@ -1,10 +1,10 @@
 epid,firstname,lastname,active,start,end,birthdate,country,gender,eugroup,party,email,twitter,term,voteid
-254876,Ricardo,MORGADO,1,2024-04-10,,,pt,,EPP,Partido Social Democrata,,,9,7362
-254722,Teófilo,SANTOS,1,2024-04-02,,1951-02-12,pt,,EPP,Partido Social Democrata,,,9,7361
-254721,Vânia,NETO,1,2024-04-02,,1979-04-25,pt,,EPP,Partido Social Democrata,,,9,7360
-254720,Ana Miguel,DOS SANTOS,1,2024-04-02,,1981-09-12,pt,,EPP,Partido Social Democrata,,,9,7359
-254719,Vasco,BECKER-WEINBERG,1,2024-03-26,,1979-09-21,pt,,EPP,Partido do Centro Democrático Social-Partido Popular,,,9,7358
-254718,Anabela,RODRIGUES,1,2024-03-26,,1976-10-18,pt,,GUE/NGL,Bloco de Esquerda,,,9,7357
+254876,Ricardo,MORGADO,1,2024-04-10,,,pt,M,EPP,Partido Social Democrata,,,9,7362
+254722,Teófilo,SANTOS,1,2024-04-02,,1951-02-12,pt,M,EPP,Partido Social Democrata,,,9,7361
+254721,Vânia,NETO,1,2024-04-02,,1979-04-25,pt,F,EPP,Partido Social Democrata,,,9,7360
+254720,Ana Miguel,DOS SANTOS,1,2024-04-02,,1981-09-12,pt,F,EPP,Partido Social Democrata,,,9,7359
+254719,Vasco,BECKER-WEINBERG,1,2024-03-26,,1979-09-21,pt,M,EPP,Partido do Centro Democrático Social-Partido Popular,,,9,7358
+254718,Anabela,RODRIGUES,1,2024-03-26,,1976-10-18,pt,F,GUE/NGL,Bloco de Esquerda,,,9,7357
 253043,Henk Jan,ORMEL,1,2024-02-27,,1955-12-15,nl,M,EPP,Christen Democratisch Appèl,,,9,7347
 253008,Linus,GLANZELIUS,1,2024-02-27,,1990-12-28,se,M,S&D,Arbetarepartiet- Socialdemokraterna,,,9,7346
 251874,Niels,GEUKING,1,2024-02-05,,1992-11-17,de,M,EPP,Familien-Partei Deutschlands,,,9,7345
