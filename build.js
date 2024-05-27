@@ -34,6 +34,7 @@ const opts = parseArgs({
   tokens: true,
 });
 
+let docs = {};
 let meps = [];
 //            this.type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
 const encoding = {
@@ -61,6 +62,23 @@ const readCsv = async (fileName, transform) => {
   });
   await finished(parser);
 };
+
+const readReports = async () => {
+  fileName = "../mepwatch/9/data/text_tabled.csv";
+  const parser = fs.createReadStream(fileName).pipe(
+    parse({
+      columns: true, // Treat the first line as column names
+      skip_empty_lines: true,
+    })
+  );
+  parser.on("readable", function () {
+    let record;
+    while ((record = parser.read()) !== null) {
+      docs[record.reference]=record;
+    }
+  });
+  await finished(parser);
+}
 
 const readMeps = async () => {
   //  const jsonString = await fs.promises.readFile("../mepwatch/9/data/meps.json",    "utf8"  );
@@ -133,6 +151,7 @@ const processFile = async (filePath,extraVotes) => {
   const votes = [];
   console.log("processing", name);
   await readVotes();
+  await readReports();
   await readMeps();
   // Read the JSON file
   try {
@@ -164,6 +183,10 @@ console.error ("can't find the vote",vote.dbid);
         if (!vote.id) {
           updated = true;
           vote.id = t.report;
+        }
+        if (!vote.url && docs [vote.id]) {
+          vote.url= docs[vote.id].oeil;
+          updated = true;
         }
         if (!vote.date) {
           updated = true;

@@ -84,7 +84,7 @@ epid,firstname,lastname,active,start,end,birthdate,country,gender,eugroup,party,
 204414,Margarita,DE LA PISA CARRIÓN,1,2020-02-01,,1975-09-19,es,F,ECR,VOX,,,9,7270
 204413,Marcos,ROS SEMPERE,1,2020-02-01,,1974-03-24,es,M,S&D,Partido Socialista Obrero Español,,,9,7269
 204400,Adrián,VÁZQUEZ LÁZARA,1,2020-02-01,,1982-05-05,es,M,Renew,Ciudadanos – Partido de la Ciudadanía,,,9,7268
-204371,Heather,ANDERSON,1,2020-01-27,2020-01-31,1959-01-31,gb,,Greens/EFA,Scottish National Party,,,9,7267
+204371,Heather,ANDERSON,1,2020-01-27,2020-01-31,1959-01-31,gb,F,Greens/EFA,Scottish National Party,,,9,7267
 204368,Christian,SAGARTZ,1,2020-01-23,,1981-01-16,at,M,EPP,Österreichische Volkspartei,,,9,7266
 204346,Dominik,TARCZYŃSKI,1,2020-02-01,,,pl,M,ECR,Prawo i Sprawiedliwość,,,9,7265
 204336,Miriam,LEXMANN,1,2020-02-01,,1972-12-02,sk,F,EPP,Kresťanskodemokratické hnutie,,,9,7264
@@ -251,7 +251,7 @@ epid,firstname,lastname,active,start,end,birthdate,country,gender,eugroup,party,
 197686,Julie,LECHANTEUX,1,2019-07-02,2022-07-28,1977-12-22,fr,F,ID,Rassemblement national,,,9,7074
 197684,Pernando,BARRENA ARZA,1,2019-07-02,2022-09-02,1965-11-01,es,M,GUE/NGL,EH BILDU,,,9,7072
 197683,Gilbert,COLLARD,1,2019-07-02,,1948-02-03,fr,M,NA,Divers droite,,,9,7071
-197682,Hannes,HEIDE,1,2019-07-02,,1966-10-17,at,F,S&D,Sozialdemokratische Partei Österreichs,,,9,7070
+197682,Hannes,HEIDE,1,2019-07-02,,1966-10-17,at,M,S&D,Sozialdemokratische Partei Österreichs,,,9,7070
 197681,Sira,REGO,1,2019-07-02,2023-11-20,1973-11-20,es,F,GUE/NGL,Izquierda Unida,,,9,7069
 197680,Aurélia,BEIGNEUX,1,2019-07-02,,1980-06-02,fr,F,ID,Rassemblement national,,,9,7068
 197679,Isabel,BENJUMEA BENJUMEA,1,2019-07-02,,1982-09-05,es,F,EPP,Partido Popular,,,9,7067
@@ -274,11 +274,11 @@ epid,firstname,lastname,active,start,end,birthdate,country,gender,eugroup,party,
 197655,Cristian,TERHEŞ,1,2019-07-02,,1978-12-04,ro,M,ECR,Partidului Național Conservator Român (PNCR),,,9,7044
 197654,Ciarán,CUFFE,1,2019-07-02,,1963-04-03,ie,M,Greens/EFA,Green Party,,,9,7043
 197653,Claudiu,MANDA,1,2019-07-02,,1975-12-20,ro,M,S&D,Partidul Social Democrat,,,9,7042
-197652,Angelika,WINZIG,1,2019-07-02,,1963-05-09,at,M,EPP,Österreichische Volkspartei,,,9,7041
+197652,Angelika,WINZIG,1,2019-07-02,,1963-05-09,at,F,EPP,Österreichische Volkspartei,,,9,7041
 197651,Carmen,AVRAM,1,2019-07-02,,1966-05-08,ro,F,S&D,Partidul Social Democrat,,,9,7040
 197650,Isabel,SANTOS,1,2019-07-02,,1968-02-12,pt,F,S&D,Partido Socialista,,,9,7039
 197649,Gheorghe,FALCĂ,1,2019-07-02,,1967-01-22,ro,M,EPP,Partidul Naţional Liberal,,,9,7038
-197648,Alexander,BERNHUBER,1,2019-07-02,,1992-05-18,at,F,EPP,Österreichische Volkspartei,,,9,7037
+197648,Alexander,BERNHUBER,1,2019-07-02,,1992-05-18,at,M,EPP,Österreichische Volkspartei,,,9,7037
 197647,Dan-Ştefan,MOTREANU,1,2019-07-02,,1970-09-11,ro,M,EPP,Partidul Naţional Liberal,,,9,7036
 197646,Mircea-Gheorghe,HAVA,1,2019-07-02,,1956-12-26,ro,M,EPP,Partidul Naţional Liberal,,,9,7035
 197645,Francisco,GUERREIRO,1,2019-07-02,,1984-09-12,pt,M,Greens/EFA,Independente,,,9,7034

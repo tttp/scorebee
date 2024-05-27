@@ -273,7 +273,7 @@ let votes=  [];
             <% } %> 
               <div class="panel-heading">
                   <h3 class="panel-title"><%= v.title %></h3>
-voted&nbsp;<span class="thumbs">
+voted<span class="thumbs">
           <i class="fa fa-thumbs-o-<%= vote.direction[v.mep] %>" title="the MEP voted <%= vote.type[v.mep]  %>"></i>&nbsp;<%= vote.type[v.mep]  %></span>, we recommend&nbsp;
           <span class="thumbs">
           <i class="fa fa-thumbs-o-<%= vote.direction[v.recommendation] %>" title="We recommended <%= vote.type[v.recommendation] %>"></i>
@@ -284,6 +284,7 @@ voted&nbsp;<span class="thumbs">
               <div class="panel-body">
                 <p><%= v.description || v.id %></p>
               </div>
+<div class="panel-footer"><a target="_blank" class="btn btn-default btn-xs" href='https://mepwatch.eu/9/vote.html?v=<%=v.dbid %>'>vote</a> <%if (v.url) { %><a href="<%= v.url %>" class="btn btn-default btn-xs" target='_blank'>law</a><% } %></div>
             </div>
             </div>
             <% if ((count % 2) == 0) { %>
