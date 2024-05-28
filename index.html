@@ -313,9 +313,7 @@ voted<span class="thumbs">
     (async () => {
        const r = await awaitd3 ("json","data/bee.json");
       card=scoreCard (r.topics[0].votings);
-console.log(card);
       meps =  await awaitd3("csv","meps.csv");
-console.log(meps[0]);
       const rcv = await awaitd3("csv","data/bee.csv");
       card.vote.setRollCall (rcv);
       card.grid ("#ep2014list");

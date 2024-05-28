@@ -113,16 +113,17 @@ var scoreCard = function (list_votes) {
     this.index = {}; // column number in the cvs of a voteid
     this.mepindex = {}; //row number in the csv of a mepid
     this.type = {
-      1: "for",
+      "1": "for",
       "-1": "against",
-      0: "abstention",
-      X: "absent",
+      "0": "abstention",
+      "X": "absent",
       "": "not an MEP at the time of this vote",
     };
     this.direction = { 1: "up", "-1": "down" };
     _.each(
       all,
       function (v, i) {
+        v.for =
         v.pro =
           v.against =
           v.abstention =
@@ -146,7 +147,7 @@ var scoreCard = function (list_votes) {
   };
 
   votes.prototype.setRollCall = function (rolls) {
-    //var type = {1:"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
+    //var type = {"1":"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
 
     this.rollcalls = rolls;
     _.each(
@@ -180,11 +181,13 @@ var scoreCard = function (list_votes) {
     _.each(
       this.all,
       function (vote) {
-        vote.weight = 1 + (vote.weight - min) / (max - min);
+//        vote.weight = 1 + (vote.weight - min) / (max - min);
         vote.weight = 1;
       },
       this
     );
+
+//    this.all.forEach (v => console.log(v.dbid,v.title,v.for,v.against,v.abstention,v.absent,v.weight));
   };
 
   votes.prototype.getEffort = function (mepid) {
@@ -227,7 +230,7 @@ var scoreCard = function (list_votes) {
   votes.prototype.getScore = function (mepid) {
     var score = (nbvote = 0);
     if (!this.mepindex[mepid]) {
-      console || console.log("mep missing " + mepid);
+      console.log("mep missing " + mepid);
       return 50; //we don't have that mep?
     }
     var mep = this.rollcalls[this.mepindex[mepid]];
