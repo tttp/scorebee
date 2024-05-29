@@ -257,7 +257,7 @@ var scoreCard = function (list_votes) {
   var vote = new votes(list_votes);
 
   const tpl = _.template(
-    "<div style='background-color:<%= color %>;opacity: <%= opacity %>' class='mep' data-id='<%= epid %>' data-tenure='<%= tenure %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %><% if (tenure !== votes) {%><span>(<%= tenure %>)</span><% }%></div></div><div class='party'><%= party %></div></div>"
+    "<div style='background-color:<%= color %>;opacity: <%= opacity %>' class='mep' data-id='<%= epid %>' data-tenure='<%= tenure %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (ep2024) {%><div class='candidate'>Candidate 2024</div><% }%><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %><% if (tenure !== votes) {%><span>(<%= tenure %>)</span><% }%></div></div><div class='party'><%= party %></div></div>"
   );
 
   const tplGroup = function (d) {
@@ -317,6 +317,7 @@ var scoreCard = function (list_votes) {
       data.forEach(function (e, i) {
         //e.effort = vote.getEffort(e.epid);
         const t = vote.getEffort(e.epid);
+console.log(e);
         e.effort = t.effort;
         e.tenure = t.tenure;
         //e.scores = [getScore(e), getScore(e), getScore(e), getScore(e)];
@@ -519,6 +520,7 @@ var scoreCard = function (list_votes) {
         d.size = 20 + (20 * d.effort) / 100;
         d.opacity = opacity (d.tenure);
         d.votes = vote.all.length;
+if (d.ep2024) console.log("candidate",d);
         return tpl(d);
       })
       .htmlGroup(function (d) {
