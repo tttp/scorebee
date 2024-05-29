@@ -257,7 +257,7 @@ var scoreCard = function (list_votes) {
   var vote = new votes(list_votes);
 
   const tpl = _.template(
-    "<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-tenure='<%= tenure %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %><% if (tenure !== votes) {%><span>(<%= tenure %>)</span><% }%></div></div><div class='party'><%= party %></div></div>"
+    "<div style='background-color:<%= color %>;opacity: <%= opacity %>' class='mep' data-id='<%= epid %>' data-tenure='<%= tenure %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %><% if (tenure !== votes) {%><span>(<%= tenure %>)</span><% }%></div></div><div class='party'><%= party %></div></div>"
   );
 
   const tplGroup = function (d) {
@@ -285,6 +285,11 @@ var scoreCard = function (list_votes) {
     function getScore(mep) {
       return vote.getScore(mep.epid);
     }
+    var opacity = d3.scale
+      .linear()
+      .clamp(true)
+      .domain([0, vote.all.length])
+      .range([0.2,1]);
 
     // color based on the score.F0A92E
     var color = d3.scale
@@ -512,6 +517,7 @@ var scoreCard = function (list_votes) {
         d.score = d.scores[0];
         d.color = color(d.score);
         d.size = 20 + (20 * d.effort) / 100;
+        d.opacity = opacity (d.tenure);
         d.votes = vote.all.length;
         return tpl(d);
       })
