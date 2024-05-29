@@ -235,8 +235,11 @@ let votes=  [];
   
         <ul id="infobox_info">
             <li><h1><strong><%= firstname %> <%= lastname.formatName() %></strong></h1></li>
-            <li>Participation: <strong><%= Math.round(effort) %></strong></li>
-            <li>Country: <strong><%= country %></strong></li>
+<% if (tenure !== votes) { %>           <li title="number of votes analysed when the person was an MEP">Vote tenure: <strong><%= tenure %>/<%= votes %></strong> MEP from <%= start %><% if (end) { %> to <%= end %><% }%> </li> <% } %>
+
+            <li>Participation: <strong><%= Math.round(effort) %>%</strong></li>
+
+            <li>Country: <strong><%= countries[country] %></strong></li>
             <li>National party: <strong><%= party %></strong></li>
             <li>European Party:<strong> <%= eugroup %> </strong></li>
 <% if (twitter) { %><li><div class='twitter' data-twitter='<%= twitter %>'>This MEP is a candidate in the 2014 elections - share the score!</div></li><% } %>

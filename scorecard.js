@@ -5,7 +5,7 @@ var ndx = null; //workaround for now...
 var partyChart = null;
 let bar_country = null;
 
-var countries = {
+const countries = {
   be: "Belgium",
   bg: "Bulgaria",
   cz: "Czech Republic",
@@ -201,18 +201,20 @@ var scoreCard = function (list_votes) {
     _.each(
       this.all,
       function (vote) {
-        if (mep[vote.dbid]) {
           // skip the vote the mep wasn't an mep
+        if (mep[vote.dbid]) {
           ++nbvote;
           if (Math.abs(mep[vote.dbid]) == 1)
             // yes or no
             ++effort;
           if (mep[vote.dbid] == 0) ++effort; //count abstention as effort
-        }
+        } else {
+//console.log("missing vote",vote.dbid,mepid);
+}
       },
       this
     );
-    return (effort / nbvote) * 100;
+    return {effort:(effort / nbvote) * 100, tenure: nbvote};
   };
 
   votes.prototype.exists = function (mepid) {
@@ -254,16 +256,16 @@ var scoreCard = function (list_votes) {
   };
   var vote = new votes(list_votes);
 
-  var tpl = _.template(
-    "<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %></div></div><div class='party'><%= party %></div></div>"
+  const tpl = _.template(
+    "<div style='background-color:<%= color %>;' class='mep' data-id='<%= epid %>' data-tenure='<%= tenure %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %><% if (tenure !== votes) {%><span>(<%= tenure %>)</span><% }%></div></div><div class='party'><%= party %></div></div>"
   );
 
-  var tplGroup = function (d) {
+  const tplGroup = function (d) {
     return (
       "<div class='dc-grid-group nodc-grid-item country_" +
       getCountryKey(d.key) +
       "'><h1 class='dc-grid-label'>" +
-      d.key +
+      countries[d.key] +
       "</h1></div>"
     );
   };
@@ -308,8 +310,12 @@ var scoreCard = function (list_votes) {
         meps.splice(i, 1);
       });
       data.forEach(function (e, i) {
-        e.effort = vote.getEffort(e.epid);
-        e.scores = [getScore(e), getScore(e), getScore(e), getScore(e)];
+        //e.effort = vote.getEffort(e.epid);
+        const t = vote.getEffort(e.epid);
+        e.effort = t.effort;
+        e.tenure = t.tenure;
+        //e.scores = [getScore(e), getScore(e), getScore(e), getScore(e)];
+        e.scores = [getScore(e)];
         e.birthdate = dateFormat.parse(e.birthdate);
         e.age = ~~((now - e.birthdate) / 31557600000); // 24 * 3600 * 365.25 * 1000
       });
@@ -506,7 +512,7 @@ var scoreCard = function (list_votes) {
         d.score = d.scores[0];
         d.color = color(d.score);
         d.size = 20 + (20 * d.effort) / 100;
-
+        d.votes = vote.all.length;
         return tpl(d);
       })
       .htmlGroup(function (d) {
@@ -569,7 +575,7 @@ var scoreCard = function (list_votes) {
     });
 
     $("#infobox").modal("show");
-    $("#infobox_header").html(tplPopup(d));
+    $("#infobox_header").html(tplPopup({...d, votes: vote.all.length}));
     $(".infobox_content").html(tplScore(v));
     window.location.hash = "mep" + d.epid;
     $("#twitter").html(tplTwitter(d));

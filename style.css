@@ -108,6 +108,11 @@ font-weight: bold;
 border-radius: 6px;
 }
 
+.score span {
+font-size: 12px!important;
+font-weight:normal;
+}
+
 #thumbsup {
 	float:left;
 }
