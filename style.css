@@ -97,8 +97,9 @@ bottom: 70px;
 .candidate {
 background: rgba(0, 0, 255, 0.65);
 position:absolute;
+font-size: 12px;
 right: 32px;
-bottom: 270px;
+bottom: 272px;
 color: white;
 padding: 0 10px;
 border-radius: 6px;
