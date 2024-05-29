@@ -255,7 +255,7 @@ let votes=  [];
 <script type="text/tpl" id="score_tpl">
     <div class="row">
       <% var count = 0; %>
-        <% _.each (d, function (v) { %>
+        <% d.filter(v => v.mep !=='').forEach ( v => { %>
           <%
             count++;
             if ((count % 2) == 0) {
@@ -294,6 +294,15 @@ voted<span class="thumbs">
                 </div>
             <% } %>
          <% }); %>
+        <% if (d.some(v => v.mep ==='')) { %>
+                <div class="col-md-12">
+
+<h3>Not an MEP during these votes</h3><ul>
+        <% d.filter(v => v.mep ==='').forEach ( v => { %>
+<li><%= v.title %></li>
+          <% })  %>
+</ul></div>
+          <% } %>
     </div><!-- /votes grid -->
     <div style="clear:both;margin-bottom: 20px;"></div>
 </script>
