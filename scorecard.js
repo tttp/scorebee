@@ -141,7 +141,6 @@ var scoreCard = function (list_votes) {
 
   votes.prototype.get = function (id) {
     //return the detail of a vote based on its id
-    console.log(this.index[id]);
     if (this.index[id]) return this.all[this.index[id]];
     return null; // asking for a vote that doesn't exist
   };
@@ -194,7 +193,7 @@ var scoreCard = function (list_votes) {
     var effort = 0;
     nbvote = 0;
     if (!this.exists(mepid)) {
-      console || Console.log("mep missing " + mepid);
+      console.log("amep missing " + mepid,this.mepindex);
       return 0; //we don't have that mep?
     }
     var mep = this.rollcalls[this.mepindex[mepid]];
@@ -218,12 +217,13 @@ var scoreCard = function (list_votes) {
   };
 
   votes.prototype.exists = function (mepid) {
+
     return this.mepindex.hasOwnProperty(mepid);
   };
 
   votes.prototype.getVotes = function (mepid) {
     if (!this.exists(mepid)) {
-      console || console.log("mep missing " + mepid);
+      console || console.log("bmep missing " + mep,"aa",vote.mepindex);
       return {}; //we don't have that mep?
     }
     return this.rollcalls[this.mepindex[mepid]];
@@ -231,8 +231,9 @@ var scoreCard = function (list_votes) {
 
   votes.prototype.getScore = function (mepid) {
     var score = (nbvote = 0);
-    if (!this.mepindex[mepid]) {
-      console.log("mep missing " + mepid);
+    //if (!this.mepindex[mepid]) {
+    if (!this.exists(mepid)) {
+      console.log("dmep missing " + mepid,vote.mepindex);
       return 50; //we don't have that mep?
     }
     var mep = this.rollcalls[this.mepindex[mepid]];
@@ -311,19 +312,23 @@ var scoreCard = function (list_votes) {
           empty.unshift(i);
         }
       });
-      empty.forEach(function (i) {
-        meps.splice(i, 1);
-      });
+//console.log(Object.keys(vote.mepindex).length);
       data.forEach(function (e, i) {
         //e.effort = vote.getEffort(e.epid);
         const t = vote.getEffort(e.epid);
-console.log(e);
         e.effort = t.effort;
         e.tenure = t.tenure;
+        if (t.tenure === 0 || t.effort ===0) {
+console.log("mep never there during the votes",e.lastname);
+          empty.unshift(i);
+        }
         //e.scores = [getScore(e), getScore(e), getScore(e), getScore(e)];
         e.scores = [getScore(e)];
         e.birthdate = dateFormat.parse(e.birthdate);
         e.age = ~~((now - e.birthdate) / 31557600000); // 24 * 3600 * 365.25 * 1000
+      });
+      empty.forEach(function (i) {
+        meps.splice(i, 1);
       });
     }
 
@@ -514,13 +519,12 @@ console.log(e);
         return d.country;
       })
       .size(1000)
-      .html(function (d) {
+      .html(d => {
         d.score = d.scores[0];
         d.color = color(d.score);
         d.size = 20 + (20 * d.effort) / 100;
         d.opacity = opacity (d.tenure);
         d.votes = vote.all.length;
-if (d.ep2024) console.log("candidate",d);
         return tpl(d);
       })
       .htmlGroup(function (d) {
@@ -560,6 +564,7 @@ if (d.ep2024) console.log("candidate",d);
     } else if (hash.length == 3) {
       //country
       var iso = hash.substring(1);
+console.log(iso);
     }
   }
 
