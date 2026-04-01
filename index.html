@@ -3,7 +3,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Bees Scores</title>
+        <title>10 engagements</title>
 
         <link rel="stylesheet" type="text/css" href="dc.css"/>
 
@@ -33,7 +33,6 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
         <script>
-            var twitterMsg = "How is @ voting record of #score% on #bee issues compared to the other MEPs? #EP2024";
 
             var topic = {
             };
@@ -75,10 +74,10 @@ let votes=  [];
                         <div class="form-group col-md-8">
                           <div>
                             <h1>
-	                            	<a href="https://www.bee-life.eu">Bee coherent
+	                            	<a href="https://www.bee-life.eu">10 engagements
 									</a>	
                             </h1>
-                            <p>Analyse voting records of Members of the European Parliament on policies relevant to bees, pollinators and beekeeping in the last 5 years of legislature, showing how coherent they have been for their protection and that of the planet and EU farming. In this 2024 elections, vote informed</p>
+                            <p>Analyse voting records of Members of the European Parliament on policies relevant to Workers' right.</p>
                           </div>  
 
                             <div class="input-group">
@@ -287,7 +286,7 @@ voted<span class="thumbs">
               <div class="panel-body">
                 <p><%= v.description || v.id %></p>
               </div>
-<div class="panel-footer"><a target="_blank" class="btn btn-default btn-xs" href='https://mepwatch.eu/9/vote.html?v=<%=v.dbid %>'>vote</a> <%if (v.url) { %><a href="<%= v.url %>" class="btn btn-default btn-xs" target='_blank'>law</a><% } %></div>
+<div class="panel-footer"><a target="_blank" class="btn btn-default btn-xs" href='https://mepwatch.eu/10/vote.html?v=<%=v.dbid %>'>vote</a> <%if (v.url) { %><a href="<%= v.url %>" class="btn btn-default btn-xs" target='_blank'>law</a><% } %></div>
             </div>
             </div>
             <% if ((count % 2) == 0) { %>
@@ -323,10 +322,10 @@ voted<span class="thumbs">
      });
 
     (async () => {
-       const r = await awaitd3 ("json","data/bee.json");
+       const r = await awaitd3 ("json","data/10engagement.json");
       card=scoreCard (r.topics[0].votings);
-      meps =  await awaitd3("csv","meps.csv");
-      const rcv = await awaitd3("csv","data/bee.csv");
+      meps =  await awaitd3("csv","../10/data/meps.csv");
+      const rcv = await awaitd3("csv","data/10engagement.csv");
       card.vote.setRollCall (rcv);
       card.grid ("#ep2014list");
 

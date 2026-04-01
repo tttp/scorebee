@@ -39,7 +39,7 @@ const countries = {
 jQuery(function ($) {
   var message = "";
   $(".country").prepend(
-    "<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>"
+    "<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>",
   );
   $("#alert_placeholder").hide();
   $("#search-input").keyup(function () {
@@ -67,26 +67,27 @@ jQuery(function ($) {
 });
 
 if (!hasHashFilter()) {
- // we need to find a better way than automatically filtering on the country
+  // we need to find a better way than automatically filtering on the country
 
-  false && $.get("http://country.proca.foundation", function (data) {
-    jQuery(function ($) {
-      if (!bar_country) return;
+  false &&
+    $.get("http://country.proca.foundation", function (data) {
+      jQuery(function ($) {
+        if (!bar_country) return;
         const country = data.country.toLowerCase();
 
-      _.each(bar_country.group().top(28), function (d) {
-        if (country === d.key) {
-          location.hash = "#bar_country";
-          notice("Show only MEPs from " + d.key);
-          bar_country.filter(country);
-          //          scrollTo("main");
-          scrolled = true; // no need to smooth scroll, the visitor knows now
-          dc.redrawAll();
-          $("#collapseOne").collapse("show");
-        }
+        _.each(bar_country.group().top(28), function (d) {
+          if (country === d.key) {
+            location.hash = "#bar_country";
+            notice("Show only MEPs from " + d.key);
+            bar_country.filter(country);
+            //          scrollTo("main");
+            scrolled = true; // no need to smooth scroll, the visitor knows now
+            dc.redrawAll();
+            $("#collapseOne").collapse("show");
+          }
+        });
       });
     });
-  });
 }
 
 var eu_groups = {
@@ -113,10 +114,10 @@ var scoreCard = function (list_votes) {
     this.index = {}; // column number in the cvs of a voteid
     this.mepindex = {}; //row number in the csv of a mepid
     this.type = {
-      "1": "for",
+      1: "for",
       "-1": "against",
-      "0": "abstention",
-      "X": "absent",
+      0: "abstention",
+      X: "absent",
       "": "not an MEP at the time of this vote",
     };
     this.direction = { 1: "up", "-1": "down" };
@@ -124,7 +125,7 @@ var scoreCard = function (list_votes) {
       all,
       function (v, i) {
         v.for =
-        v.pro =
+          v.pro =
           v.against =
           v.abstention =
           v.absent =
@@ -135,7 +136,7 @@ var scoreCard = function (list_votes) {
           this.index[v.dbid] = i;
         }
       },
-      this
+      this,
     );
   };
 
@@ -159,10 +160,10 @@ var scoreCard = function (list_votes) {
           function (vote, id) {
             ++vote[this.type[mep[vote.dbid]]]; //type is one of pro against abstention absent
           },
-          this
+          this,
         );
       },
-      this
+      this,
     );
     // coef calculation
     var max = 0,
@@ -175,32 +176,32 @@ var scoreCard = function (list_votes) {
         if (min > vote.weight) min = vote.weight;
         if (max < vote.weight) max = vote.weight;
       },
-      this
+      this,
     );
     _.each(
       this.all,
       function (vote) {
-//        vote.weight = 1 + (vote.weight - min) / (max - min);
+        //        vote.weight = 1 + (vote.weight - min) / (max - min);
         vote.weight = 1;
       },
-      this
+      this,
     );
 
-//    this.all.forEach (v => console.log(v.dbid,v.title,v.for,v.against,v.abstention,v.absent,v.weight));
+    //    this.all.forEach (v => console.log(v.dbid,v.title,v.for,v.against,v.abstention,v.absent,v.weight));
   };
 
   votes.prototype.getEffort = function (mepid) {
     var effort = 0;
     nbvote = 0;
     if (!this.exists(mepid)) {
-      console.log("amep missing " + mepid,this.mepindex);
+      console.log("amep missing " + mepid, this.mepindex);
       return 0; //we don't have that mep?
     }
     var mep = this.rollcalls[this.mepindex[mepid]];
     _.each(
       this.all,
       function (vote) {
-          // skip the vote the mep wasn't an mep
+        // skip the vote the mep wasn't an mep
         if (mep[vote.dbid]) {
           ++nbvote;
           if (Math.abs(mep[vote.dbid]) == 1)
@@ -208,22 +209,21 @@ var scoreCard = function (list_votes) {
             ++effort;
           if (mep[vote.dbid] == 0) ++effort; //count abstention as effort
         } else {
-//console.log("missing vote",vote.dbid,mepid);
-}
+          //console.log("missing vote",vote.dbid,mepid);
+        }
       },
-      this
+      this,
     );
-    return {effort:(effort / nbvote) * 100, tenure: nbvote};
+    return { effort: (effort / nbvote) * 100, tenure: nbvote };
   };
 
   votes.prototype.exists = function (mepid) {
-
     return this.mepindex.hasOwnProperty(mepid);
   };
 
   votes.prototype.getVotes = function (mepid) {
     if (!this.exists(mepid)) {
-      console || console.log("bmep missing " + mep,"aa",vote.mepindex);
+      console || console.log("bmep missing " + mep, "aa", vote.mepindex);
       return {}; //we don't have that mep?
     }
     return this.rollcalls[this.mepindex[mepid]];
@@ -233,7 +233,7 @@ var scoreCard = function (list_votes) {
     var score = (nbvote = 0);
     //if (!this.mepindex[mepid]) {
     if (!this.exists(mepid)) {
-      console.log("dmep missing " + mepid,vote.mepindex);
+      console.log("dmep missing " + mepid, vote.mepindex);
       return 50; //we don't have that mep?
     }
     var mep = this.rollcalls[this.mepindex[mepid]];
@@ -249,7 +249,7 @@ var scoreCard = function (list_votes) {
           score = score + vote.recommendation * mep[vote.dbid] * vote.weight;
         }
       },
-      this
+      this,
     );
     if (nbvote == 0) return 50; // the dude wasn't around for the votes
     //  return Math.floor (100*(score / nbvote)); // from -100 to 100
@@ -258,7 +258,7 @@ var scoreCard = function (list_votes) {
   var vote = new votes(list_votes);
 
   const tpl = _.template(
-    "<div style='background-color:<%= color %>;opacity: <%= opacity %>' class='mep' data-id='<%= epid %>' data-tenure='<%= tenure %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (ep2024) {%><div class='candidate'>Candidate 2024</div><% }%><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %><% if (tenure !== votes) {%><span>(<%= tenure %>)</span><% }%></div></div><div class='party'><%= party %></div></div>"
+    "<div style='background-color:<%= color %>;opacity: <%= opacity %>' class='mep' data-id='<%= epid %>' data-tenure='<%= tenure %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %><% if (tenure !== votes) {%><span>(<%= tenure %>)</span><% }%></div></div><div class='party'><%= party %></div></div>",
   );
 
   const tplGroup = function (d) {
@@ -290,7 +290,7 @@ var scoreCard = function (list_votes) {
       .linear()
       .clamp(true)
       .domain([0, vote.all.length])
-      .range([0.2,1]);
+      .range([0.2, 1]);
 
     // color based on the score.F0A92E
     var color = d3.scale
@@ -312,14 +312,14 @@ var scoreCard = function (list_votes) {
           empty.unshift(i);
         }
       });
-//console.log(Object.keys(vote.mepindex).length);
+      //console.log(Object.keys(vote.mepindex).length);
       data.forEach(function (e, i) {
         //e.effort = vote.getEffort(e.epid);
         const t = vote.getEffort(e.epid);
         e.effort = t.effort;
         e.tenure = t.tenure;
-        if (t.tenure === 0 || t.effort ===0) {
-console.log("mep never there during the votes",e.lastname);
+        if (t.tenure === 0 || t.effort === 0) {
+          console.log("mep never there during the votes", e.lastname);
           empty.unshift(i);
         }
         //e.scores = [getScore(e), getScore(e), getScore(e), getScore(e)];
@@ -445,7 +445,7 @@ console.log("mep never there during the votes",e.lastname);
       },
       function () {
         return { count: 0, score: 0 };
-      }
+      },
     );
 
     //  var countryScore   = country.group().reduceSum(function(d) { return d.scores[0]; });
@@ -519,11 +519,11 @@ console.log("mep never there during the votes",e.lastname);
         return d.country;
       })
       .size(1000)
-      .html(d => {
+      .html((d) => {
         d.score = d.scores[0];
         d.color = color(d.score);
         d.size = 20 + (20 * d.effort) / 100;
-        d.opacity = opacity (d.tenure);
+        d.opacity = opacity(d.tenure);
         d.votes = vote.all.length;
         return tpl(d);
       })
@@ -564,7 +564,7 @@ console.log("mep never there during the votes",e.lastname);
     } else if (hash.length == 3) {
       //country
       var iso = hash.substring(1);
-console.log(iso);
+      console.log(iso);
     }
   }
 
@@ -588,7 +588,7 @@ console.log(iso);
     });
 
     $("#infobox").modal("show");
-    $("#infobox_header").html(tplPopup({...d, votes: vote.all.length}));
+    $("#infobox_header").html(tplPopup({ ...d, votes: vote.all.length }));
     $(".infobox_content").html(tplScore(v));
     window.location.hash = "mep" + d.epid;
     $("#twitter").html(tplTwitter(d));
@@ -606,7 +606,7 @@ console.log(iso);
       {
         scrollTop: jQuery(".country_" + getCountryKey(id)).offset().top,
       },
-      2000
+      2000,
     );
   }
 
@@ -636,7 +636,7 @@ console.log(iso);
         },
         function () {
           return { count: 0, score: 0, effort: 0 };
-        }
+        },
       )
       .order(function (p) {
         return p.count;
@@ -733,7 +733,7 @@ console.log(iso);
         },
         function () {
           return { count: 0, score: 0, effort: 0 };
-        }
+        },
       )
       .order(function (p) {
         return p.count;

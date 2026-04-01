@@ -50,6 +50,7 @@
         {
           "dbid": 184393,
           "id": "A10-0260/2025",
+          "recommendation": 1,
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0260_EN.html",
           "date": "2026-02-12",
           "title": "João Oliveira - Proposition de résolution (ensemble du texte)"
@@ -59,6 +60,7 @@
           "id": "A10-0212/2025",
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0212_EN.html",
           "date": "2025-11-25",
+          "recommendation": 1,
           "title": "Marit Maij - Proposition de résolution (ensemble du texte)"
         },
         {
@@ -66,11 +68,13 @@
           "id": "A10-0269/2025",
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0269_EN.html",
           "date": "2026-01-20",
+          "recommendation": 1,
           "title": "René Repasi - Proposition de résolution (ensemble du texte)"
         },
         {
           "dbid": 184106,
           "id": "A10-0006/2026",
+          "recommendation": 1,
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2026-0006_EN.html",
           "date": "2026-02-11",
           "title": "Nicolae Ștefănuță - Proposition de résolution (ensemble du texte)"
@@ -78,6 +82,7 @@
         {
           "dbid": 182797,
           "id": "A10-0244/2025",
+          "recommendation": 1,
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0244_EN.html",
           "date": "2025-12-17",
           "title": "Andrzej Buła - Proposition de résolution (ensemble du texte)"
@@ -86,12 +91,14 @@
           "dbid": 181544,
           "id": "A10-0185/2025",
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0185_EN.html",
+          "recommendation": -1,
           "date": "2025-11-26",
           "title": "Jorge Martín Frías - Proposition de résolution (ensemble du texte)"
         },
         {
           "dbid": 182518,
           "id": "A10-0197/2025",
+          "recommendation": -1,
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0197_EN.html",
           "date": "2025-12-16",
           "title": "Jörgen Warborn - Accord provisoire - Am 401"

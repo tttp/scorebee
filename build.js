@@ -120,7 +120,7 @@ const readVotes = async () => {
 const readVote = async (id) => {
   const records = {};
   await readCsv("../10/cards/" + id + ".csv", (record) => {
-    const id = parseInt(record.vote_id, 10);
+    const id = parseInt(record.mepid, 10);
 
     records[id] = record.result;
   });
@@ -220,7 +220,7 @@ const processFile = async (filePath, extraVotes) => {
         }
         const rcv = await readVote(vote.dbid);
         for (const mep of meps) {
-          let d = encoding[rcv[mep.voteid]];
+          let d = encoding[rcv[mep.voteid || mep.epid]];
           if (
             d === "X" &&
             (t.date < mep.start || (mep.end && t.date > mep.end))
