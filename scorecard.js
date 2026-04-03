@@ -570,6 +570,11 @@ var scoreCard = function (list_votes) {
     } else if (hash.length == 3) {
       //country
       var iso = hash.substring(1);
+      dc.events.trigger(function () {
+        bar_country.filter(iso);
+        dc.redrawAll();
+        $("#collapseOne").collapse("show");
+      }, 2000);
       console.log(iso);
     }
   }
