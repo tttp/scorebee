@@ -83,6 +83,7 @@
         {
           "dbid": 189597,
           "id": "A10-0048/2026",
+          "recommendation": -1,
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2026-0048_EN.html",
           "date": "2026-03-26",
           "title": "Malik Azmani - Décision d'engager des négociations interinstitutionnelles"
@@ -147,7 +148,7 @@
         },
         {
           "dbid": 189384,
-          "recommendation": 1,
+          "recommendation": -1,
           "id": "A10-0073/2026",
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2026-0073_EN.html",
           "date": "2026-03-26",
