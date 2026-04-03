@@ -110,7 +110,7 @@ let votes=  [];
             <div class="row">
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="ep2014list">
+                        <div id="eplist">
                             <div class="row">
                               <div class="col-md-12">
                                 <div class="country center-block">
@@ -327,7 +327,7 @@ voted<span class="thumbs">
       meps =  await awaitd3("csv","../10/data/meps.csv");
       const rcv = await awaitd3("csv","data/10engagement.csv");
       card.vote.setRollCall (rcv);
-      card.grid ("#ep2014list");
+      card.grid ("#eplist");
 
 
 

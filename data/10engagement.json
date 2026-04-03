@@ -56,6 +56,38 @@
           "title": "João Oliveira - Proposition de résolution (ensemble du texte)"
         },
         {
+          "dbid": 171364,
+          "recommendation": 1,
+          "id": "A10-0029/2024",
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2024-0029_EN.html",
+          "date": "2024-12-19",
+          "title": "Dennis Radtke - Décision d'engager des négociations interinstitutionnelles"
+        },
+        {
+          "dbid": 178653,
+          "recommendation": 1,
+          "id": "A10-0147/2025",
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0147_EN.html",
+          "date": "2025-09-09",
+          "title": "Piotr Müller - Après le § 64 - Am 25"
+        },
+        {
+          "dbid": 184187,
+          "recommendation": 1,
+          "id": "A10-0256/2025",
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0256_EN.html",
+          "date": "2026-02-12",
+          "title": "Subcontracting",
+          "description": "Johan Danielsson - Proposition de résolution (ensemble du texte)"
+        },
+        {
+          "dbid": 189597,
+          "id": "A10-0048/2026",
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2026-0048_EN.html",
+          "date": "2026-03-26",
+          "title": "Malik Azmani - Décision d'engager des négociations interinstitutionnelles"
+        },
+        {
           "dbid": 181617,
           "id": "A10-0212/2025",
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0212_EN.html",
@@ -78,6 +110,58 @@
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2026-0006_EN.html",
           "date": "2026-02-11",
           "title": "Nicolae Ștefănuță - Proposition de résolution (ensemble du texte)"
+        },
+        {
+          "dbid": 183122,
+          "id": "A10-0261/2025",
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0261_EN.html",
+          "recommendation": 1,
+          "date": "2026-01-20",
+          "title": "Just transition",
+          "description": "Jana Toom - Proposition de résolution (ensemble du texte)"
+        },
+        {
+          "dbid": 183122,
+          "description": "Semester – Employment",
+          "recommendation": 1,
+          "id": "A10-0261/2025",
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0261_EN.html",
+          "date": "2026-01-20",
+          "title": "Jana Toom - Proposition de résolution (ensemble du texte)"
+        },
+        {
+          "dbid": 184187,
+          "id": "A10-0256/2025",
+          "recommendation": 1,
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0256_EN.html",
+          "date": "2026-02-12",
+          "title": "Johan Danielsson - Proposition de résolution (ensemble du texte)"
+        },
+        {
+          "dbid": 174634,
+          "id": "A10-0042/2025",
+          "recommendation": -1,
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0042_EN.html",
+          "date": "2025-04-02",
+          "title": "Andrzej Halicki - Après le § 26 - Am 70"
+        },
+        {
+          "dbid": 189384,
+          "recommendation": 1,
+          "id": "A10-0073/2026",
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2026-0073_EN.html",
+          "date": "2026-03-26",
+          "title": "AI - Omnibus",
+          "description": "Arba Kokalari, Michael McNamara - Proposition de la Commission"
+        },
+        {
+          "dbid": 186516,
+          "recommendation": 1,
+          "id": "A10-0007/2026",
+          "url": "https://www.europarl.europa.eu/doceo/document/A-10-2026-0007_EN.html",
+          "date": "2026-03-11",
+          "title": "AI - Rights",
+          "description": "José Cepeda, Paulo Cunha - Projet de décision du Conseil"
         },
         {
           "dbid": 182797,

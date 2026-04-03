@@ -105,6 +105,8 @@ var eu_groups = {
   "NA/NI": "grey",
   NA: "grey",
   NI: "grey",
+  Patriots: "#9b20a9",
+  ESN: "#808080",
   Array: "#df73be",
 };
 
@@ -132,6 +134,10 @@ var scoreCard = function (list_votes) {
           v["not an MEP at the time of this vote"] =
             0;
         v.date = new Date(v.date);
+        if (!v.recommendation) {
+          console.log("missing recommendation for ", v.dbid, v.title);
+          v.recommendation = 0;
+        }
         if (typeof v.dbid !== "undefined") {
           this.index[v.dbid] = i;
         }
@@ -223,7 +229,7 @@ var scoreCard = function (list_votes) {
 
   votes.prototype.getVotes = function (mepid) {
     if (!this.exists(mepid)) {
-      console || console.log("bmep missing " + mep, "aa", vote.mepindex);
+      console.error("bmep missing " + mep, "aa", vote.mepindex);
       return {}; //we don't have that mep?
     }
     return this.rollcalls[this.mepindex[mepid]];
@@ -233,7 +239,7 @@ var scoreCard = function (list_votes) {
     var score = (nbvote = 0);
     //if (!this.mepindex[mepid]) {
     if (!this.exists(mepid)) {
-      console.log("dmep missing " + mepid, vote.mepindex);
+      console.error("dmep missing " + mepid, vote.mepindex);
       return 50; //we don't have that mep?
     }
     var mep = this.rollcalls[this.mepindex[mepid]];
