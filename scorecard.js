@@ -91,7 +91,7 @@ if (!hasHashFilter()) {
 }
 
 var eu_groups = {
-  "GUE/NGL": "#df73be",
+  "GUE/NGL": "#800c00",
   "S&D": "#ec2335",
   "Verts/ALE": "#67bd1b",
   "Greens/EFA": "#67bd1b",
