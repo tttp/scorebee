@@ -41,25 +41,14 @@ const Modal = {
   show: (id) => {
     const el = document.getElementById(id.replace('#', ''));
     if (!el) return;
-    el.classList.add('in');
-    el.style.display = 'block';
-    document.body.classList.add('modal-open');
-    let backdrop = document.querySelector('.modal-backdrop');
-    if (!backdrop) {
-      backdrop = document.createElement('div');
-      backdrop.className = 'modal-backdrop fade in';
-      document.body.appendChild(backdrop);
-    }
-    backdrop.addEventListener('click', () => Modal.hide(el.id));
+    el.classList.add('is-active');
+    document.documentElement.classList.add('is-clipped');
   },
   hide: (id) => {
     const el = document.getElementById(id.replace('#', ''));
     if (!el) return;
-    el.classList.remove('in');
-    el.style.display = 'none';
-    document.body.classList.remove('modal-open');
-    const backdrop = document.querySelector('.modal-backdrop');
-    if (backdrop) backdrop.remove();
+    el.classList.remove('is-active');
+    document.documentElement.classList.remove('is-clipped');
   }
 };
 
@@ -67,98 +56,105 @@ const Collapse = {
   toggle: (id) => {
     const el = document.querySelector(id);
     if (!el) return;
-    el.classList.toggle('in');
+    el.classList.toggle('is-hidden');
   },
   show: (id) => {
     const el = document.querySelector(id);
     if (!el) return;
-    el.classList.add('in');
+    el.classList.remove('is-hidden');
   }
 };
 
 const renderPopup = (d) => `
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-   <span>
-        <img src='https://www.europarl.europa.eu/mepphoto/${d.epid}.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
-    </span>
-    <div class="row">
-      <div class="col-md-8 mep" data-id='${d.epid}' data-score='${d.score}'>
-        <ul id="infobox_info">
-            <li><h1><strong>${d.firstname} ${d.lastname.formatName()}</strong></h1></li>
-            ${d.tenure !== d.votes ? `<li title="number of votes analysed when the person was an MEP">Vote tenure: <strong>${d.tenure}/${d.votes}</strong> MEP from ${d.start}${d.end ? ` to ${d.end}` : ''} </li>` : ''}
-            <li>Participation: <strong>${Math.round(d.effort)}%</strong></li>
-            <li>Country: <strong>${countries[d.country]}</strong></li>
-            <li>National party: <strong>${d.party}</strong></li>
-            <li>European Party:<strong> ${d.eugroup} </strong></li>
-            ${d.twitter ? `<li><div class='twitter' data-twitter='${d.twitter}'>This MEP is a candidate in the 2014 elections - share the score!</div></li>` : ''}
-            <li style="font-size:2em"><strong>Voting score: ${d.score}/100</strong></li>
-        </ul> 
-      </div>   
-    </div>  
-    <div style="clear:both;"></div>
+    <div class="modal-background" onclick="Modal.hide('infobox')"></div>
+    <div class="modal-card" style="width: 80%; max-width: 800px;">
+      <header class="modal-card-head">
+        <p class="modal-card-title">${d.firstname} ${d.lastname.formatName()}</p>
+        <button class="delete" aria-label="close" onclick="Modal.hide('infobox')"></button>
+      </header>
+      <section class="modal-card-body infobox_content">
+        <div class="columns">
+          <div class="column is-one-quarter">
+            <img src='https://www.europarl.europa.eu/mepphoto/${d.epid}.jpg' width=170 height=216 />
+          </div>
+          <div class="column">
+            <ul id="infobox_info">
+                ${d.tenure !== d.votes ? `<li title="number of votes analysed when the person was an MEP">Vote tenure: <strong>${d.tenure}/${d.votes}</strong> MEP from ${d.start}${d.end ? ` to ${d.end}` : ''} </li>` : ''}
+                <li>Participation: <strong>${Math.round(d.effort)}%</strong></li>
+                <li>Country: <strong>${countries[d.country]}</strong></li>
+                <li>National party: <strong>${d.party}</strong></li>
+                <li>European Party:<strong> ${d.eugroup} </strong></li>
+                ${d.twitter ? `<li><div class='twitter' data-twitter='${d.twitter}'>This MEP is a candidate - share the score!</div></li>` : ''}
+                <li style="font-size:2em"><strong>Voting score: ${d.score}/100</strong></li>
+            </ul> 
+          </div>
+        </div>
+        <div class="votes-container mt-4">
+          <!-- Populated by tplScore -->
+        </div>
+      </section>
+    </div>
 `;
 
 const renderScoreTable = (v, vote) => {
-  let html = '<div class="row">';
-  let count = 0;
+  let html = '<div class="columns is-multiline">';
   v.d.filter(item => item.mep !== '').forEach(item => {
-    count++;
-    if (count % 2 === 0) {
-      html += '<div class="row" style="margin:0px">';
-    }
-    let panelClass = 'panel-default';
-    if (item.type === 'for') panelClass = 'panel-success';
-    else if (item.type === 'abstention') panelClass = 'panel-warning';
-    else if (item.type === 'absent') panelClass = 'panel-info';
-    else if (item.type === 'against') panelClass = 'panel-danger';
+    let cardClass = '';
+    let iconName = 'help-circle';
+    if (item.type === 'for') { cardClass = 'is-success'; iconName = 'thumbs-up'; }
+    else if (item.type === 'abstention') { cardClass = 'is-warning'; iconName = 'minus-circle'; }
+    else if (item.type === 'absent') { cardClass = 'is-info'; iconName = 'user-minus'; }
+    else if (item.type === 'against') { cardClass = 'is-danger'; iconName = 'thumbs-down'; }
 
     html += `
-            <div class="col-md-6 each_vote_container">
-              <div class="panel ${panelClass}">
-                <div class="panel-heading">
-                  <h3 class="panel-title">${item.title}</h3>
-                  voted <span class="thumbs">
-                  <i class="fa fa-thumbs-o-${vote.direction[item.mep]}" title="the MEP voted ${vote.type[item.mep]}"></i>&nbsp;${vote.type[item.mep]}</span>, we recommend&nbsp;
-                  <span class="thumbs">
-                  <i class="fa fa-thumbs-o-${vote.direction[item.recommendation]}" title="We recommended ${vote.type[item.recommendation]}"></i>
-                  </span>
+            <div class="column is-6">
+              <div class="message ${cardClass}">
+                <div class="message-header">
+                  <p>${item.title}</p>
                 </div>
-                <div class="panel-body">
-                  <p>${item.description || item.id}</p>
-                </div>
-                <div class="panel-footer">
-                  <a target="_blank" class="btn btn-default btn-xs" href='https://mepwatch.eu/10/vote.html?v=${item.dbid}'>vote</a> 
-                  ${item.url ? `<a href="${item.url}" class="btn btn-default btn-xs" target='_blank'>law</a>` : ''}
+                <div class="message-body">
+                  <div class="is-size-7 mb-2">
+                    Voted: <span class="tag ${cardClass} is-light">
+                      <i data-lucide="${item.direction === 'up' ? 'thumbs-up' : 'thumbs-down'}" style="width:14px; height:14px;"></i>&nbsp;${vote.type[item.mep]}
+                    </span>
+                    Recommended: <span class="tag is-dark is-light">
+                      <i data-lucide="${vote.direction[item.recommendation] === 'up' ? 'thumbs-up' : 'thumbs-down'}" style="width:14px; height:14px;"></i>
+                    </span>
+                  </div>
+                  <p class="is-size-7">${item.description || item.id}</p>
+                  <div class="buttons are-small mt-2">
+                    <a target="_blank" class="button is-small" href='https://mepwatch.eu/10/vote.html?v=${item.dbid}'>vote</a> 
+                    ${item.url ? `<a href="${item.url}" class="button is-small" target='_blank'>law</a>` : ''}
+                  </div>
                 </div>
               </div>
             </div>
         `;
-    if (count % 2 === 0) {
-      html += '</div>';
-    }
   });
 
   const nonMep = v.d.filter(item => item.mep === '');
   if (nonMep.length > 0) {
-    html += '<div class="col-md-12"><h3>Not an MEP during these votes</h3><ul>';
+    html += '<div class="column is-12"><div class="content"><h3>Not an MEP during these votes</h3><ul>';
     nonMep.forEach(item => {
       html += `<li>${item.title}</li>`;
     });
-    html += '</ul></div>';
+    html += '</ul></div></div>';
   }
-  html += '</div><div style="clear:both;margin-bottom: 20px;"></div>';
+  html += '</div>';
   return html;
 };
 
 const renderMepCard = (d) => `
-    <div style='background-color:${d.color};opacity: ${d.opacity}' class='mep' data-id='${d.epid}' data-tenure='${d.tenure}' data-score='${d.score}'>
-      <h2 title='MEP from ${d.country} in ${d.eugroup}'>${d.firstname} ${d.lastname.formatName()}</h2>
-      <div>
-        <img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/${d.epid}.jpg' alt='${d.lastname}, ${d.firstname} member of ${d.eugroup}' title='MEP from ${d.country} in ${d.eugroup}' width=170 height=216 />
-        ${d.twitter ? `<div class='twitter' data-twitter='${d.twitter}'></div>` : ''}
-        <div class='score' style='font-size:${d.size}px;'>${d.score}${d.tenure !== d.votes ? `<span>(${d.tenure})</span>` : ''}</div>
+    <div style='background-color:${d.color};opacity: ${d.opacity}' class='mep card' data-id='${d.epid}' data-tenure='${d.tenure}' data-score='${d.score}'>
+      <div class="card-content p-2 has-text-centered">
+        <h2 class="title is-6 mb-1" title='MEP from ${d.country} in ${d.eugroup}'>${d.firstname} ${d.lastname.formatName()}</h2>
+        <div class="image-container" style="position:relative;">
+          <img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/${d.epid}.jpg' alt='${d.lastname}' width=170 height=216 />
+          ${d.twitter ? `<div class='twitter' data-twitter='${d.twitter}'></div>` : ''}
+          <div class='score' style='font-size:${d.size}px;'>${d.score}${d.tenure !== d.votes ? `<span>(${d.tenure})</span>` : ''}</div>
+        </div>
+        <div class='is-size-7 has-text-weight-bold'>${d.party}</div>
       </div>
-      <div class='party'>${d.party}</div>
     </div>
 `;
 
@@ -166,12 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const countryEl = document.querySelector(".country");
   if (countryEl) {
     countryEl.insertAdjacentHTML('afterbegin',
-      "<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>"
+      "<div id='alert_placeholder' class='notification is-info is-light' style='display:none'><span></span><button class='delete' onclick=\"this.parentElement.style.display='none'\"></button></div>"
     );
   }
-
-  const alertPlaceholder = document.getElementById("alert_placeholder");
-  if (alertPlaceholder) alertPlaceholder.style.display = 'none';
 
   const searchInput = document.getElementById("search-input");
   if (searchInput) {
@@ -184,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       document.querySelectorAll(".resetall").forEach(el => el.disabled = true);
       dc.redrawAll();
-      console.log(this.value);
     });
   }
 
@@ -203,16 +195,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   document.addEventListener('click', (e) => {
-    // Bootstrap dismissals
-    if (e.target.closest('[data-dismiss="modal"]')) {
-      const modal = e.target.closest('.modal');
-      if (modal) Modal.hide(modal.id);
+    // Bulma navbar burger toggle
+    const burger = e.target.closest('.navbar-burger');
+    if (burger) {
+      const target = document.getElementById(burger.dataset.target);
+      burger.classList.toggle('is-active');
+      target.classList.toggle('is-active');
     }
-    if (e.target.closest('[data-dismiss="alert"]')) {
-      const alert = e.target.closest('.alert');
-      if (alert) alert.style.display = 'none';
-    }
-    // Bootstrap toggles
+
     const collapseToggle = e.target.closest('[data-toggle="collapse"]');
     if (collapseToggle) {
       e.preventDefault();
@@ -241,6 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
   twitterize();
+  if (window.lucide) lucide.createIcons();
 });
 
 var eu_groups = {
@@ -377,7 +368,7 @@ var scoreCard = function (list_votes) {
     return (
       "<div class='dc-grid-group nodc-grid-item country_" +
       getCountryKey(d.key) +
-      "'><h1 class='dc-grid-label'>" +
+      "'><h1 class='title is-4'>" +
       countries[d.key] +
       "</h1></div>"
     );
@@ -667,14 +658,15 @@ var scoreCard = function (list_votes) {
       }
     });
 
-    Modal.show("#infobox");
-    const headerEl = document.getElementById("infobox_header");
-    if (headerEl) headerEl.innerHTML = tplPopup({ ...d, votes: vote.all.length });
-    const contentEl = document.querySelector(".infobox_content");
-    if (contentEl) contentEl.innerHTML = tplScore(v, vote);
+    const headerEl = document.getElementById("infobox");
+    if (headerEl) {
+      headerEl.innerHTML = tplPopup({ ...d, votes: vote.all.length });
+      const votesContainer = headerEl.querySelector(".votes-container");
+      if (votesContainer) votesContainer.innerHTML = tplScore(v, vote);
+    }
+    Modal.show("infobox");
     window.location.hash = "mep" + d.epid;
-    const twitterEl = document.getElementById("twitter");
-    if (twitterEl) twitterEl.innerHTML = tplTwitter(d);
+    if (window.lucide) lucide.createIcons();
   }
   function getCountryKey(name) {
     return name.replace(/ /g, "_").toLowerCase();
@@ -730,7 +722,7 @@ var scoreCard = function (list_votes) {
       .attr("class", "d3-tip")
       .html(function (p) {
         return (
-          "<span><h2>" +
+          "<span><h2 class='title is-6 mb-1'>" +
           p.data.key +
           "</h2><ul>" +
           "<li>Number of MEPs: " +
@@ -781,7 +773,7 @@ var scoreCard = function (list_votes) {
       .attr("class", "d3-tip")
       .html(function (p) {
         return (
-          "<span><h2>" +
+          "<span><h2 class='title is-6 mb-1'>" +
           p.key +
           "</h2><ul>" +
           "<li>Number of MEPs: " +

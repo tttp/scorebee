@@ -12,5 +12,9 @@
     "@eslint/js": "^9.3.0",
     "csv-parse": "^5.5.6",
     "csv-stringify": "^6.5.0"
+  },
+  "dependencies": {
+    "bulma": "^1.0.4",
+    "lucide": "^1.7.0"
   }
 }

@@ -10,7 +10,8 @@
     "title": "10 engagements",
     "description": "",
     "link": "https://www.hetacv.be",
-    "logo": "ihttps://www.hetacv.be/images/default-source/acv-csc-sitemap/5000-over-het-acv-a-propos-de-la-csc/5220-internationaal-international/acv-csci/acv-csci_logo.png?sfvrsn=dcf72591_6",
+    "background": "https://www.hetacv.be/images/default-source/acv-csc-sitemap/3980-actualiteit-actualite/3985-campagnes-campagnes/elections-sociales---sociale-verkiezingen-2024/documenten-bestellen-cover.jpg",
+    "logo": "ihttps://www.hetacv.be/images/default-source/acv-csc-sitemap/5000-over-het-acv-a-propos-de-la-csc/5220-internationaal-international/acv-csci/acv-csci_logo.png",
     "limits": [
       {
         "upper": 20,
@@ -188,7 +189,7 @@
           "id": "A10-0147/2025",
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0147_EN.html",
           "date": "2025-09-09",
-          "recommendation": 0,
+          "recommendation": 1,
           "title": "Public Procurement",
           "description": "Piotr Müller - Proposition de résolution (ensemble du texte)"
         },
