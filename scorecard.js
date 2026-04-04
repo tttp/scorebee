@@ -39,52 +39,52 @@ const countries = {
 
 const Modal = {
   show: (id) => {
-    const el = document.getElementById(id.replace('#', ''));
+    const el = document.getElementById(id.replace("#", ""));
     if (!el) return;
-    el.classList.add('is-active');
-    document.documentElement.classList.add('is-clipped');
+    el.classList.add("is-active");
+    document.documentElement.classList.add("is-clipped");
   },
   hide: (id) => {
-    const el = document.getElementById(id.replace('#', ''));
+    const el = document.getElementById(id.replace("#", ""));
     if (!el) return;
-    el.classList.remove('is-active');
-    document.documentElement.classList.remove('is-clipped');
-  }
+    el.classList.remove("is-active");
+    document.documentElement.classList.remove("is-clipped");
+  },
 };
 
 const Collapse = {
   toggle: (id) => {
     const el = document.querySelector(id);
     if (!el) return;
-    el.classList.toggle('is-hidden');
+    el.classList.toggle("is-hidden");
   },
   show: (id) => {
     const el = document.querySelector(id);
     if (!el) return;
-    el.classList.remove('is-hidden');
-  }
+    el.classList.remove("is-hidden");
+  },
 };
 
 const renderPopup = (d) => `
     <div class="modal-background" onclick="Modal.hide('infobox')"></div>
-    <div class="modal-card" style="width: 80%; max-width: 800px;">
+    <div class="modal-card" style="width: 95%; max-width: 1200px;">
       <header class="modal-card-head">
         <p class="modal-card-title">${d.firstname} ${d.lastname.formatName()}</p>
         <button class="delete" aria-label="close" onclick="Modal.hide('infobox')"></button>
       </header>
       <section class="modal-card-body infobox_content">
         <div class="columns">
-          <div class="column is-one-quarter">
+          <div class="column is-narrow">
             <img src='https://www.europarl.europa.eu/mepphoto/${d.epid}.jpg' width=170 height=216 />
           </div>
           <div class="column">
             <ul id="infobox_info">
-                ${d.tenure !== d.votes ? `<li title="number of votes analysed when the person was an MEP">Vote tenure: <strong>${d.tenure}/${d.votes}</strong> MEP from ${d.start}${d.end ? ` to ${d.end}` : ''} </li>` : ''}
+                ${d.tenure !== d.votes ? `<li title="number of votes analysed when the person was an MEP">Vote tenure: <strong>${d.tenure}/${d.votes}</strong> MEP from ${d.start}${d.end ? ` to ${d.end}` : ""} </li>` : ""}
                 <li>Participation: <strong>${Math.round(d.effort)}%</strong></li>
                 <li>Country: <strong>${countries[d.country]}</strong></li>
                 <li>National party: <strong>${d.party}</strong></li>
                 <li>European Party:<strong> ${d.eugroup} </strong></li>
-                ${d.twitter ? `<li><div class='twitter' data-twitter='${d.twitter}'>This MEP is a candidate - share the score!</div></li>` : ''}
+                ${d.twitter ? `<li><div class='twitter' data-twitter='${d.twitter}'>This MEP is a candidate - share the score!</div></li>` : ""}
                 <li style="font-size:2em"><strong>Voting score: ${d.score}/100</strong></li>
             </ul> 
           </div>
@@ -96,51 +96,76 @@ const renderPopup = (d) => `
     </div>
 `;
 
+const voteIcon = (vote, direction) => {
+  switch (vote) {
+    case 1:
+    case "1":
+      return "<i data-lucide='thumbs-up' /></i>";
+    case -1:
+    case "-1":
+      return "<i data-lucide='thumbs-down' /></i>";
+    case 0: // abtention
+    case "0":
+      return "<i data-lucide='user-minus' /></i>";
+    case "X":
+      return "<i data-lucide='clock-alert' ></i>";
+  }
+  console.log(vote, direction);
+  return "AAA";
+  switch (direction) {
+    case "up":
+      return "<i data-lucide='thumbs-up' /></i>";
+    case "down":
+      return "<i data-lucide='thumbs-up' /></i>";
+  }
+};
+
 const renderScoreTable = (v, vote) => {
   let html = '<div class="columns is-multiline">';
-  v.d.filter(item => item.mep !== '').forEach(item => {
-    let cardClass = '';
-    let iconName = 'help-circle';
-    if (item.type === 'for') { cardClass = 'is-success'; iconName = 'thumbs-up'; }
-    else if (item.type === 'abstention') { cardClass = 'is-warning'; iconName = 'minus-circle'; }
-    else if (item.type === 'absent') { cardClass = 'is-info'; iconName = 'user-minus'; }
-    else if (item.type === 'against') { cardClass = 'is-danger'; iconName = 'thumbs-down'; }
-
-    html += `
-            <div class="column is-6">
+  v.d
+    .filter((item) => item.mep !== "")
+    .forEach((item) => {
+      let cardClass = "";
+      if (item.type === "for") cardClass = "is-success";
+      else if (item.type === "abstention") cardClass = "is-info";
+      else if (item.type === "absent") cardClass = "is-light";
+      else if (item.type === "against") cardClass = "is-danger";
+      html += `
+            <div class="column is-12-mobile is-6-tablet is-4-desktop">
               <div class="message ${cardClass}">
                 <div class="message-header">
-                  <p>${item.title}</p>
+                  <p class="is-size-7">${item.title}</p>
                 </div>
-                <div class="message-body">
+                <div class="message-body p-2">
                   <div class="is-size-7 mb-2">
-                    Voted: <span class="tag ${cardClass} is-light">
-                      <i data-lucide="${item.direction === 'up' ? 'thumbs-up' : 'thumbs-down'}" style="width:14px; height:14px;"></i>&nbsp;${vote.type[item.mep]}
+                    Voted: <span class="tag is-light">
+                      ${voteIcon(item.mep)} ${vote.type[item.mep]}
                     </span>
-                    Recommended: <span class="tag is-dark is-light">
-                      <i data-lucide="${vote.direction[item.recommendation] === 'up' ? 'thumbs-up' : 'thumbs-down'}" style="width:14px; height:14px;"></i>
+                    Recommended: <span class="tag  is-light">
+                      ${voteIcon(item.recommendation)}
                     </span>
                   </div>
-                  <p class="is-size-7">${item.description || item.id}</p>
+                  <p class="is-size-7" style="min-height: 3em;">${item.description || item.id}</p>
                   <div class="buttons are-small mt-2">
                     <a target="_blank" class="button is-small" href='https://mepwatch.eu/10/vote.html?v=${item.dbid}'>vote</a> 
-                    ${item.url ? `<a href="${item.url}" class="button is-small" target='_blank'>law</a>` : ''}
+                    ${item.url ? `<a href="${item.url}" class="button is-small" target='_blank'>law</a>` : ""}
                   </div>
                 </div>
               </div>
             </div>
         `;
-  });
+    });
 
-  const nonMep = v.d.filter(item => item.mep === '');
+  const nonMep = v.d.filter((item) => item.mep === "");
   if (nonMep.length > 0) {
-    html += '<div class="column is-12"><div class="content"><h3>Not an MEP during these votes</h3><ul>';
-    nonMep.forEach(item => {
+    html +=
+      '<div class="column is-12"><div class="content"><h3>Not an MEP during these votes</h3><ul>';
+    nonMep.forEach((item) => {
       html += `<li>${item.title}</li>`;
     });
-    html += '</ul></div></div>';
+    html += "</ul></div></div>";
   }
-  html += '</div>';
+  html += "</div>";
   return html;
 };
 
@@ -150,85 +175,96 @@ const renderMepCard = (d) => `
         <h2 class="title is-6 mb-1" title='MEP from ${d.country} in ${d.eugroup}'>${d.firstname} ${d.lastname.formatName()}</h2>
         <div class="image-container" style="position:relative;">
           <img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/${d.epid}.jpg' alt='${d.lastname}' width=170 height=216 />
-          ${d.twitter ? `<div class='twitter' data-twitter='${d.twitter}'></div>` : ''}
-          <div class='score' style='font-size:${d.size}px;'>${d.score}${d.tenure !== d.votes ? `<span>(${d.tenure})</span>` : ''}</div>
+          ${d.twitter ? `<div class='twitter' data-twitter='${d.twitter}'></div>` : ""}
+          <div class='score' style='font-size:${d.size}px;'>${d.score}${d.tenure !== d.votes ? `<span>(${d.tenure})</span>` : ""}</div>
         </div>
         <div class='is-size-7 has-text-weight-bold'>${d.party}</div>
       </div>
     </div>
 `;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   const countryEl = document.querySelector(".country");
   if (countryEl) {
-    countryEl.insertAdjacentHTML('afterbegin',
-      "<div id='alert_placeholder' class='notification is-info is-light' style='display:none'><span></span><button class='delete' onclick=\"this.parentElement.style.display='none'\"></button></div>"
+    countryEl.insertAdjacentHTML(
+      "afterbegin",
+      "<div id='alert_placeholder' class='notification is-info is-light' style='display:none'><span></span><button class='delete' onclick=\"this.parentElement.style.display='none'\"></button></div>",
     );
   }
 
   const searchInput = document.getElementById("search-input");
   if (searchInput) {
-    searchInput.addEventListener('keyup', function () {
+    searchInput.addEventListener("keyup", function () {
       const s = this.value.toLowerCase();
       if (wall) {
         wall.dimension().filter(function (d) {
           return d.indexOf(s) !== -1;
         });
       }
-      document.querySelectorAll(".resetall").forEach(el => el.disabled = true);
+      document
+        .querySelectorAll(".resetall")
+        .forEach((el) => (el.disabled = true));
       dc.redrawAll();
     });
   }
 
   tplPopup = renderPopup;
   tplScore = renderScoreTable;
-  tplTwitter = (d) => ''; // Placeholder
+  tplTwitter = (d) => ""; // Placeholder
 
-  document.querySelectorAll(".resetall").forEach(el => {
-    el.addEventListener('click', function () {
+  document.querySelectorAll(".resetall").forEach((el) => {
+    el.addEventListener("click", function () {
       const si = document.getElementById("search-input");
       if (si) si.value = "";
-      document.querySelectorAll(".resetall").forEach(el => el.disabled = false);
+      document
+        .querySelectorAll(".resetall")
+        .forEach((el) => (el.disabled = false));
       dc.filterAll();
       dc.renderAll();
     });
   });
 
-  document.addEventListener('click', (e) => {
+  document.addEventListener("click", (e) => {
     // Bulma navbar burger toggle
-    const burger = e.target.closest('.navbar-burger');
+    const burger = e.target.closest(".navbar-burger");
     if (burger) {
       const target = document.getElementById(burger.dataset.target);
-      burger.classList.toggle('is-active');
-      target.classList.toggle('is-active');
+      burger.classList.toggle("is-active");
+      target.classList.toggle("is-active");
     }
 
     const collapseToggle = e.target.closest('[data-toggle="collapse"]');
     if (collapseToggle) {
       e.preventDefault();
-      const targetSelector = collapseToggle.getAttribute('data-target') || collapseToggle.getAttribute('href');
+      const targetSelector =
+        collapseToggle.getAttribute("data-target") ||
+        collapseToggle.getAttribute("href");
       Collapse.toggle(targetSelector);
     }
   });
 
   if (!hasHashFilter()) {
-    false && fetch("http://country.proca.foundation")
-      .then(res => res.json())
-      .then(data => {
-        if (!bar_country) return;
-        const country = data.country.toLowerCase();
+    false &&
+      fetch("http://country.proca.foundation")
+        .then((res) => res.json())
+        .then((data) => {
+          if (!bar_country) return;
+          const country = data.country.toLowerCase();
 
-        bar_country.group().top(28).forEach(d => {
-          if (country === d.key) {
-            location.hash = "#bar_country";
-            notice("Show only MEPs from " + d.key);
-            bar_country.filter(country);
-            scrolled = true;
-            dc.redrawAll();
-            Collapse.show("#collapseOne");
-          }
+          bar_country
+            .group()
+            .top(28)
+            .forEach((d) => {
+              if (country === d.key) {
+                location.hash = "#bar_country";
+                notice("Show only MEPs from " + d.key);
+                bar_country.filter(country);
+                scrolled = true;
+                dc.redrawAll();
+                Collapse.show("#collapseOne");
+              }
+            });
         });
-      });
   }
   twitterize();
   if (window.lucide) lucide.createIcons();
@@ -274,7 +310,7 @@ var scoreCard = function (list_votes) {
         v.abstention =
         v.absent =
         v["not an MEP at the time of this vote"] =
-        0;
+          0;
       v.date = new Date(v.date);
       if (!v.recommendation) {
         console.log("missing recommendation for ", v.dbid, v.title);
@@ -323,8 +359,7 @@ var scoreCard = function (list_votes) {
     this.all.forEach((vote) => {
       if (mep[vote.dbid]) {
         ++nbvote;
-        if (Math.abs(mep[vote.dbid]) == 1 || mep[vote.dbid] == 0)
-          ++effort;
+        if (Math.abs(mep[vote.dbid]) == 1 || mep[vote.dbid] == 0) ++effort;
       }
     });
     return { effort: nbvote ? (effort / nbvote) * 100 : 0, tenure: nbvote };
@@ -375,7 +410,7 @@ var scoreCard = function (list_votes) {
   };
 
   var getMEP = function (id) {
-    return meps.find(m => m.epid === id);
+    return meps.find((m) => m.epid === id);
   };
 
   function grid(selector) {
@@ -403,7 +438,7 @@ var scoreCard = function (list_votes) {
     function adjust(data) {
       var dateFormat = d3.time.format("%Y-%m-%d");
       var now = Date.now();
-      var filteredMeps = data.filter(e => {
+      var filteredMeps = data.filter((e) => {
         if (!vote.exists(e.epid)) return false;
         const t = vote.getEffort(e.epid);
         e.effort = t.effort;
@@ -499,9 +534,9 @@ var scoreCard = function (list_votes) {
         }
         const resetAllBtn = document.querySelectorAll(".resetall");
         if (ndx.size() !== nb) {
-          resetAllBtn.forEach(btn => btn.disabled = false);
+          resetAllBtn.forEach((btn) => (btn.disabled = false));
         } else {
-          resetAllBtn.forEach(btn => btn.disabled = true);
+          resetAllBtn.forEach((btn) => (btn.disabled = true));
         }
       });
 
@@ -681,7 +716,7 @@ var scoreCard = function (list_votes) {
     if (targetEl) {
       window.scrollTo({
         top: targetEl.getBoundingClientRect().top + window.pageYOffset,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   }
@@ -877,36 +912,38 @@ function hasHashFilter() {
 function notice(message, callback) {
   const ap = document.getElementById("alert_placeholder");
   if (!ap) return;
-  ap.style.display = '';
+  ap.style.display = "";
   const span = ap.querySelector("span");
   if (span) span.innerHTML = message;
   setTimeout(function () {
-    ap.style.transition = 'opacity 1s';
-    ap.style.opacity = '0';
+    ap.style.transition = "opacity 1s";
+    ap.style.opacity = "0";
     setTimeout(() => {
-      ap.style.display = 'none';
-      ap.style.opacity = '1';
+      ap.style.display = "none";
+      ap.style.opacity = "1";
       callback && callback();
     }, 1000);
   }, 3000);
 }
 
 function twitterize() {
-  document.body.addEventListener('click', function (event) {
+  document.body.addEventListener("click", function (event) {
     const twitterBtn = event.target.closest(".twitter");
     if (!twitterBtn) return;
-    
+
     event.preventDefault();
-    const _twitterMsg = (typeof twitterMsg === "undefined") 
-      ? "How does @ score of #score compare to the other MEPs? #ep2014" 
-      : twitterMsg;
-    
+    const _twitterMsg =
+      typeof twitterMsg === "undefined"
+        ? "How does @ score of #score compare to the other MEPs? #ep2014"
+        : twitterMsg;
+
     const t = twitterBtn.dataset.twitter;
     const mep = twitterBtn.closest("div.mep");
     if (!mep) return;
-    
+
     let msg = _twitterMsg.replace("@ ", t + " ");
-    msg = msg.replace("#score", mep.dataset.score) +
+    msg =
+      msg.replace("#score", mep.dataset.score) +
       " " +
       document.URL.replace(/#.*/, "") +
       "#mep" +
