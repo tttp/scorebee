@@ -4,6 +4,7 @@ var tplTwitter = null;
 var ndx = null; //workaround for now...
 var partyChart = null;
 let bar_country = null;
+let wall = null; // Used in grid function
 
 const countries = {
   be: "Belgium",
@@ -36,59 +37,211 @@ const countries = {
   gb: "United Kingdom",
 };
 
-jQuery(function ($) {
-  var message = "";
-  $(".country").prepend(
-    "<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>",
-  );
-  $("#alert_placeholder").hide();
-  $("#search-input").keyup(function () {
-    var s = $(this).val().toLowerCase();
-    wall.dimension().filter(function (d) {
-      return d.indexOf(s) !== -1;
+const Modal = {
+  show: (id) => {
+    const el = document.getElementById(id.replace('#', ''));
+    if (!el) return;
+    el.classList.add('in');
+    el.style.display = 'block';
+    document.body.classList.add('modal-open');
+    let backdrop = document.querySelector('.modal-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'modal-backdrop fade in';
+      document.body.appendChild(backdrop);
+    }
+    backdrop.addEventListener('click', () => Modal.hide(el.id));
+  },
+  hide: (id) => {
+    const el = document.getElementById(id.replace('#', ''));
+    if (!el) return;
+    el.classList.remove('in');
+    el.style.display = 'none';
+    document.body.classList.remove('modal-open');
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) backdrop.remove();
+  }
+};
+
+const Collapse = {
+  toggle: (id) => {
+    const el = document.querySelector(id);
+    if (!el) return;
+    el.classList.toggle('in');
+  },
+  show: (id) => {
+    const el = document.querySelector(id);
+    if (!el) return;
+    el.classList.add('in');
+  }
+};
+
+const renderPopup = (d) => `
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+   <span>
+        <img src='https://www.europarl.europa.eu/mepphoto/${d.epid}.jpg' width=170 height=216 style="float:left;margin-right:10px"/> 
+    </span>
+    <div class="row">
+      <div class="col-md-8 mep" data-id='${d.epid}' data-score='${d.score}'>
+        <ul id="infobox_info">
+            <li><h1><strong>${d.firstname} ${d.lastname.formatName()}</strong></h1></li>
+            ${d.tenure !== d.votes ? `<li title="number of votes analysed when the person was an MEP">Vote tenure: <strong>${d.tenure}/${d.votes}</strong> MEP from ${d.start}${d.end ? ` to ${d.end}` : ''} </li>` : ''}
+            <li>Participation: <strong>${Math.round(d.effort)}%</strong></li>
+            <li>Country: <strong>${countries[d.country]}</strong></li>
+            <li>National party: <strong>${d.party}</strong></li>
+            <li>European Party:<strong> ${d.eugroup} </strong></li>
+            ${d.twitter ? `<li><div class='twitter' data-twitter='${d.twitter}'>This MEP is a candidate in the 2014 elections - share the score!</div></li>` : ''}
+            <li style="font-size:2em"><strong>Voting score: ${d.score}/100</strong></li>
+        </ul> 
+      </div>   
+    </div>  
+    <div style="clear:both;"></div>
+`;
+
+const renderScoreTable = (v, vote) => {
+  let html = '<div class="row">';
+  let count = 0;
+  v.d.filter(item => item.mep !== '').forEach(item => {
+    count++;
+    if (count % 2 === 0) {
+      html += '<div class="row" style="margin:0px">';
+    }
+    let panelClass = 'panel-default';
+    if (item.type === 'for') panelClass = 'panel-success';
+    else if (item.type === 'abstention') panelClass = 'panel-warning';
+    else if (item.type === 'absent') panelClass = 'panel-info';
+    else if (item.type === 'against') panelClass = 'panel-danger';
+
+    html += `
+            <div class="col-md-6 each_vote_container">
+              <div class="panel ${panelClass}">
+                <div class="panel-heading">
+                  <h3 class="panel-title">${item.title}</h3>
+                  voted <span class="thumbs">
+                  <i class="fa fa-thumbs-o-${vote.direction[item.mep]}" title="the MEP voted ${vote.type[item.mep]}"></i>&nbsp;${vote.type[item.mep]}</span>, we recommend&nbsp;
+                  <span class="thumbs">
+                  <i class="fa fa-thumbs-o-${vote.direction[item.recommendation]}" title="We recommended ${vote.type[item.recommendation]}"></i>
+                  </span>
+                </div>
+                <div class="panel-body">
+                  <p>${item.description || item.id}</p>
+                </div>
+                <div class="panel-footer">
+                  <a target="_blank" class="btn btn-default btn-xs" href='https://mepwatch.eu/10/vote.html?v=${item.dbid}'>vote</a> 
+                  ${item.url ? `<a href="${item.url}" class="btn btn-default btn-xs" target='_blank'>law</a>` : ''}
+                </div>
+              </div>
+            </div>
+        `;
+    if (count % 2 === 0) {
+      html += '</div>';
+    }
+  });
+
+  const nonMep = v.d.filter(item => item.mep === '');
+  if (nonMep.length > 0) {
+    html += '<div class="col-md-12"><h3>Not an MEP during these votes</h3><ul>';
+    nonMep.forEach(item => {
+      html += `<li>${item.title}</li>`;
     });
-    $(".resetall").attr("disabled", true);
-    dc.redrawAll();
-    console.log($(this).val());
+    html += '</ul></div>';
+  }
+  html += '</div><div style="clear:both;margin-bottom: 20px;"></div>';
+  return html;
+};
+
+const renderMepCard = (d) => `
+    <div style='background-color:${d.color};opacity: ${d.opacity}' class='mep' data-id='${d.epid}' data-tenure='${d.tenure}' data-score='${d.score}'>
+      <h2 title='MEP from ${d.country} in ${d.eugroup}'>${d.firstname} ${d.lastname.formatName()}</h2>
+      <div>
+        <img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/${d.epid}.jpg' alt='${d.lastname}, ${d.firstname} member of ${d.eugroup}' title='MEP from ${d.country} in ${d.eugroup}' width=170 height=216 />
+        ${d.twitter ? `<div class='twitter' data-twitter='${d.twitter}'></div>` : ''}
+        <div class='score' style='font-size:${d.size}px;'>${d.score}${d.tenure !== d.votes ? `<span>(${d.tenure})</span>` : ''}</div>
+      </div>
+      <div class='party'>${d.party}</div>
+    </div>
+`;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const countryEl = document.querySelector(".country");
+  if (countryEl) {
+    countryEl.insertAdjacentHTML('afterbegin',
+      "<div id='alert_placeholder'><div class='alert alert-info'><span></span><button class='close' data-dismiss='alert' aria-hidden='true'>×</button></div></div>"
+    );
+  }
+
+  const alertPlaceholder = document.getElementById("alert_placeholder");
+  if (alertPlaceholder) alertPlaceholder.style.display = 'none';
+
+  const searchInput = document.getElementById("search-input");
+  if (searchInput) {
+    searchInput.addEventListener('keyup', function () {
+      const s = this.value.toLowerCase();
+      if (wall) {
+        wall.dimension().filter(function (d) {
+          return d.indexOf(s) !== -1;
+        });
+      }
+      document.querySelectorAll(".resetall").forEach(el => el.disabled = true);
+      dc.redrawAll();
+      console.log(this.value);
+    });
+  }
+
+  tplPopup = renderPopup;
+  tplScore = renderScoreTable;
+  tplTwitter = (d) => ''; // Placeholder
+
+  document.querySelectorAll(".resetall").forEach(el => {
+    el.addEventListener('click', function () {
+      const si = document.getElementById("search-input");
+      if (si) si.value = "";
+      document.querySelectorAll(".resetall").forEach(el => el.disabled = false);
+      dc.filterAll();
+      dc.renderAll();
+    });
   });
 
-  tplPopup = _.template($("#infobox_tpl").text());
-  tplScore = _.template($("#score_tpl").text());
-  tplTwitter = _.template($("#twitter_tpl").text());
-
-  $(".resetall").click(function () {
-    $("#search-input").val("");
-    $(".resetall").attr("disabled", false);
-    dc.filterAll();
-    dc.renderAll();
+  document.addEventListener('click', (e) => {
+    // Bootstrap dismissals
+    if (e.target.closest('[data-dismiss="modal"]')) {
+      const modal = e.target.closest('.modal');
+      if (modal) Modal.hide(modal.id);
+    }
+    if (e.target.closest('[data-dismiss="alert"]')) {
+      const alert = e.target.closest('.alert');
+      if (alert) alert.style.display = 'none';
+    }
+    // Bootstrap toggles
+    const collapseToggle = e.target.closest('[data-toggle="collapse"]');
+    if (collapseToggle) {
+      e.preventDefault();
+      const targetSelector = collapseToggle.getAttribute('data-target') || collapseToggle.getAttribute('href');
+      Collapse.toggle(targetSelector);
+    }
   });
 
-  $("body").on("click", ".btn", function (event) {});
-});
-
-if (!hasHashFilter()) {
-  // we need to find a better way than automatically filtering on the country
-
-  false &&
-    $.get("http://country.proca.foundation", function (data) {
-      jQuery(function ($) {
+  if (!hasHashFilter()) {
+    false && fetch("http://country.proca.foundation")
+      .then(res => res.json())
+      .then(data => {
         if (!bar_country) return;
         const country = data.country.toLowerCase();
 
-        _.each(bar_country.group().top(28), function (d) {
+        bar_country.group().top(28).forEach(d => {
           if (country === d.key) {
             location.hash = "#bar_country";
             notice("Show only MEPs from " + d.key);
             bar_country.filter(country);
-            //          scrollTo("main");
-            scrolled = true; // no need to smooth scroll, the visitor knows now
+            scrolled = true;
             dc.redrawAll();
-            $("#collapseOne").collapse("show");
+            Collapse.show("#collapseOne");
           }
         });
       });
-    });
-}
+  }
+  twitterize();
+});
 
 var eu_groups = {
   "GUE/NGL": "#800c00",
@@ -123,104 +276,67 @@ var scoreCard = function (list_votes) {
       "": "not an MEP at the time of this vote",
     };
     this.direction = { 1: "up", "-1": "down" };
-    _.each(
-      all,
-      function (v, i) {
-        v.for =
-          v.pro =
-          v.against =
-          v.abstention =
-          v.absent =
-          v["not an MEP at the time of this vote"] =
-            0;
-        v.date = new Date(v.date);
-        if (!v.recommendation) {
-          console.log("missing recommendation for ", v.dbid, v.title);
-          v.recommendation = 0;
-        }
-        if (typeof v.dbid !== "undefined") {
-          this.index[v.dbid] = i;
-        }
-      },
-      this,
-    );
+    all.forEach((v, i) => {
+      v.for =
+        v.pro =
+        v.against =
+        v.abstention =
+        v.absent =
+        v["not an MEP at the time of this vote"] =
+        0;
+      v.date = new Date(v.date);
+      if (!v.recommendation) {
+        console.log("missing recommendation for ", v.dbid, v.title);
+        v.recommendation = 0;
+      }
+      if (typeof v.dbid !== "undefined") {
+        this.index[v.dbid] = i;
+      }
+    });
   };
 
   votes.prototype.get = function (id) {
-    //return the detail of a vote based on its id
-    if (this.index[id]) return this.all[this.index[id]];
-    return null; // asking for a vote that doesn't exist
+    if (this.index[id] !== undefined) return this.all[this.index[id]];
+    return null;
   };
 
   votes.prototype.setRollCall = function (rolls) {
-    //var type = {"1":"for","-1":"against",0:"abstention","X":"absent","":"not an MEP at the time of this vote"};
-
     this.rollcalls = rolls;
-    _.each(
-      rolls,
-      function (v, i) {
-        var mep = v;
-        this.mepindex[v.mep] = i;
-        _.each(
-          this.all,
-          function (vote, id) {
-            ++vote[this.type[mep[vote.dbid]]]; //type is one of pro against abstention absent
-          },
-          this,
-        );
-      },
-      this,
-    );
-    // coef calculation
+    rolls.forEach((v, i) => {
+      var mep = v;
+      this.mepindex[v.mep] = i;
+      this.all.forEach((vote, id) => {
+        ++vote[this.type[mep[vote.dbid]]];
+      });
+    });
     var max = 0,
       min = Infinity;
-    _.each(
-      this.all,
-      function (vote) {
-        vote.cast = vote.pro + vote.against + vote.abstention;
-        vote.weight = Math.abs(vote.cast / (vote.against - vote.pro));
-        if (min > vote.weight) min = vote.weight;
-        if (max < vote.weight) max = vote.weight;
-      },
-      this,
-    );
-    _.each(
-      this.all,
-      function (vote) {
-        //        vote.weight = 1 + (vote.weight - min) / (max - min);
-        vote.weight = 1;
-      },
-      this,
-    );
-
-    //    this.all.forEach (v => console.log(v.dbid,v.title,v.for,v.against,v.abstention,v.absent,v.weight));
+    this.all.forEach((vote) => {
+      vote.cast = vote.pro + vote.against + vote.abstention;
+      vote.weight = Math.abs(vote.cast / (vote.against - vote.pro)) || 1;
+      if (min > vote.weight) min = vote.weight;
+      if (max < vote.weight) max = vote.weight;
+    });
+    this.all.forEach((vote) => {
+      vote.weight = 1;
+    });
   };
 
   votes.prototype.getEffort = function (mepid) {
     var effort = 0;
-    nbvote = 0;
+    var nbvote = 0;
     if (!this.exists(mepid)) {
-      console.log("amep missing " + mepid, this.mepindex);
-      return 0; //we don't have that mep?
+      return { effort: 0, tenure: 0 };
     }
     var mep = this.rollcalls[this.mepindex[mepid]];
-    _.each(
-      this.all,
-      function (vote) {
-        // skip the vote the mep wasn't an mep
-        if (mep[vote.dbid]) {
-          ++nbvote;
-          if (Math.abs(mep[vote.dbid]) == 1)
-            // yes or no
-            ++effort;
-          if (mep[vote.dbid] == 0) ++effort; //count abstention as effort
-        } else {
-          //console.log("missing vote",vote.dbid,mepid);
-        }
-      },
-      this,
-    );
-    return { effort: (effort / nbvote) * 100, tenure: nbvote };
+    this.all.forEach((vote) => {
+      if (mep[vote.dbid]) {
+        ++nbvote;
+        if (Math.abs(mep[vote.dbid]) == 1 || mep[vote.dbid] == 0)
+          ++effort;
+      }
+    });
+    return { effort: nbvote ? (effort / nbvote) * 100 : 0, tenure: nbvote };
   };
 
   votes.prototype.exists = function (mepid) {
@@ -229,43 +345,33 @@ var scoreCard = function (list_votes) {
 
   votes.prototype.getVotes = function (mepid) {
     if (!this.exists(mepid)) {
-      console.error("bmep missing " + mep, "aa", vote.mepindex);
-      return {}; //we don't have that mep?
+      return {};
     }
     return this.rollcalls[this.mepindex[mepid]];
   };
 
   votes.prototype.getScore = function (mepid) {
-    var score = (nbvote = 0);
-    //if (!this.mepindex[mepid]) {
+    var score = 0;
+    var nbvote = 0;
     if (!this.exists(mepid)) {
-      console.error("dmep missing " + mepid, vote.mepindex);
-      return 50; //we don't have that mep?
+      return 50;
     }
     var mep = this.rollcalls[this.mepindex[mepid]];
-    _.each(
-      this.all,
-      function (vote) {
-        if (mep[vote.dbid]) {
-          nbvote = nbvote + vote.weight; //no weight used
-          if (mep[vote.dbid] == "X") {
-            //abstention, we skip
-            return;
-          }
+    this.all.forEach((vote) => {
+      if (mep[vote.dbid]) {
+        nbvote = nbvote + vote.weight;
+        if (mep[vote.dbid] !== "X") {
           score = score + vote.recommendation * mep[vote.dbid] * vote.weight;
         }
-      },
-      this,
-    );
-    if (nbvote == 0) return 50; // the dude wasn't around for the votes
-    //  return Math.floor (100*(score / nbvote)); // from -100 to 100
-    return Math.floor(50 + (100 * (score / nbvote)) / 2); // from 0 to 100
+      }
+    });
+    if (nbvote == 0) return 50;
+    return Math.floor(50 + (100 * (score / nbvote)) / 2);
   };
+
   var vote = new votes(list_votes);
 
-  const tpl = _.template(
-    "<div style='background-color:<%= color %>;opacity: <%= opacity %>' class='mep' data-id='<%= epid %>' data-tenure='<%= tenure %>' data-score='<%= score %>'><h2 title='MEP from <%= country %> in <%= eugroup %>'><%= firstname %> <%= lastname.formatName() %></h2><div><img loading='lazy' src='https://www.europarl.europa.eu/mepphoto/<%= epid %>.jpg' alt='<%= lastname %>, <%= firstname %> member of <%= eugroup %>' title='MEP from <%= country %> in <%= eugroup %>' width=170 height=216 /><% if (twitter) { %><div class='twitter' data-twitter='<%= twitter %>'></div><% } %><div class='score' style='font-size:<%= size %>px;'><%= score %><% if (tenure !== votes) {%><span>(<%= tenure %>)</span><% }%></div></div><div class='party'><%= party %></div></div>",
-  );
+  const tpl = renderMepCard;
 
   const tplGroup = function (d) {
     return (
@@ -278,15 +384,13 @@ var scoreCard = function (list_votes) {
   };
 
   var getMEP = function (id) {
-    for (var i in meps) {
-      if (meps[i].epid === id) return meps[i];
-    }
+    return meps.find(m => m.epid === id);
   };
 
   function grid(selector) {
     adjust(meps);
 
-    ndx = crossfilter(meps); //global.
+    ndx = crossfilter(meps);
     var all = ndx.groupAll();
 
     function getScore(mep) {
@@ -298,54 +402,37 @@ var scoreCard = function (list_votes) {
       .domain([0, vote.all.length])
       .range([0.2, 1]);
 
-    // color based on the score.F0A92E
     var color = d3.scale
       .linear()
       .clamp(true)
       .domain([0, 49, 50, 51, 100])
       .range(["#CF1919", "#FA9B9B", "#ccc", "#d0e5cc", "#2C851C"])
-      // .range(["#ED0E0E","#FC9144","#FF8E2B","#CCF279","#2C851C"])
       .interpolate(d3.interpolateHcl);
 
     function adjust(data) {
-      //calculate age
       var dateFormat = d3.time.format("%Y-%m-%d");
       var now = Date.now();
-      var empty = [];
-      data.forEach(function (e, i) {
-        // remove the meps that have no votes
-        if (!vote.exists(e.epid)) {
-          empty.unshift(i);
-        }
-      });
-      //console.log(Object.keys(vote.mepindex).length);
-      data.forEach(function (e, i) {
-        //e.effort = vote.getEffort(e.epid);
+      var filteredMeps = data.filter(e => {
+        if (!vote.exists(e.epid)) return false;
         const t = vote.getEffort(e.epid);
         e.effort = t.effort;
         e.tenure = t.tenure;
         if (t.tenure === 0 || t.effort === 0) {
-          console.log("mep never there during the votes", e.lastname);
-          empty.unshift(i);
+          return false;
         }
-        //e.scores = [getScore(e), getScore(e), getScore(e), getScore(e)];
         e.scores = [getScore(e)];
         e.birthdate = dateFormat.parse(e.birthdate);
-        e.age = ~~((now - e.birthdate) / 31557600000); // 24 * 3600 * 365.25 * 1000
+        e.age = ~~((now - e.birthdate) / 31557600000);
+        return true;
       });
-      empty.forEach(function (i) {
-        meps.splice(i, 1);
-      });
+      meps.length = 0;
+      meps.push(...filteredMeps);
     }
 
-    //var chart_age = dc.barChart(selector + " .age");
     var chart_age = dc.lineChart(selector + " .age");
-
     var age = ndx.dimension(function (d) {
-      if (typeof d.age == "undefined") return "";
-      return d.age;
+      return d.age || "";
     });
-
     var ageGroup = age.group().reduceSum(function (d) {
       return 1;
     });
@@ -364,10 +451,8 @@ var scoreCard = function (list_votes) {
 
     var pie_gender = dc.pieChart(selector + " .gender").radius(70);
     var gender = ndx.dimension(function (d) {
-      if (typeof d.gender == "undefined") return "";
-      return d.gender;
+      return d.gender || "";
     });
-
     var groupGender = gender.group().reduceSum(function (d) {
       return 1;
     });
@@ -410,33 +495,30 @@ var scoreCard = function (list_votes) {
       .dimension(score)
       .group(scoreGroup)
       .renderlet(function (chart) {
-        if (!console || !console.log) return;
         var d = chart.dimension().top(Number.POSITIVE_INFINITY);
-        var total = (nb = 0);
+        var total = 0;
+        var nb = 0;
         d.forEach(function (a) {
           ++nb;
           total += a.scores[0];
         });
-        if (nb) {
-          var avg = total / nb;
-          $(".bar_score div#avg_score").text(Math.round(avg));
-        } else {
-          $(".bar_score div#avg_score").text("");
+        const avgEl = document.querySelector(".bar_score div#avg_score");
+        if (avgEl) {
+          avgEl.textContent = nb ? Math.round(total / nb) : "";
         }
-        //why doesn't it work? if (chart.dimension().size() !== chart.group().value()) {
+        const resetAllBtn = document.querySelectorAll(".resetall");
         if (ndx.size() !== nb) {
-          $(".resetall").attr("disabled", false);
+          resetAllBtn.forEach(btn => btn.disabled = false);
         } else {
-          $(".resetall").attr("disabled", true);
+          resetAllBtn.forEach(btn => btn.disabled = true);
         }
       });
 
     bar_score.yAxis().ticks(4).tickFormat(d3.format(",.0f"));
 
-    bar_country = dc.barChart(selector + " .country"); //global
+    bar_country = dc.barChart(selector + " .country");
     var country = ndx.dimension(function (d) {
-      if (typeof d.country == "undefined") return "";
-      return d.country;
+      return d.country || "";
     });
     var countryGroup = country.group().reduce(
       function (a, d) {
@@ -454,7 +536,6 @@ var scoreCard = function (list_votes) {
       },
     );
 
-    //  var countryScore   = country.group().reduceSum(function(d) { return d.scores[0]; });
     bar_country
       .colorCalculator(function (d, i) {
         return color(d.value.score / d.value.count);
@@ -493,14 +574,8 @@ var scoreCard = function (list_votes) {
           scrollTo(d);
         })
         .style("text-anchor", "end")
-        .attr("dx", function (d) {
-          return "-0.6em";
-        })
-        .attr("dy", function (d) {
-          return "-5px";
-        });
-      //      .attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
-      //.attr("transform", function(d) { return "rotate(-90, -4, 9) "; });
+        .attr("dx", "-0.6em")
+        .attr("dy", "-5px");
     }
 
     partyChart = chartParty(selector, ndx, color);
@@ -533,14 +608,10 @@ var scoreCard = function (list_votes) {
         d.votes = vote.all.length;
         return tpl(d);
       })
-      .htmlGroup(function (d) {
-        return tplGroup(d);
-      })
+      .htmlGroup(tplGroup)
       .sortBy(function (d) {
         return d.lastname;
-        //    return d.score;
       })
-      //  .order(d3.descending)
       .renderlet(function (grid) {
         grid.selectAll(".dc-grid-item").on("click", function (d) {
           MEPpopup(d);
@@ -557,25 +628,23 @@ var scoreCard = function (list_votes) {
     if (hash.indexOf("#party") === 0) {
       var filter = decodeURIComponent(hash.substring(6));
       notice("Show only MEPs from " + filter);
-      dc.events.trigger(function () {
+      setTimeout(() => {
         partyChart.filter(filter);
         dc.redrawAll();
-        $("#collapseOne").collapse("show");
+        Collapse.show("#collapseOne");
       }, 2000);
     }
 
     if (hash.indexOf("#mep") === 0) {
       var mep = getMEP(hash.substring(4));
-      MEPpopup(mep);
+      if (mep) MEPpopup(mep);
     } else if (hash.length == 3) {
-      //country
       var iso = hash.substring(1);
-      dc.events.trigger(function () {
+      setTimeout(() => {
         bar_country.filter(iso);
         dc.redrawAll();
-        $("#collapseOne").collapse("show");
+        Collapse.show("#collapseOne");
       }, 2000);
-      console.log(iso);
     }
   }
 
@@ -583,7 +652,7 @@ var scoreCard = function (list_votes) {
     d.votes = vote.getVotes(d.epid);
 
     var v = { d: vote.all };
-    _.each(v.d, function (x) {
+    v.d.forEach(function (x) {
       x.mep = d.votes[x.dbid];
       x.direction = vote.direction[x.mep];
       if (x.mep == "") {
@@ -598,11 +667,14 @@ var scoreCard = function (list_votes) {
       }
     });
 
-    $("#infobox").modal("show");
-    $("#infobox_header").html(tplPopup({ ...d, votes: vote.all.length }));
-    $(".infobox_content").html(tplScore(v));
+    Modal.show("#infobox");
+    const headerEl = document.getElementById("infobox_header");
+    if (headerEl) headerEl.innerHTML = tplPopup({ ...d, votes: vote.all.length });
+    const contentEl = document.querySelector(".infobox_content");
+    if (contentEl) contentEl.innerHTML = tplScore(v, vote);
     window.location.hash = "mep" + d.epid;
-    $("#twitter").html(tplTwitter(d));
+    const twitterEl = document.getElementById("twitter");
+    if (twitterEl) twitterEl.innerHTML = tplTwitter(d);
   }
   function getCountryKey(name) {
     return name.replace(/ /g, "_").toLowerCase();
@@ -612,13 +684,14 @@ var scoreCard = function (list_votes) {
   function scrollTo(id) {
     if (scrolled) return;
     scrolled = true;
-    $("#collapseOne").collapse("show");
-    jQuery("html, body").animate(
-      {
-        scrollTop: jQuery(".country_" + getCountryKey(id)).offset().top,
-      },
-      2000,
-    );
+    Collapse.show("#collapseOne");
+    const targetEl = document.querySelector(".country_" + getCountryKey(id));
+    if (targetEl) {
+      window.scrollTo({
+        top: targetEl.getBoundingClientRect().top + window.pageYOffset,
+        behavior: 'smooth'
+      });
+    }
   }
 
   function chartGroup(selector, ndx, color) {
@@ -627,8 +700,7 @@ var scoreCard = function (list_votes) {
       .innerRadius(20)
       .radius(70);
     var dimension = ndx.dimension(function (d) {
-      if (typeof d.eugroup == "undefined") return "";
-      return d.eugroup;
+      return d.eugroup || "";
     });
     var group = dimension
       .group()
@@ -668,9 +740,9 @@ var scoreCard = function (list_votes) {
           Math.floor(p.data.value.effort / p.data.value.count) +
           "</li>" +
           "<li>score: " +
-          Math.floor(p.data.value.score / p.data.value.count)
+          Math.floor(p.data.value.score / p.data.value.count) +
+          "</li></ul></span>"
         );
-        ("</li></ul></span>");
       })
       .offset([-12, 0]);
 
@@ -683,7 +755,6 @@ var scoreCard = function (list_votes) {
       })
       .colorCalculator(function (d, i) {
         return eu_groups[d.key];
-        //return color(d.value.score/d.value.count);
       })
       .group(group)
       .on("postRender", function (c) {
@@ -703,8 +774,7 @@ var scoreCard = function (list_votes) {
   function chartParty(selector, ndx, color) {
     var bubble_party = dc.bubbleChart(selector + " .party");
     var party = ndx.dimension(function (d) {
-      if (typeof d.party == "undefined") return "";
-      return d.party;
+      return d.party || "";
     });
     var tip = d3
       .tip()
@@ -721,9 +791,9 @@ var scoreCard = function (list_votes) {
           Math.floor(p.value.effort / p.value.count) +
           "</li>" +
           "<li>Average score: " +
-          Math.floor(p.value.score / p.value.count)
+          Math.floor(p.value.score / p.value.count) +
+          "</li></ul></span>"
         );
-        ("</li></ul></span>");
       })
       .offset([-12, 0]);
 
@@ -749,7 +819,6 @@ var scoreCard = function (list_votes) {
       .order(function (p) {
         return p.count;
       });
-    //  var countryScore   = country.group().reduceSum(function(d) { return d.scores[0]; });
     bubble_party
       .colorCalculator(function (d, i) {
         return color(d.value.score / d.value.count);
@@ -779,7 +848,6 @@ var scoreCard = function (list_votes) {
       .yAxisPadding(0)
       .elasticX(false)
       .elasticRadius(false)
-
       .xAxisPadding(0)
       .maxBubbleRelativeSize(0.15)
       .renderHorizontalGridLines(false)
@@ -811,40 +879,49 @@ var scoreCard = function (list_votes) {
 
 function hasHashFilter() {
   var hash = window.location.hash;
-  if (hash.indexOf("#mep") === 0) return true;
-  if (hash.indexOf("#party") === 0) return true;
-  return false;
+  return hash.indexOf("#mep") === 0 || hash.indexOf("#party") === 0;
 }
 
 function notice(message, callback) {
-  $("#alert_placeholder").show();
-  $("#alert_placeholder span").html(message);
+  const ap = document.getElementById("alert_placeholder");
+  if (!ap) return;
+  ap.style.display = '';
+  const span = ap.querySelector("span");
+  if (span) span.innerHTML = message;
   setTimeout(function () {
-    $("#alert_placeholder").fadeOut("slow");
-    callback && callback();
+    ap.style.transition = 'opacity 1s';
+    ap.style.opacity = '0';
+    setTimeout(() => {
+      ap.style.display = 'none';
+      ap.style.opacity = '1';
+      callback && callback();
+    }, 1000);
   }, 3000);
 }
 
 function twitterize() {
-  jQuery("body").on("click", ".twitter", function (event) {
+  document.body.addEventListener('click', function (event) {
+    const twitterBtn = event.target.closest(".twitter");
+    if (!twitterBtn) return;
+    
     event.preventDefault();
-    if (typeof twitterMsg == "undefined")
-      var _twitterMsg =
-        "How does @ score of #score compare to the other MEPs? #ep2014";
-    else var _twitterMsg = twitterMsg;
-    var t = $(this).data("twitter");
-    var mep = $(this).closest("div.mep");
-    var msg = _twitterMsg.replace("@ ", t + " ");
-    msg =
-      msg.replace("#score", mep.data("score")) +
+    const _twitterMsg = (typeof twitterMsg === "undefined") 
+      ? "How does @ score of #score compare to the other MEPs? #ep2014" 
+      : twitterMsg;
+    
+    const t = twitterBtn.dataset.twitter;
+    const mep = twitterBtn.closest("div.mep");
+    if (!mep) return;
+    
+    let msg = _twitterMsg.replace("@ ", t + " ");
+    msg = msg.replace("#score", mep.dataset.score) +
       " " +
       document.URL.replace(/#.*/, "") +
       "#mep" +
-      mep.data("id");
+      mep.dataset.id;
 
-    var url = "http://twitter.com/home/?status=";
+    const url = "http://twitter.com/home/?status=";
     window.open(url + encodeURIComponent(msg), "twitter");
-    return false;
   });
 }
 
