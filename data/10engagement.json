@@ -49,11 +49,12 @@
       "votings": [
         {
           "dbid": 184393,
-          "id": "A10-0260/2025",
           "recommendation": 1,
+          "title": "the title",
+          "description": "João Oliveira - Proposition de résolution (ensemble du texte)",
+          "id": "A10-0260/2025",
           "url": "https://www.europarl.europa.eu/doceo/document/A-10-2025-0260_EN.html",
-          "date": "2026-02-12",
-          "title": "João Oliveira - Proposition de résolution (ensemble du texte)"
+          "date": "2026-02-12"
         },
         {
           "dbid": 171364,
